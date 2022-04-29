@@ -1,0 +1,28 @@
+{
+  "name": "project-battleship",
+  "version": "1.0.0",
+  "description": "Battleship game as learning project. Assignment: https://www.theodinproject.com/lessons/node-path-javascript-battleship",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaciejDabrowskii/PROJECT-BATTLESHIP.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaciejDabrowskii/PROJECT-BATTLESHIP/issues"
+  },
+  "homepage": "https://github.com/MaciejDabrowskii/PROJECT-BATTLESHIP#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "css-loader": "^6.7.1",
+    "jest": "^28.0.3",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.72.0"
+  }
+}
