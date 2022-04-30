@@ -42,3 +42,9 @@ test("chek if calculating ship area works properly with vertical placement", () 
   const ship = shipFactory(4);
   expect(ship.calculateShipArea([1, 1], "vertical")).toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
 });
+test("chek if shipFactory correctly save ship coordinates", () =>
+{
+  const ship = shipFactory(4);
+  ship.calculateShipArea([1, 1], "vertical");
+  expect(ship.getShipArea()).toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
+});

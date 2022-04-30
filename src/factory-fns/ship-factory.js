@@ -2,7 +2,7 @@ const shipFactory = (length) =>
 {
   const shipLength = length;
   const ship = new Array(length);
-  const area = [];
+  const shipArea = [];
 
   function hit(position)
   {
@@ -20,17 +20,17 @@ const shipFactory = (length) =>
     {
       for (let i = 0; i < length; i += 1)
       {
-        area.push([firstCoord[0] + i, firstCoord[1]]);
+        shipArea.push([firstCoord[0] + i, firstCoord[1]]);
       }
     }
     if (orientation === "vertical")
     {
       for (let i = 0; i < length; i += 1)
       {
-        area.push([firstCoord[0], firstCoord[1] + i]);
+        shipArea.push([firstCoord[0], firstCoord[1] + i]);
       }
     }
-    return area;
+    return shipArea;
   };
   const getLength = () => length;
   const getShip = () => ship;
