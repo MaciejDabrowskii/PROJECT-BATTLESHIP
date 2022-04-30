@@ -1,9 +1,10 @@
-import { fill } from "lodash";
+import _, { fill } from "lodash";
 import shipFactory from "../factory-fns/ship-factory.js";
 
 test("chek if ship factory properly returns their length (5)", () =>
 {
-  expect(shipFactory(5).getLength()).toEqual(5);
+  const ship = shipFactory(4);
+  expect(ship.getLength()).toEqual(4);
 });
 test("chek if ship factory properly creats array of given length 6", () =>
 {
@@ -28,6 +29,16 @@ test("chek if hit function cant hit non existent space in array", () =>
 test("chek if isSunk works properly", () =>
 {
   const ship = shipFactory(4);
-  ship.getShip().fill("hit", 0, ship.getShip().length);
+  _.fill(ship.getShip(), "hit");
   expect(ship.isSunk()).toEqual(true);
+});
+test("chek if calculating ship area works properly with horizontal placement", () =>
+{
+  const ship = shipFactory(4);
+  expect(ship.calculateShipArea([1, 1], "horizontal")).toEqual([[1, 1], [2, 1], [3, 1], [4, 1]]);
+});
+test("chek if calculating ship area works properly with vertical placement", () =>
+{
+  const ship = shipFactory(4);
+  expect(ship.calculateShipArea([1, 1], "vertical")).toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
 });
