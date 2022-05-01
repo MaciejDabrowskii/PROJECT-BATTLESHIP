@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable max-len */
 import _, { fill } from "lodash";
-import shipFactory from "../factory-fns/ship-factory.js";
+import shipFactory from "../factory-fns/ship-factory";
 
 test("chek if ship factory properly returns their length (5)", () =>
 {

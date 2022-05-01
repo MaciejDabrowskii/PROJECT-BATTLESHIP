@@ -41,7 +41,6 @@ const shipFactory = (length, orientation) =>
     }
     return shipArea;
   };
-
   return {
     getShip,
     hit,

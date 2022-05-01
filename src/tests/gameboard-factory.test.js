@@ -1,5 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-sparse-arrays */
+/* eslint-disable max-len */
+/* eslint-disable no-undef */
 import _, { compact, flattenDeep } from "lodash";
-import gameboardFactory from "../factory-fns/gameboard-factory.js";
+import gameboardFactory from "../factory-fns/gameboard-factory";
 
 test("check if gameboardFactory properly creates gameboard", () =>
 {
@@ -28,11 +32,10 @@ test("check if gameboardFactory properly creates gameboard", () =>
 test("check if placed ship methotds work properly", () =>
 {
   const gameboard = gameboardFactory();
-  gameboard.placeShip("destroyer", [1, 1]);
-
+  gameboard.placeShip("carrier", [1, 1]);
   expect(
     gameboard.getBoard()[1][1].getShipArea(),
-  ).toEqual([[1, 1], [2, 1]]);
+  ).toEqual([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]);
 });
 
 test("check if recive attack correctly register hits ", () =>

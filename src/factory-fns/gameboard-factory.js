@@ -1,4 +1,3 @@
-import _, { fill } from "lodash";
 import shipFactory from "./ship-factory";
 
 const gameboardFactory = () =>
@@ -8,13 +7,13 @@ const gameboardFactory = () =>
   const missedAttacks = [];
 
   const ships = {
-    carrier: shipFactory(5, orientation),
-    battleship: shipFactory(4, orientation),
-    crusier: shipFactory(3, orientation),
-    submarine: shipFactory(3, orientation),
-    destroyer: shipFactory(2, orientation),
+    carrier: {},
+    battleship: {},
+    crusier: {},
+    submarine: {},
+    destroyer: {},
   };
-
+  // shipFactory(2, orientation)
   const getBoard = () => board;
   const getShipsNames = () => Object.keys(ships);
 
@@ -32,6 +31,31 @@ const gameboardFactory = () =>
 
   const placeShip = (shipType, firstCoord) =>
   {
+    switch (shipType)
+    {
+      case "carrier":
+        ships[shipType] = shipFactory(5, orientation);
+        break;
+
+      case "battleship":
+        ships[shipType] = shipFactory(4, orientation);
+        break;
+
+      case "crusier":
+        ships[shipType] = shipFactory(3, orientation);
+        break;
+
+      case "submarine":
+        ships[shipType] = shipFactory(3, orientation);
+        break;
+
+      case "destroyer":
+        ships[shipType] = shipFactory(2, orientation);
+        break;
+
+      default:
+    }
+
     ships[shipType].calculateShipArea(firstCoord).forEach((coord) =>
     {
       board[coord[0]][coord[1]] = ships[shipType];
@@ -66,7 +90,7 @@ const gameboardFactory = () =>
     }
     return String(arrayOfShips.every((ship) => ship.isSunk()));
   };
-
+  const getShips = () => ships;
   return {
     getBoard,
     getShipsNames,
@@ -74,6 +98,7 @@ const gameboardFactory = () =>
     switchOrientation,
     receiveAttack,
     isFleetDestroyed,
+    getShips,
   };
 };
 export default gameboardFactory;
