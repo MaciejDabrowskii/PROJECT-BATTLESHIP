@@ -6,6 +6,7 @@ const gameboardFactory = () =>
   const board = [...new Array(10)].map(() => new Array(10));
   let orientation = "horizontal";
   const missedAttacks = [];
+
   const ships = {
     carrier: shipFactory(5, orientation),
     battleship: shipFactory(4, orientation),
@@ -36,6 +37,7 @@ const gameboardFactory = () =>
       board[coord[0]][coord[1]] = ships[shipType];
     });
   };
+
   const receiveAttack = (coords) =>
   {
     switch (typeof (board[coords[0]][coords[1]]))
@@ -50,6 +52,7 @@ const gameboardFactory = () =>
       default:
     }
   };
+
   const isFleetDestroyed = () =>
   {
     const arrayOfShips = [];
