@@ -4,7 +4,11 @@ const shipFactory = (length, orientation) =>
   const ship = new Array(length);
   const shipArea = [];
 
-  function hit(position)
+  const getLength = () => length;
+  const getShip = () => ship;
+  const getShipArea = () => shipArea;
+
+  const hit = (position) =>
   {
     switch (shipOrientation)
     {
@@ -15,10 +19,10 @@ const shipFactory = (length, orientation) =>
         break;
       default:
     }
-  }
+  };
+
   const isSunk = () => ship.every((element) => element === "hit");
-  // eslint-disable-next-line consistent-return
-  // shipArea calculates all ship cordinates from given starting coordinates
+
   const calculateShipArea = (firstCoord) =>
   {
     if (shipOrientation === "horizontal")
@@ -37,9 +41,6 @@ const shipFactory = (length, orientation) =>
     }
     return shipArea;
   };
-  const getLength = () => length;
-  const getShip = () => ship;
-  const getShipArea = () => shipArea;
 
   return {
     getShip,

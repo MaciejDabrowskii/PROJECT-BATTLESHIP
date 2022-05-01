@@ -13,6 +13,10 @@ const gameboardFactory = () =>
     submarine: shipFactory(3, orientation),
     destroyer: shipFactory(2, orientation),
   };
+
+  const getBoard = () => board;
+  const getShipsNames = () => Object.keys(ships);
+
   const switchOrientation = () =>
   {
     switch (orientation)
@@ -24,7 +28,6 @@ const gameboardFactory = () =>
       default:
     }
   };
-  const getShipsNames = () => Object.keys(ships);
 
   const placeShip = (shipType, firstCoord) =>
   {
@@ -61,7 +64,6 @@ const gameboardFactory = () =>
     return String(arrayOfShips.every((ship) => ship.isSunk()));
   };
 
-  const getBoard = () => board;
   return {
     getBoard,
     getShipsNames,
