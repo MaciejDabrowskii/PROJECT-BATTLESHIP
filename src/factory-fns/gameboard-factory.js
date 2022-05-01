@@ -6,7 +6,7 @@ const gameboardFactory = () =>
   const board = [...new Array(10)].map(() => new Array(10));
   let orientation = "horizontal";
   const missedAttacks = [];
-  const ship = {
+  const ships = {
     carrier: shipFactory(5, orientation),
     battleship: shipFactory(4, orientation),
     crusier: shipFactory(3, orientation),
@@ -24,11 +24,13 @@ const gameboardFactory = () =>
       default:
     }
   };
+  const getShipsNames = () => Object.keys(ships);
+
   const placeShip = (shipType, firstCoord) =>
   {
-    ship[shipType].calculateShipArea(firstCoord).forEach((coord) =>
+    ships[shipType].calculateShipArea(firstCoord).forEach((coord) =>
     {
-      board[coord[0]][coord[1]] = ship[shipType];
+      board[coord[0]][coord[1]] = ships[shipType];
     });
   };
   const receiveAttack = (coords) =>
@@ -45,13 +47,28 @@ const gameboardFactory = () =>
       default:
     }
   };
+  const isFleetDestroyed = () =>
+  {
+    const arrayOfShips = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const property in ships)
+    {
+      if ({}.hasOwnProperty.call(ships, property))
+      {
+        arrayOfShips.push(ships[property]);
+      }
+    }
+    return String(arrayOfShips.every((ship) => ship.isSunk()));
+  };
 
   const getBoard = () => board;
   return {
     getBoard,
+    getShipsNames,
     placeShip,
     switchOrientation,
     receiveAttack,
+    isFleetDestroyed,
   };
 };
 export default gameboardFactory;

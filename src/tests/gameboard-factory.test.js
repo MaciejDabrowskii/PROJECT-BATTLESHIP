@@ -65,3 +65,36 @@ test("check if reciveAttack correctly register misses ", () =>
     gameboard.getBoard()[2][0],
   ).toEqual("miss");
 });
+
+test("check if placing all ships and geting hit to all of them works correctly", () =>
+{
+  const gameboard = gameboardFactory();
+  const shipCoords = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]];
+  const attacks = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [0, 1], [1, 1], [2, 1], [3, 1], [0, 2], [1, 2], [2, 2], [0, 3], [1, 3], [2, 3], [0, 4], [1, 4]];
+  const shipNames = gameboard.getShipsNames();
+  shipCoords.forEach((coord, index) =>
+  {
+    gameboard.placeShip(shipNames[index], coord);
+  });
+  attacks.forEach((attack) => gameboard.receiveAttack(attack));
+  const attackedShips = [];
+  shipCoords.forEach((coord) =>
+  {
+    attackedShips.push([...gameboard.getBoard()[coord[0]][coord[1]].getShip()]);
+  });
+  expect(attackedShips).toEqual([["hit", "hit", "hit", "hit", "hit"], ["hit", "hit", "hit", "hit"], ["hit", "hit", "hit"], ["hit", "hit", "hit"], ["hit", "hit"]]);
+});
+
+test("check if isFleetDestroyed works correctly", () =>
+{
+  const gameboard = gameboardFactory();
+  const shipCoords = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]];
+  const attacks = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [0, 1], [1, 1], [2, 1], [3, 1], [0, 2], [1, 2], [2, 2], [0, 3], [1, 3], [2, 3], [0, 4], [1, 4]];
+  const shipNames = gameboard.getShipsNames();
+  shipCoords.forEach((coord, index) =>
+  {
+    gameboard.placeShip(shipNames[index], coord);
+  });
+  attacks.forEach((attack) => gameboard.receiveAttack(attack));
+  expect(gameboard.isFleetDestroyed()).toEqual("true");
+});
