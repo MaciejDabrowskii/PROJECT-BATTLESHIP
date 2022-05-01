@@ -16,9 +16,10 @@ test("chek if ship factory properly creats array of given length 3", () =>
 });
 test("chek if ship properly register hits", () =>
 {
-  const ship = shipFactory(4);
-  ship.hit(3);
-  expect(ship.getShip()[3]).toEqual("hit");
+  const ship = shipFactory(4, "horizontal");
+  ship.calculateShipArea([1, 0]);
+  ship.hit([2, 0]);
+  expect(ship.getShip()[1]).toEqual("hit");
 });
 test("chek if hit function cant hit non existent space in array", () =>
 {
@@ -34,17 +35,17 @@ test("chek if isSunk works properly", () =>
 });
 test("chek if calculating ship area works properly with horizontal placement", () =>
 {
-  const ship = shipFactory(4);
-  expect(ship.calculateShipArea([1, 1], "horizontal")).toEqual([[1, 1], [2, 1], [3, 1], [4, 1]]);
+  const ship = shipFactory(4, "horizontal");
+  expect(ship.calculateShipArea([1, 1])).toEqual([[1, 1], [2, 1], [3, 1], [4, 1]]);
 });
 test("chek if calculating ship area works properly with vertical placement", () =>
 {
-  const ship = shipFactory(4);
-  expect(ship.calculateShipArea([1, 1], "vertical")).toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
+  const ship = shipFactory(4, "vertical");
+  expect(ship.calculateShipArea([1, 1])).toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
 });
 test("chek if shipFactory correctly save ship coordinates", () =>
 {
-  const ship = shipFactory(4);
-  ship.calculateShipArea([1, 1], "vertical");
+  const ship = shipFactory(4, "vertical");
+  ship.calculateShipArea([1, 1]);
   expect(ship.getShipArea()).toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
 });
