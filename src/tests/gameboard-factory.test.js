@@ -8,18 +8,22 @@ import gameboardFactory from "../factory-fns/gameboard-factory";
 test("check if gameboardFactory properly creates gameboard", () =>
 {
   const gameboard = gameboardFactory();
-  expect(gameboard.getBoard()).toEqual([...new Array(10)].map(() => new Array(10)));
+  expect(
+    gameboard.getBoard(),
+  ).toEqual([...new Array(10)].map(() => new Array(10)));
 });
 
-test("check if gameboardFactory properly creates gameboard", () =>
+test("check if gameboardFactory properly add ships to gameboard", () =>
 {
   const gameboard = gameboardFactory();
   gameboard.placeShip("destroyer", [1, 1]);
 
-  expect(_.compact(_.flattenDeep(gameboard.getBoard())).length).toEqual(2);
+  expect(
+    _.compact(_.flattenDeep(gameboard.getBoard())).length,
+  ).toEqual(2);
 });
 
-test("check if gameboardFactory properly creates gameboard", () =>
+test("check if gameboardFactory properly add ships to gameboard", () =>
 {
   const gameboard = gameboardFactory();
   gameboard.placeShip("destroyer", [1, 1]);
@@ -33,6 +37,7 @@ test("check if placed ship methotds work properly", () =>
 {
   const gameboard = gameboardFactory();
   gameboard.placeShip("carrier", [1, 1]);
+
   expect(
     gameboard.getBoard()[1][1].getShipArea(),
   ).toEqual([[1, 1], [2, 1], [3, 1], [4, 1], [5, 1]]);
@@ -85,26 +90,27 @@ test("check if isColliding works", () =>
 {
   const gameboard = gameboardFactory();
   gameboard.placeShip("destroyer", [0, 0]);
-  // gameboard.placeShip("carrier", [0, 1]);
-
-  expect(_.compact(_.flattenDeep(gameboard.getBoard())).length).toEqual(2);
-
-  // expect(
-  //   gameboard.getFieldStatus().antiCollision,
-  // ).toEqual(true);
+  gameboard.placeShip("carrier", [0, 0]);
 
   expect(
-    gameboard.isColliding([0, 1]),
+    _.compact(_.flattenDeep(gameboard.getBoard())).length,
+  ).toEqual(2);
+
+  expect(
+    gameboard.isColliding(...[[0, 0], [0, 5]]),
   ).toEqual(true);
 });
 
-// test("check if isColliding works with placeShip function", () =>
-// {
-//   const gameboard = gameboardFactory();
-//   gameboard.placeShip("destroyer", [0, 0]);
-//   gameboard.placeShip("carrier", [2, 1]);
-//   expect(_.compact(_.flattenDeep(gameboard.getBoard())).length).toEqual(2);
-// });
+test("check if isColliding works with placeShip function", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [0, 0]);
+  gameboard.placeShip("carrier", [2, 1]);
+
+  expect(
+    _.compact(_.flattenDeep(gameboard.getBoard())).length,
+  ).toEqual(2);
+});
 
 // test("check if placing all ships and geting hit to all of them works correctly", () =>
 // {
@@ -136,7 +142,10 @@ test("check if isFleetDestroyed works correctly", () =>
     gameboard.placeShip(shipNames[index], coord);
   });
   attacks.forEach((attack) => gameboard.receiveAttack(attack));
-  expect(gameboard.isFleetDestroyed()).toEqual("true");
+
+  expect(
+    gameboard.isFleetDestroyed(),
+  ).toEqual("true");
 });
 
 test("check if isFleetDestroyed works correctly", () =>
@@ -150,7 +159,10 @@ test("check if isFleetDestroyed works correctly", () =>
     gameboard.placeShip(shipNames[index], coord);
   });
   attacks.forEach((attack) => gameboard.receiveAttack(attack));
-  expect(gameboard.isFleetDestroyed()).toEqual("true");
+
+  expect(
+    gameboard.isFleetDestroyed(),
+  ).toEqual("true");
 });
 
 test("check if gamebord correctly register colison coordinates ", () =>

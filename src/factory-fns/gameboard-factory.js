@@ -76,7 +76,7 @@ const gameboardFactory = () =>
 
     if (
       !isColliding(
-        ships[shipType]
+        ...ships[shipType]
           .calculateShipArea(firstCoord),
       ))
     {
