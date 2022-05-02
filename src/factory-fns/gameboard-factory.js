@@ -4,7 +4,11 @@ const gameboardFactory = () =>
 {
   const board = [...new Array(10)].map(() => new Array(10));
   let orientation = "horizontal";
-  const missedAttacks = [];
+
+  const fieldStatus = {
+    missedAttacks: [],
+    antiCollision: [],
+  };
 
   const ships = {
     carrier: {},
@@ -13,9 +17,12 @@ const gameboardFactory = () =>
     submarine: {},
     destroyer: {},
   };
+
   // shipFactory(2, orientation)
   const getBoard = () => board;
   const getShipsNames = () => Object.keys(ships);
+  const getFieldStatus = () => fieldStatus;
+  const getShips = () => ships;
 
   const switchOrientation = () =>
   {
@@ -27,6 +34,17 @@ const gameboardFactory = () =>
         break;
       default:
     }
+  };
+
+  const isColliding = (shipArea) =>
+  {
+    const antiCollision = JSON.stringify(fieldStatus.antiCollision);
+
+    return shipArea.every((element) =>
+    {
+      const result = antiCollision.indexOf(JSON.stringify(element));
+      return result !== -1;
+    });
   };
 
   const placeShip = (shipType, firstCoord) =>
@@ -56,10 +74,30 @@ const gameboardFactory = () =>
       default:
     }
 
-    ships[shipType].calculateShipArea(firstCoord).forEach((coord) =>
+    if (
+      !isColliding(
+        ships[shipType]
+          .calculateShipArea(firstCoord),
+      ))
     {
-      board[coord[0]][coord[1]] = ships[shipType];
-    });
+      ships[shipType]
+        .setShipArea(
+          ships[shipType]
+            .calculateShipArea(firstCoord),
+        );
+      ships[shipType]
+        .calculateShipArea(firstCoord)
+        .forEach((coord) =>
+        {
+          board[coord[0]][coord[1]] = ships[shipType];
+          fieldStatus.antiCollision.push(coord);
+        });
+
+      fieldStatus.antiCollision
+        .push(...ships[shipType]
+          .calculateColisionArea(ships[shipType]
+            .getShipArea()));
+    }
   };
 
   const receiveAttack = (coords) =>
@@ -71,7 +109,7 @@ const gameboardFactory = () =>
         break;
       case "undefined":
         board[coords[0]][coords[1]] = "miss";
-        missedAttacks.push(coords);
+        fieldStatus.missedAttacks.push(coords);
         break;
       default:
     }
@@ -90,15 +128,17 @@ const gameboardFactory = () =>
     }
     return String(arrayOfShips.every((ship) => ship.isSunk()));
   };
-  const getShips = () => ships;
+
   return {
     getBoard,
     getShipsNames,
+    getShips,
     placeShip,
     switchOrientation,
     receiveAttack,
     isFleetDestroyed,
-    getShips,
+    isColliding,
+    getFieldStatus,
   };
 };
 export default gameboardFactory;

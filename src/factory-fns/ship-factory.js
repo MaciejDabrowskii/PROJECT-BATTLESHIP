@@ -4,50 +4,136 @@ const shipFactory = (length, orientation) =>
   const ship = new Array(length);
   const shipArea = [];
 
+  const setShipArea = (array) => shipArea.push(...array);
   const getLength = () => length;
   const getShip = () => ship;
   const getShipArea = () => shipArea;
-
-  const hit = (position) =>
-  {
-    switch (shipOrientation)
-    {
-      case "horizontal": ship[position[0] - shipArea[0][0]] = "hit";
-        break;
-
-      case "vertical": ship[position[1] - shipArea[0][1]] = "hit";
-        break;
-      default:
-    }
-  };
 
   const isSunk = () => ship.every((element) => element === "hit");
 
   const calculateShipArea = (firstCoord) =>
   {
+    const area = [];
     if (shipOrientation === "horizontal")
     {
       for (let i = 0; i < length; i += 1)
       {
-        shipArea.push([firstCoord[0] + i, firstCoord[1]]);
+        area.push([firstCoord[0] + i, firstCoord[1]]);
       }
     }
     if (shipOrientation === "vertical")
     {
       for (let i = 0; i < length; i += 1)
       {
-        shipArea.push([firstCoord[0], firstCoord[1] + i]);
+        area.push([firstCoord[0], firstCoord[1] + i]);
       }
     }
-    return shipArea;
+    return area;
   };
+
+  const hit = (coord) =>
+  {
+    if (shipArea.length > 1)
+    {
+      switch (shipOrientation)
+      {
+        case "horizontal": ship[coord[0] - shipArea[0][0]] = "hit";
+          break;
+
+        case "vertical": ship[coord[1] - shipArea[0][1]] = "hit";
+          break;
+
+        default:
+      }
+    }
+  };
+
+  const calculateColisionArea = (area) =>
+  {
+    const colisonArray = [];
+
+    area.forEach((coord, index, array) =>
+    {
+      if (index === 0) // first coordinate
+      {
+        colisonArray.push(
+          [coord[0] - 1, coord[1]], // middle left
+          [coord[0] - 1, coord[1] - 1], // ubove left
+          [coord[0] - 1, coord[1] + 1], // under left
+          [coord[0], coord[1] - 1], // middle ubove
+        );
+
+        if (orientation === "horizontal")
+        {
+          colisonArray.push(
+            [coord[0], coord[1] + 1], // middle under
+          );
+        }
+        if (orientation === "vertical")
+        {
+          colisonArray.push(
+            [coord[0] + 1, coord[1] - 1], // ubove left
+          );
+        }
+      }
+
+      else if (index === array.length - 1)// last coordinate
+      {
+        colisonArray.push(
+          [coord[0], coord[1] + 1], // middle under
+          [coord[0] + 1, coord[1]], // middle right
+          [coord[0] + 1, coord[1] + 1], // ubove right
+          [coord[0] + 1, coord[1] - 1], // under right
+        );
+
+        if (orientation === "horizontal")
+        {
+          colisonArray.push(
+            [coord[0], coord[1] - 1], // under left
+          );
+        }
+        if (orientation === "vertical")
+        {
+          colisonArray.push(
+            [coord[0] - 1, coord[1] + 1], // ubove right
+          );
+        }
+      }
+
+      else
+      {
+        switch (shipOrientation)
+        {
+          case "horizontal":
+            colisonArray.push(
+              [coord[0], coord[1] - 1], // middle ubove
+              [coord[0], coord[1] + 1], // middle under
+            );
+            break;
+
+          case "vertical":
+            colisonArray.push(
+              [coord[0] - 1, coord[1]], // middle ubove
+              [coord[0] + 1, coord[1]], // middle under
+            );
+
+            break;
+          default:
+        }
+      }
+    });
+    return colisonArray;
+  };
+
   return {
+    setShipArea,
     getShip,
+    getShipArea,
     hit,
     isSunk,
     getLength,
     calculateShipArea,
-    getShipArea,
+    calculateColisionArea,
   };
 };
 export default shipFactory;

@@ -58,6 +58,18 @@ test("check if reciveAttack correctly register misses ", () =>
     gameboard.getBoard()[2][0],
   ).toEqual("miss");
 });
+
+test("check if gameboard correctly stores misses ", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [0, 0]);
+  gameboard.receiveAttack([2, 0]);
+
+  expect(
+    gameboard.getFieldStatus().missedAttacks,
+  ).toEqual([[2, 0]]);
+});
+
 test("check if reciveAttack correctly register misses ", () =>
 {
   const gameboard = gameboardFactory();
@@ -69,7 +81,51 @@ test("check if reciveAttack correctly register misses ", () =>
   ).toEqual("miss");
 });
 
-test("check if placing all ships and geting hit to all of them works correctly", () =>
+test("check if isColliding works", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [0, 0]);
+  // gameboard.placeShip("carrier", [0, 1]);
+
+  expect(_.compact(_.flattenDeep(gameboard.getBoard())).length).toEqual(2);
+
+  // expect(
+  //   gameboard.getFieldStatus().antiCollision,
+  // ).toEqual(true);
+
+  expect(
+    gameboard.isColliding([0, 1]),
+  ).toEqual(true);
+});
+
+// test("check if isColliding works with placeShip function", () =>
+// {
+//   const gameboard = gameboardFactory();
+//   gameboard.placeShip("destroyer", [0, 0]);
+//   gameboard.placeShip("carrier", [2, 1]);
+//   expect(_.compact(_.flattenDeep(gameboard.getBoard())).length).toEqual(2);
+// });
+
+// test("check if placing all ships and geting hit to all of them works correctly", () =>
+// {
+//   const gameboard = gameboardFactory();
+//   const shipCoords = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]];
+//   const attacks = [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [0, 1], [1, 1], [2, 1], [3, 1], [0, 2], [1, 2], [2, 2], [0, 3], [1, 3], [2, 3], [0, 4], [1, 4]];
+//   const shipNames = gameboard.getShipsNames();
+//   shipCoords.forEach((coord, index) =>
+//   {
+//     gameboard.placeShip(shipNames[index], coord);
+//   });
+//   attacks.forEach((attack) => gameboard.receiveAttack(attack));
+//   const attackedShips = [];
+//   shipCoords.forEach((coord) =>
+//   {
+//     attackedShips.push([...gameboard.getBoard()[coord[0]][coord[1]].getShip()]);
+//   });
+//   expect(attackedShips).toEqual([["hit", "hit", "hit", "hit", "hit"], ["hit", "hit", "hit", "hit"], ["hit", "hit", "hit"], ["hit", "hit", "hit"], ["hit", "hit"]]);
+// });
+
+test("check if isFleetDestroyed works correctly", () =>
 {
   const gameboard = gameboardFactory();
   const shipCoords = [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]];
@@ -80,12 +136,7 @@ test("check if placing all ships and geting hit to all of them works correctly",
     gameboard.placeShip(shipNames[index], coord);
   });
   attacks.forEach((attack) => gameboard.receiveAttack(attack));
-  const attackedShips = [];
-  shipCoords.forEach((coord) =>
-  {
-    attackedShips.push([...gameboard.getBoard()[coord[0]][coord[1]].getShip()]);
-  });
-  expect(attackedShips).toEqual([["hit", "hit", "hit", "hit", "hit"], ["hit", "hit", "hit", "hit"], ["hit", "hit", "hit"], ["hit", "hit", "hit"], ["hit", "hit"]]);
+  expect(gameboard.isFleetDestroyed()).toEqual("true");
 });
 
 test("check if isFleetDestroyed works correctly", () =>
@@ -101,3 +152,33 @@ test("check if isFleetDestroyed works correctly", () =>
   attacks.forEach((attack) => gameboard.receiveAttack(attack));
   expect(gameboard.isFleetDestroyed()).toEqual("true");
 });
+
+test("check if gamebord correctly register colison coordinates ", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [1, 1]);
+  expect(
+    gameboard.getFieldStatus().antiCollision.length,
+  ).toEqual(12);
+});
+// test("check if gamebord correctly register colison coordinates ", () =>
+// {
+//   const gameboard = gameboardFactory();
+//   gameboard.placeShip("destroyer", [1, 1]);
+//   const antiCollisionArray = gameboard.getFieldStatus().antiCollision;
+//   expect(
+//     antiCollisionArray.includes([0, 0]),
+//   ).toBeTruthy();
+//   expect(
+//     antiCollisionArray.includes([0, 2]),
+//   ).toBeTruthy();
+//   expect(
+//     antiCollisionArray.includes([0, 1]),
+//   ).toBeTruthy();
+//   expect(
+//     antiCollisionArray.includes([3, 0]),
+//   ).toBeTruthy();
+//   expect(
+//     antiCollisionArray.includes([3, 2]),
+//   ).toBeTruthy();
+// });
