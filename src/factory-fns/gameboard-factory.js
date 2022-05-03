@@ -11,14 +11,13 @@ const gameboardFactory = () =>
   };
 
   const ships = {
-    carrier: {},
-    battleship: {},
-    crusier: {},
-    submarine: {},
-    destroyer: {},
+    carrier: {}, // length: 5
+    battleship: {}, // length: 4
+    crusier: {}, // length: 3
+    submarine: {}, // length: 3
+    destroyer: {}, // length: 2
   };
 
-  // shipFactory(2, orientation)
   const getBoard = () => board;
   const getShipsNames = () => Object.keys(ships);
   const getFieldStatus = () => fieldStatus;
@@ -36,20 +35,17 @@ const gameboardFactory = () =>
     }
   };
 
-  const isColliding = (shipArea) =>
+  const isColliding = (ship, coord) => // takes ship object calculates its area and check it against colision area if one of ship area match colison return true
   {
-    const antiCollision = JSON.stringify(fieldStatus.antiCollision);
-
-    return shipArea.every((element) =>
-    {
-      const result = antiCollision.indexOf(JSON.stringify(element));
-      return result !== -1;
-    });
+    const antiCollisionArea = JSON.stringify(fieldStatus.antiCollision);
+    return ship.calculateShipArea(coord)
+      .some((el) => antiCollisionArea
+        .includes(JSON.stringify((el))));
   };
 
   const placeShip = (shipType, firstCoord) =>
   {
-    switch (shipType)
+    switch (shipType) // create a ship object
     {
       case "carrier":
         ships[shipType] = shipFactory(5, orientation);
@@ -75,17 +71,14 @@ const gameboardFactory = () =>
     }
 
     if (
-      !isColliding(
-        ...ships[shipType]
-          .calculateShipArea(firstCoord),
-      ))
+      !isColliding(ships[shipType], firstCoord)) // cheks if ship placment is possible
     {
-      ships[shipType]
+      ships[shipType] // sets calculated ship area in ship object
         .setShipArea(
           ships[shipType]
             .calculateShipArea(firstCoord),
         );
-      ships[shipType]
+      ships[shipType] // push ship area to gameboard array and anticolison array
         .calculateShipArea(firstCoord)
         .forEach((coord) =>
         {
@@ -93,21 +86,21 @@ const gameboardFactory = () =>
           fieldStatus.antiCollision.push(coord);
         });
 
-      fieldStatus.antiCollision
+      fieldStatus.antiCollision // calculates ship colison area (all surounding fields) and push tem to anticolision array
         .push(...ships[shipType]
           .calculateColisionArea(ships[shipType]
             .getShipArea()));
     }
   };
 
-  const receiveAttack = (coords) =>
+  const receiveAttack = (coords) => // take coordinates and check board field
   {
     switch (typeof (board[coords[0]][coords[1]]))
     {
-      case "object":
+      case "object": // if field contains object (ship) run function hit on it
         board[coords[0]][coords[1]].hit(coords);
         break;
-      case "undefined":
+      case "undefined": // if field undefined (empty) sets string "miss" on this field and push coordinates to missed attacks array
         board[coords[0]][coords[1]] = "miss";
         fieldStatus.missedAttacks.push(coords);
         break;
@@ -115,7 +108,7 @@ const gameboardFactory = () =>
     }
   };
 
-  const isFleetDestroyed = () =>
+  const isFleetDestroyed = () => // takes ships object keys properties (ships objects) and run method isSunk in each to determine that all ships are sunk
   {
     const arrayOfShips = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -126,19 +119,18 @@ const gameboardFactory = () =>
         arrayOfShips.push(ships[property]);
       }
     }
-    return String(arrayOfShips.every((ship) => ship.isSunk()));
+    return arrayOfShips.every((ship) => ship.isSunk());
   };
 
   return {
     getBoard,
     getShipsNames,
     getShips,
+    getFieldStatus,
     placeShip,
     switchOrientation,
     receiveAttack,
     isFleetDestroyed,
-    isColliding,
-    getFieldStatus,
   };
 };
 export default gameboardFactory;

@@ -1,29 +1,30 @@
 const shipFactory = (length, orientation) =>
 {
   const shipOrientation = orientation;
-  const ship = new Array(length);
+  const shipLength = length;
+  const ship = new Array(length).fill("notHit", 0, length);
   const shipArea = [];
 
   const setShipArea = (array) => shipArea.push(...array);
-  const getLength = () => length;
+  const getLength = () => shipLength;
   const getShip = () => ship;
   const getShipArea = () => shipArea;
 
   const isSunk = () => ship.every((element) => element === "hit");
 
-  const calculateShipArea = (firstCoord) =>
+  const calculateShipArea = (firstCoord) => // takes coordinate and calculates ship area depending on orientation. Returns ship area array
   {
     const area = [];
     if (shipOrientation === "horizontal")
     {
-      for (let i = 0; i < length; i += 1)
+      for (let i = 0; i < shipLength; i += 1)
       {
         area.push([firstCoord[0] + i, firstCoord[1]]);
       }
     }
     if (shipOrientation === "vertical")
     {
-      for (let i = 0; i < length; i += 1)
+      for (let i = 0; i < shipLength; i += 1)
       {
         area.push([firstCoord[0], firstCoord[1] + i]);
       }
@@ -31,7 +32,7 @@ const shipFactory = (length, orientation) =>
     return area;
   };
 
-  const hit = (coord) =>
+  const hit = (coord) => // take coordinates and marks proper ship position as hit
   {
     if (shipArea.length > 1)
     {
@@ -48,7 +49,7 @@ const shipFactory = (length, orientation) =>
     }
   };
 
-  const calculateColisionArea = (area) =>
+  const calculateColisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields. (it can return negative values but it does not matter)
   {
     const colisonArray = [];
 
@@ -127,13 +128,13 @@ const shipFactory = (length, orientation) =>
 
   return {
     setShipArea,
-    getShip,
-    getShipArea,
     hit,
     isSunk,
-    getLength,
     calculateShipArea,
     calculateColisionArea,
+    getShip,
+    getShipArea,
+    getLength,
   };
 };
 export default shipFactory;
