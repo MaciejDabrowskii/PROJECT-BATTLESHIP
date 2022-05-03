@@ -78,15 +78,15 @@ test("check if recive attack correctly register hits ", () =>
   gameboard.receiveAttack([7, 5]);
 
   expect(
-    gameboard.getBoard()[1][0].getShip()[1],
+    gameboard.getBoard()[1][0].getShipBody()[1],
   ).toEqual("hit");
 
   expect(
-    gameboard.getBoard()[1][0].getShip(),
+    gameboard.getBoard()[1][0].getShipBody(),
   ).toEqual(["hit", "hit"]);
 
   expect(
-    gameboard.getBoard()[7][5].getShip(),
+    gameboard.getBoard()[7][5].getShipBody(),
   ).toEqual(["notHit", "notHit", "notHit", "notHit", "hit"]);
 });
 
@@ -208,7 +208,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
   ).toEqual(17);
 
   expect(
-    gameboard.getShips().carrier.getShip(),
+    gameboard.getShips().carrier.getShipBody(),
   ).toEqual(["hit", "hit", "hit", "hit", "hit"]);
 
   expect(
@@ -216,7 +216,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
   ).toEqual(true);
 
   expect(
-    gameboard.getShips().battleship.getShip(),
+    gameboard.getShips().battleship.getShipBody(),
   ).toEqual(["hit", "hit", "hit", "hit"]);
 
   expect(
@@ -224,7 +224,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
   ).toEqual(true);
 
   expect(
-    gameboard.getShips().crusier.getShip(),
+    gameboard.getShips().crusier.getShipBody(),
   ).toEqual(["hit", "hit", "hit"]);
 
   expect(
@@ -232,7 +232,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
   ).toEqual(true);
 
   expect(
-    gameboard.getShips().submarine.getShip(),
+    gameboard.getShips().submarine.getShipBody(),
   ).toEqual(["hit", "hit", "hit"]);
 
   expect(
@@ -240,7 +240,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
   ).toEqual(true);
 
   expect(
-    gameboard.getShips().destroyer.getShip(),
+    gameboard.getShips().destroyer.getShipBody(),
   ).toEqual(["hit", "hit"]);
 
   expect(

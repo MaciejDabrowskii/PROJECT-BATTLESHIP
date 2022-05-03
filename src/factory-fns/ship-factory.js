@@ -7,7 +7,7 @@ const shipFactory = (length, orientation) =>
 
   const setShipArea = (array) => shipArea.push(...array);
   const getLength = () => shipLength;
-  const getShip = () => ship;
+  const getShipBody = () => ship;
   const getShipArea = () => shipArea;
 
   const isSunk = () => ship.every((element) => element === "hit");
@@ -49,7 +49,7 @@ const shipFactory = (length, orientation) =>
     }
   };
 
-  const calculateColisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields. (it can return negative values but it does not matter)
+  const calculateCollisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields. (it can return negative values but it does not matter)
   {
     const colisonArray = [];
 
@@ -134,8 +134,8 @@ const shipFactory = (length, orientation) =>
     hit,
     isSunk,
     calculateShipArea,
-    calculateColisionArea,
-    getShip,
+    calculateCollisionArea,
+    getShipBody,
     getShipArea,
     getLength,
   };

@@ -14,14 +14,14 @@ test("check if ship factory properly returns their length (5)", () =>
 test("check if ship factory properly creats array of given length 6", () =>
 {
   expect(shipFactory(6)
-    .getShip().length)
+    .getShipBody().length)
     .toEqual(6);
 });
 
 test("check if ship factory properly creats array of given length 3", () =>
 {
   expect(shipFactory(3)
-    .getShip().length)
+    .getShipBody().length)
     .toEqual(3);
 });
 
@@ -33,7 +33,7 @@ test("check if ship properly register hits", () =>
   );
   ship.hit([2, 0]);
 
-  expect(ship.getShip()[1])
+  expect(ship.getShipBody()[1])
     .toEqual("hit");
 });
 
@@ -42,14 +42,14 @@ test("check if hit function cant hit non existent space in array", () =>
   const ship = shipFactory(4);
   ship.hit(4);
 
-  expect(ship.getShip()[5])
+  expect(ship.getShipBody()[5])
     .toBeUndefined();
 });
 
 test("check if isSunk works properly", () =>
 {
   const ship = shipFactory(4);
-  _.fill(ship.getShip(), "hit");
+  _.fill(ship.getShipBody(), "hit");
 
   expect(ship.isSunk())
     .toEqual(true);

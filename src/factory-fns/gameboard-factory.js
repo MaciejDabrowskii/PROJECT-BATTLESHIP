@@ -88,7 +88,7 @@ const gameboardFactory = () =>
 
       fieldStatus.antiCollision // calculates ship colison area (all surounding fields) and push tem to anticolision array
         .push(...ships[shipType]
-          .calculateColisionArea(ships[shipType]
+          .calculateCollisionArea(ships[shipType]
             .getShipArea()));
     }
   };
