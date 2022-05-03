@@ -35,7 +35,7 @@ const gameboardFactory = () =>
     }
   };
 
-  const isColliding = (ship, coord) => // takes ship object calculates its area and check it against colision area if one of ship area match colison return true
+  const isColliding = (ship, coord) => // takes ship object calculates its area and check it against colision area if one of ship area match collison return true
   {
     const antiCollisionArea = JSON.stringify(fieldStatus.antiCollision);
     return ship.calculateShipArea(coord)

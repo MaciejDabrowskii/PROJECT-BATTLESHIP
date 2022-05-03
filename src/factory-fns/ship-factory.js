@@ -49,7 +49,7 @@ const shipFactory = (length, orientation) =>
     }
   };
 
-  const calculateCollisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields. (it can return negative values but it does not matter)
+  const calculateCollisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields.
   {
     const colisonArray = [];
 
@@ -123,7 +123,7 @@ const shipFactory = (length, orientation) =>
         }
       }
     });
-    return colisonArray.filter((field) => !(
+    return colisonArray.filter((field) => !( // filter out coords outside gameboard ( < 0 and > 9 )
       ((field.at(1) < 0) || (field.at(0) < 0))
       || ((field.at(1) > 9) || (field.at(0) > 9))
     ));
