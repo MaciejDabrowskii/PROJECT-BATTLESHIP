@@ -45,7 +45,7 @@ const gameboardFactory = () =>
 
   const placeShip = (shipType, firstCoord) =>
   {
-    switch (shipType) // create a ship object
+    switch (shipType) // creates a ship object
     {
       case "carrier":
         ships[shipType] = shipFactory(5, orientation);

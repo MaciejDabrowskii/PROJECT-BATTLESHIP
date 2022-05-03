@@ -154,7 +154,7 @@ test("check if isColliding works", () =>
 
   expect(
     gameboard.getFieldStatus().antiCollision.length,
-  ).toEqual(12);
+  ).toEqual(6);
 });
 
 test("check if isColliding works with placeShip function", () =>
@@ -186,7 +186,7 @@ test("check if placement of all ships and anticolission works ", () =>
 
   expect(
     gameboard.getFieldStatus().antiCollision.length,
-  ).toEqual(81);
+  ).toEqual(67);
 });
 
 test("check if placing all ships and geting hit to all of them and isFleetDestroyed works correctly", () =>
@@ -259,4 +259,46 @@ test("check if gamebord correctly register colison coordinates ", () =>
   expect(
     gameboard.getFieldStatus().antiCollision.length,
   ).toEqual(12);
+});
+
+test("check if calulateColision not returning coords outside gameboard < 0 ", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [0, 0]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision,
+  ).toEqual([[0, 0], [1, 0], [0, 1], [1, 1], [2, 0], [2, 1]]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision.length,
+  ).toEqual(6);
+});
+
+test("check if calulateColision not returning coords outside gameboard > 10 ", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [8, 9]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision,
+  ).toEqual([[8, 9], [9, 9], [7, 9], [7, 8], [8, 8], [9, 8]]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision.length,
+  ).toEqual(6);
+});
+
+test("check if calulateColision not returning coords outside gameboard < 0 and > 10 ", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [8, 0]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision,
+  ).toEqual([[8, 0], [9, 0], [7, 0], [7, 1], [8, 1], [9, 1]]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision.length,
+  ).toEqual(6);
 });

@@ -123,7 +123,10 @@ const shipFactory = (length, orientation) =>
         }
       }
     });
-    return colisonArray;
+    return colisonArray.filter((field) => !(
+      ((field.at(1) < 0) || (field.at(0) < 0))
+      || ((field.at(1) > 9) || (field.at(0) > 9))
+    ));
   };
 
   return {
