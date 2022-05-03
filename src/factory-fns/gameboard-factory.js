@@ -71,9 +71,9 @@ const gameboardFactory = () =>
     }
 
     if (
-      !isColliding(ships[shipType], firstCoord)) // cheks if ship placment is possible
+      !isColliding(ships[shipType], firstCoord)) // checks if ship placment is possible
     {
-      ships[shipType] // sets calculated ship area in ship object
+      ships[shipType] // sets calculated ship area to ship object
         .setShipArea(
           ships[shipType]
             .calculateShipArea(firstCoord),
@@ -93,14 +93,14 @@ const gameboardFactory = () =>
     }
   };
 
-  const receiveAttack = (coords) => // take coordinates and check board field
+  const receiveAttack = (coords) => // takes coordinates and checks board field
   {
     switch (typeof (board[coords[0]][coords[1]]))
     {
-      case "object": // if field contains object (ship) run function hit on it
+      case "object": // if field contains object (ship) marks "hit" in ships body array
         board[coords[0]][coords[1]].hit(coords);
         break;
-      case "undefined": // if field undefined (empty) sets string "miss" on this field and push coordinates to missed attacks array
+      case "undefined": // if field undefined (empty) sets string "miss" w this field and pushes coordinates to missed attacks array
         board[coords[0]][coords[1]] = "miss";
         fieldStatus.missedAttacks.push(coords);
         break;

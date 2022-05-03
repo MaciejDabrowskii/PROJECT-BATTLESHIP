@@ -11,14 +11,14 @@ test("check if ship factory properly returns their length (5)", () =>
   expect(ship.getLength()).toEqual(4);
 });
 
-test("check if ship factory properly creats array of given length 6", () =>
+test("check if ship factory properly creates array of given length 6", () =>
 {
   expect(shipFactory(6)
     .getShipBody().length)
     .toEqual(6);
 });
 
-test("check if ship factory properly creats array of given length 3", () =>
+test("check if ship factory properly creates array of given length 3", () =>
 {
   expect(shipFactory(3)
     .getShipBody().length)
@@ -55,7 +55,7 @@ test("check if isSunk works properly", () =>
     .toEqual(true);
 });
 
-test("check if calculating ship area works properly with horizontal placement", () =>
+test("check if calculating ship area works properly with horizontal placement #1", () =>
 {
   const ship = shipFactory(4, "horizontal");
 
@@ -63,7 +63,7 @@ test("check if calculating ship area works properly with horizontal placement", 
     .toEqual([[1, 1], [2, 1], [3, 1], [4, 1]]);
 });
 
-test("check if calculating ship area works properly with vertical placement", () =>
+test("check if calculating ship area works properly with vertical placement #2", () =>
 {
   const ship = shipFactory(4, "vertical");
 

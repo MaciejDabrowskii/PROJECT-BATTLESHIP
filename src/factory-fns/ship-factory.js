@@ -2,15 +2,15 @@ const shipFactory = (length, orientation) =>
 {
   const shipOrientation = orientation;
   const shipLength = length;
-  const ship = new Array(length).fill("notHit", 0, length);
+  const shipBody = new Array(length).fill("notHit", 0, length);
   const shipArea = [];
 
   const setShipArea = (array) => shipArea.push(...array);
   const getLength = () => shipLength;
-  const getShipBody = () => ship;
+  const getShipBody = () => shipBody;
   const getShipArea = () => shipArea;
 
-  const isSunk = () => ship.every((element) => element === "hit");
+  const isSunk = () => shipBody.every((element) => element === "hit");
 
   const calculateShipArea = (firstCoord) => // takes coordinate and calculates ship area depending on orientation. Returns ship area array
   {
@@ -38,10 +38,10 @@ const shipFactory = (length, orientation) =>
     {
       switch (shipOrientation)
       {
-        case "horizontal": ship[coord[0] - shipArea[0][0]] = "hit";
+        case "horizontal": shipBody[coord[0] - shipArea[0][0]] = "hit";
           break;
 
-        case "vertical": ship[coord[1] - shipArea[0][1]] = "hit";
+        case "vertical": shipBody[coord[1] - shipArea[0][1]] = "hit";
           break;
 
         default:
@@ -114,8 +114,8 @@ const shipFactory = (length, orientation) =>
 
           case "vertical":
             colisonArray.push(
-              [coord[0] - 1, coord[1]], // middle ubove
-              [coord[0] + 1, coord[1]], // middle under
+              [coord[0] - 1, coord[1]], // middle left
+              [coord[0] + 1, coord[1]], // middle right
             );
 
             break;
