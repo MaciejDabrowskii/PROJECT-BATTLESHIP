@@ -22,6 +22,8 @@ const playerFactory = () =>
     }
   };
 
+  const getTurn = () => playerTurn;
+
   const attack = (attackCoord, enemyGameboard) =>
   {
     enemyGameboard
@@ -32,4 +34,44 @@ const playerFactory = () =>
         .getBoard()[attackCoord[0]][attackCoord[1]] === "miss"
     ) switchTurn();
   };
+
+  const randomCoord = (enemyGameboard) =>
+  {
+    const unavailable = [
+      ...enemyGameboard.getFieldStatus().missedAttacks,
+      ...enemyGameboard.getFieldStatus().hitAttacks,
+    ];
+
+    let attackCoord = [
+      Math.floor(Math.random() * 10),
+      Math.floor(Math.random() * 10),
+    ];
+    switch (unavailable.length)
+    {
+      case 0:
+        return attackCoord;
+
+      default:
+        // eslint-disable-next-line no-loop-func
+        while (unavailable.some(((el) => JSON.stringify(attackCoord)
+          .includes(JSON.stringify((el))))))
+        {
+          attackCoord = [
+            Math.floor(Math.random() * 10),
+            Math.floor(Math.random() * 10),
+          ];
+        }
+        return attackCoord;
+    }
+  };
+
+  return {
+    switchTurn,
+    getTurn,
+    attack,
+    randomCoord,
+
+  };
 };
+
+export default playerFactory;
