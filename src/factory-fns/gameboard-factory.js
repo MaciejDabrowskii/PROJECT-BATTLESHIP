@@ -35,13 +35,9 @@ const gameboardFactory = () =>
     }
   };
 
-  const isColliding = (ship, coord) => // takes ship object calculates its area and check it against colision area if one of ship area match collison return true
-  {
-    const antiCollisionArea = JSON.stringify(fieldStatus.antiCollision);
-    return ship.calculateShipArea(coord)
-      .some((el) => antiCollisionArea
-        .includes(JSON.stringify((el))));
-  };
+  const isColliding = (ship, coord) => !ship.calculateShipArea(coord) // takes ship object calculates its area and check it against colision area if one of ship area match collison return true
+    .some((el) => JSON.stringify(fieldStatus.antiCollision)
+      .includes(JSON.stringify((el))));
 
   const placeShip = (shipType, firstCoord) =>
   {
@@ -71,7 +67,13 @@ const gameboardFactory = () =>
     }
 
     if (
-      !isColliding(ships[shipType], firstCoord)) // checks if ship placment is possible
+      (isColliding(ships[shipType], firstCoord)) // checks if ship placment is possible
+    && (
+      ships[shipType]
+        .calculateShipArea(firstCoord)
+        .every((coord) => ships[shipType]
+          .checkForInvalidCoords(coord))
+    ))
     {
       ships[shipType] // sets calculated ship area to ship object
         .setShipArea(

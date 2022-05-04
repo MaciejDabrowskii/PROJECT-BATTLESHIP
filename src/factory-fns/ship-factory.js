@@ -46,6 +46,11 @@ const shipFactory = (length, orientation) =>
     }
   };
 
+  const checkForInvalidCoords = (coord) => !(
+    ((coord.at(1) < 0) || (coord.at(0) < 0))
+      || ((coord.at(1) > 9) || (coord.at(0) > 9))
+  );
+
   const calculateCollisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields.
   {
     const colisonArray = [];
@@ -120,10 +125,7 @@ const shipFactory = (length, orientation) =>
         }
       }
     });
-    return colisonArray.filter((field) => !( // filter out coords outside gameboard ( < 0 and > 9 )
-      ((field.at(1) < 0) || (field.at(0) < 0))
-      || ((field.at(1) > 9) || (field.at(0) > 9))
-    ));
+    return colisonArray.filter((field) => checkForInvalidCoords(field));
   };
 
   return {
@@ -132,6 +134,7 @@ const shipFactory = (length, orientation) =>
     isSunk,
     calculateShipArea,
     calculateCollisionArea,
+    checkForInvalidCoords,
     getShipBody,
     getShipArea,
     getLength,

@@ -292,3 +292,16 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
     gameboard.isFleetDestroyed(),
   ).toEqual(true);
 });
+
+test("check if function checkForInvalidCoords prevents from placing ships with coords that force ship to sticking outside gameboard", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("carrier", [8, 0]);
+  gameboard.placeShip("carrier", [8, 9]);
+  gameboard.switchOrientation();
+  gameboard.placeShip("carrier", [0, 7]);
+
+  expect(
+    _.compact(_.flattenDeep(gameboard.getBoard())).length,
+  ).toEqual(0);
+});
