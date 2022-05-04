@@ -7,6 +7,7 @@ const gameboardFactory = () =>
 
   const fieldStatus = {
     missedAttacks: [],
+    hitAttacks: [],
     antiCollision: [],
   };
 
@@ -101,6 +102,7 @@ const gameboardFactory = () =>
     {
       case "object": // if field contains object (ship) marks "hit" in ships body array
         board[coords[0]][coords[1]].hit(coords);
+        fieldStatus.hitAttacks.push(coords);
         break;
       case "undefined": // if field undefined (empty) sets string "miss" in this field and pushes coordinates to missed attacks array
         board[coords[0]][coords[1]] = "miss";
