@@ -46,23 +46,17 @@ const playerFactory = () =>
       Math.floor(Math.random() * 10),
       Math.floor(Math.random() * 10),
     ];
-    switch (unavailable.length)
-    {
-      case 0:
-        return attackCoord;
 
-      default:
-        // eslint-disable-next-line no-loop-func
-        while (unavailable.some(((el) => JSON.stringify(attackCoord)
-          .includes(JSON.stringify((el))))))
-        {
-          attackCoord = [
-            Math.floor(Math.random() * 10),
-            Math.floor(Math.random() * 10),
-          ];
-        }
-        return attackCoord;
+    // eslint-disable-next-line no-loop-func
+    while (unavailable.some(((el) => JSON.stringify(attackCoord)
+      .includes(JSON.stringify((el))))))
+    {
+      attackCoord = [
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+      ];
     }
+    return attackCoord;
   };
 
   return {
