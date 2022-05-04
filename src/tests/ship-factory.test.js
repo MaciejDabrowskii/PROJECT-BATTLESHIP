@@ -10,12 +10,12 @@ test("check if ship factory properly returns their length (4),(3),(2)", () =>
   const ship2 = shipFactory(3, "horizontal");
   const ship3 = shipFactory(2, "horizontal");
 
-  expect(ship.getLength()).toEqual(4, "horizontal");
-  expect(ship2.getLength()).toEqual(3, "horizontal");
-  expect(ship3.getLength()).toEqual(2, "horizontal");
+  expect(ship.getLength()).toEqual(4);
+  expect(ship2.getLength()).toEqual(3);
+  expect(ship3.getLength()).toEqual(2);
 });
 
-test("check if ship factory properly creates array of given length 6", () =>
+test("check if ship factory properly creates ship body array of given length 6", () =>
 {
   const ship = shipFactory(4, "horizontal");
   const ship2 = shipFactory(3, "horizontal");
