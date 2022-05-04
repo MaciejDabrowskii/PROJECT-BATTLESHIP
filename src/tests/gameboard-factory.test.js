@@ -8,12 +8,13 @@ import gameboardFactory from "../factory-fns/gameboard-factory";
 test("check if gameboardFactory properly creates gameboard", () =>
 {
   const gameboard = gameboardFactory();
+
   expect(
     gameboard.getBoard(),
   ).toEqual([...new Array(10)].map(() => new Array(10)));
 });
 
-test("check if gameboardFactory properly add ships to gameboard - horizontally", () =>
+test("check if gameboardFactory properly adds ships to gameboard - horizontally", () =>
 {
   const gameboard = gameboardFactory();
   gameboard.placeShip("destroyer", [1, 1]);
@@ -35,7 +36,7 @@ test("check if gameboardFactory properly add ships to gameboard - horizontally",
   ).toEqual("undefined");
 });
 
-test("check if gameboardFactory properly add ships to gameboard - vertically", () =>
+test("check if gameboardFactory properly adds ships to gameboard - vertically", () =>
 {
   const gameboard = gameboardFactory();
   gameboard.switchOrientation();
@@ -123,17 +124,6 @@ test("check if gameboard correctly stores misses ", () =>
   expect(
     gameboard.getFieldStatus().missedAttacks,
   ).toEqual([[2, 0], [3, 0], [4, 0], [5, 0]]);
-});
-
-test("check if gameboard correctly register misses ", () =>
-{
-  const gameboard = gameboardFactory();
-  gameboard.placeShip("destroyer", [0, 0]);
-  gameboard.receiveAttack([2, 0]);
-
-  expect(
-    gameboard.getBoard()[2][0],
-  ).toEqual("miss");
 });
 
 test("check if isColliding works", () =>

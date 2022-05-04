@@ -34,18 +34,15 @@ const shipFactory = (length, orientation) =>
 
   const hit = (coord) => // take coordinates and marks proper ship position as hit
   {
-    if (shipArea.length > 1)
+    switch (shipOrientation)
     {
-      switch (shipOrientation)
-      {
-        case "horizontal": shipBody[coord[0] - shipArea[0][0]] = "hit";
-          break;
+      case "horizontal": shipBody[coord[0] - shipArea[0][0]] = "hit";
+        break;
 
-        case "vertical": shipBody[coord[1] - shipArea[0][1]] = "hit";
-          break;
+      case "vertical": shipBody[coord[1] - shipArea[0][1]] = "hit";
+        break;
 
-        default:
-      }
+      default:
     }
   };
 
