@@ -67,7 +67,7 @@ const gameboardFactory = () =>
     }
 
     if (
-      (isColliding(ships[shipType], firstCoord)) // checks if ship placment is possible
+      (isColliding(ships[shipType], firstCoord)) // checks if ship placment is possible (no collision with other ships && ships coords inside gameboard)
     && (
       ships[shipType]
         .calculateShipArea(firstCoord)
