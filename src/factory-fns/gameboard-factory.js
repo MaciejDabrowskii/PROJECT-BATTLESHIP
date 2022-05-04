@@ -19,9 +19,9 @@ const gameboardFactory = () =>
   };
 
   const getBoard = () => board;
+  const getShips = () => ships;
   const getShipsNames = () => Object.keys(ships);
   const getFieldStatus = () => fieldStatus;
-  const getShips = () => ships;
 
   const switchOrientation = () =>
   {
@@ -102,7 +102,7 @@ const gameboardFactory = () =>
       case "object": // if field contains object (ship) marks "hit" in ships body array
         board[coords[0]][coords[1]].hit(coords);
         break;
-      case "undefined": // if field undefined (empty) sets string "miss" w this field and pushes coordinates to missed attacks array
+      case "undefined": // if field undefined (empty) sets string "miss" in this field and pushes coordinates to missed attacks array
         board[coords[0]][coords[1]] = "miss";
         fieldStatus.missedAttacks.push(coords);
         break;
