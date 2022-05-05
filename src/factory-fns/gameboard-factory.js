@@ -112,19 +112,9 @@ const gameboardFactory = () =>
     }
   };
 
-  const isFleetDestroyed = () => // takes ships object keys properties (ships objects) and run method isSunk in each to determine that all ships are sunk
-  {
-    const arrayOfShips = [];
-    // eslint-disable-next-line no-restricted-syntax
-    for (const property in ships)
-    {
-      if ({}.hasOwnProperty.call(ships, property))
-      {
-        arrayOfShips.push(ships[property]);
-      }
-    }
-    return arrayOfShips.every((ship) => ship.isSunk());
-  };
+  const isFleetDestroyed = () => getShipsNames() // takes ships objects and run method isSunk in each to determine that all ships are sunk
+    .every((shipName) => ships[shipName]
+      .isSunk());
 
   return {
     getBoard,

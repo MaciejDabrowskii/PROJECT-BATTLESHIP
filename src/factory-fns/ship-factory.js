@@ -10,7 +10,8 @@ const shipFactory = (length, orientation) =>
   const getShipBody = () => shipBody;
   const getShipArea = () => shipArea;
 
-  const isSunk = () => shipBody.every((element) => element === "hit");
+  const isSunk = () => shipBody
+    .every((element) => (typeof (element) === "object"));
 
   const calculateShipArea = (firstCoord) => // takes coordinate and calculates ship area depending on orientation. Returns ship area array
   {
@@ -36,10 +37,10 @@ const shipFactory = (length, orientation) =>
   {
     switch (shipOrientation)
     {
-      case "horizontal": shipBody[coord[0] - shipArea[0][0]] = "hit";
+      case "horizontal": shipBody[coord[0] - shipArea[0][0]] = coord;
         break;
 
-      case "vertical": shipBody[coord[1] - shipArea[0][1]] = "hit";
+      case "vertical": shipBody[coord[1] - shipArea[0][1]] = coord;
         break;
 
       default:

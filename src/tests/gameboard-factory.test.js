@@ -80,15 +80,15 @@ test("check if recive attack correctly register hits ", () =>
 
   expect(
     gameboard.getBoard()[1][0].getShipBody()[1],
-  ).toEqual("hit");
+  ).toEqual([1, 0]);
 
   expect(
     gameboard.getBoard()[1][0].getShipBody(),
-  ).toEqual(["hit", "hit"]);
+  ).toEqual([[0, 0], [1, 0]]);
 
   expect(
     gameboard.getBoard()[7][5].getShipBody(),
-  ).toEqual(["notHit", "notHit", "notHit", "notHit", "hit"]);
+  ).toEqual(["notHit", "notHit", "notHit", "notHit", [7, 5]]);
 });
 
 test("check if reciveAttack correctly register misses ", () =>
@@ -250,7 +250,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
 
   expect(
     gameboard.getShips().carrier.getShipBody(),
-  ).toEqual(["hit", "hit", "hit", "hit", "hit"]);
+  ).toEqual([[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]]);
 
   expect(
     gameboard.getShips().carrier.isSunk(),
@@ -258,7 +258,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
 
   expect(
     gameboard.getShips().battleship.getShipBody(),
-  ).toEqual(["hit", "hit", "hit", "hit"]);
+  ).toEqual([[0, 2], [1, 2], [2, 2], [3, 2]]);
 
   expect(
     gameboard.getShips().battleship.isSunk(),
@@ -266,7 +266,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
 
   expect(
     gameboard.getShips().crusier.getShipBody(),
-  ).toEqual(["hit", "hit", "hit"]);
+  ).toEqual([[0, 4], [1, 4], [2, 4]]);
 
   expect(
     gameboard.getShips().crusier.isSunk(),
@@ -274,7 +274,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
 
   expect(
     gameboard.getShips().submarine.getShipBody(),
-  ).toEqual(["hit", "hit", "hit"]);
+  ).toEqual([[0, 6], [1, 6], [2, 6]]);
 
   expect(
     gameboard.getShips().submarine.isSunk(),
@@ -282,7 +282,7 @@ test("check if placing all ships and geting hit to all of them and isFleetDestro
 
   expect(
     gameboard.getShips().destroyer.getShipBody(),
-  ).toEqual(["hit", "hit"]);
+  ).toEqual([[0, 8], [1, 8]]);
 
   expect(
     gameboard.getShips().destroyer.isSunk(),

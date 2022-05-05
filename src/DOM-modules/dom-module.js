@@ -55,9 +55,9 @@ const domModule = () =>
     );
   };
 
-  const renderGameboard = (board) =>
+  const renderPlayerGameboard = (gameboard) =>
   {
-    board.getBoard().forEach((array, indexFirstCoord) =>
+    gameboard.getBoard().forEach((array, indexFirstCoord) =>
     {
       qs(".player-board")
         .append(
@@ -85,12 +85,48 @@ const domModule = () =>
   {
     gameboard.getShipsNames().forEach((shipName) =>
     {
-      gameboard.getShips().shipName.getShipArea().forEach((area) =>
-      {
-        qs(`[data-firstCoord='${area[0]}'][data-secondCoord='${area[1]}']`);
-      });
+      gameboard.getShips()[shipName]
+        .getShipArea()
+        .forEach((area) =>
+        {
+          qs(`
+        [data-firstCoord='${area[0]}']
+        [data-secondCoord='${area[1]}']
+        `).classList
+            .add("ship");
+        });
     });
   };
+
+  const renderHits = (gameboard) =>
+  {
+    gameboard.getShipsNames().forEach((shipName) =>
+    {
+      gameboard.getShips()[shipName]
+        .getShipBody()
+        .forEach((area) =>
+        {
+          const field = qs(`
+    [data-firstCoord='${area[0]}']
+    [data-secondCoord='${area[1]}']
+    `);
+          field.textContent = "🔥";
+          field.classList.add("hit");
+        });
+    });
+  };
+
+  const renderMissedAttacks = (gameboard) =>
+  {
+    gameboard.getFieldStatus().missedAttacks.forEach((miss) =>
+    {
+      qs(`
+        [data-firstCoord='${miss[0]}']
+        [data-secondCoord='${miss[1]}']
+        `).textContent = "✘";
+    });
+  };
+
   return {
     generateBasic,
     renderGameboard,

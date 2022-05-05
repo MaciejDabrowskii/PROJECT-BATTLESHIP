@@ -40,13 +40,18 @@ test("check if ship properly register hits", () =>
   ship.hit([2, 0]);
 
   expect(ship.getShipBody()[1])
-    .toEqual("hit");
+    .toEqual([2, 0]);
 });
 
 test("check if isSunk works properly", () =>
 {
-  const ship = shipFactory(4);
-  _.fill(ship.getShipBody(), "hit");
+  const ship = shipFactory(3, "horizontal");
+  ship.setShipArea(
+    ship.calculateShipArea([0, 1]),
+  );
+  ship.hit([0, 1]);
+  ship.hit([1, 1]);
+  ship.hit([2, 1]);
 
   expect(ship.isSunk())
     .toEqual(true);
