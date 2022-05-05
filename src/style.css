@@ -1,0 +1,14 @@
+.field {
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid black;
+}
+.ship {
+    background-color: red;
+}
+.ship.hit {
+    background-color: rgb(0, 255, 34);
+}
+.player-board {
+    display:flex;
+}

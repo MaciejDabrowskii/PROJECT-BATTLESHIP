@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import {
   qs, qsa, addGlobalEventListener, createElement,
@@ -17,49 +18,132 @@ const domModule = () =>
 
       createElement("div", {
         class: "player-section",
-      }).append(
-
-        createElement("input", {
-          type: "text",
-          id: "player-name",
-        }),
-
-        createElement("p", {
-          text: "- board",
-          class: "board-name",
-        }),
-
-        createElement("div", {
-          class: "player-board",
-        }),
-      ),
+      }),
 
       createElement("div", {
         class: "ai-section",
-      }).append(
-
-        createElement("p", {
-          class: "board-name",
-          text: "ai - board",
-        }),
-
-        createElement("div", {
-          class: "ai-board",
-        }),
-      ),
+      }),
 
       createElement("div", {
         class: "turn-indicator",
         text: "Turn: ",
       }),
     );
+
+    qs(".player-section").append(
+
+      createElement("input", {
+        type: "text",
+        id: "player-name",
+      }),
+
+      createElement("p", {
+        text: "- board",
+        class: "board-name",
+      }),
+
+      createElement("div", {
+        class: "player-board",
+      }),
+    );
+
+    qs(".ai-section").append(
+
+      createElement("p", {
+        class: "board-name",
+        text: "ai - board",
+      }),
+
+      createElement("div", {
+        class: "ai-board",
+      }),
+    );
+  };
+
+  const renderShips = (gameboard, owner) =>
+  {
+    gameboard.getShipsNames().forEach((shipName) =>
+    {
+      gameboard.getShips()[shipName]
+        .getShipArea()
+        .forEach((area) =>
+        {
+          qs(
+            `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
+          )
+            .classList
+            .add("ship");
+        });
+    });
+  };
+
+  const renderHits = (gameboard, owner) =>
+  {
+    gameboard.getShipsNames().forEach((shipName) =>
+    {
+      gameboard.getShips()[shipName]
+        .getShipBody()
+        .forEach((area) =>
+        {
+          if (typeof (area) === "object")
+          {
+            const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
+            `);
+            field.classList.add("hit");
+            field.textContent = "🔥";
+          }
+        });
+    });
+  };
+
+  const renderMissedAttacks = (gameboard, owner) =>
+  {
+    gameboard.getFieldStatus().missedAttacks.forEach((miss) =>
+    {
+      qs(`[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`)
+        .textContent = "✘";
+    });
   };
 
   const renderPlayerGameboard = (gameboard) =>
   {
-    gameboard.getBoard().forEach((array, indexFirstCoord) =>
+    gameboard.getBoard().forEach((array, firstIndex) =>
     {
       qs(".player-board")
+        .append(
+          createElement("div", {
+            class: "column",
+            "data-column": `${firstIndex}`,
+          }),
+        );
+    });
+
+    qsa(".column").forEach((column, columnIndex) =>
+    {
+      let i = 0;
+      while (i < 10)
+      {
+        column.append(
+          createElement("div", {
+            class: "field",
+            "data-owner": "player",
+            "data-firstCoord": `${columnIndex}`,
+            "data-secondCoord": `${i}`,
+          }),
+        );
+        i += 1;
+      }
+    });
+    renderShips(gameboard, "player");
+    renderHits(gameboard, "player");
+    renderMissedAttacks(gameboard, "player");
+  };
+
+  const renderAIGameboard = (gameboard) =>
+  {
+    gameboard.getBoard().forEach((array, indexFirstCoord) =>
+    {
+      qs(".ai-board")
         .append(
           createElement("div", {
             class: "column",
@@ -71,6 +155,7 @@ const domModule = () =>
                 qs(`[data-column=${indexFirstCoord}]`).append(
                   createElement("div", {
                     class: "field",
+                    "data-owner": "ai",
                     "data-firstCoord": `${indexFirstCoord}`,
                     "data-secondCoord": `${indexSecondCoord}`,
                   }),
@@ -79,57 +164,14 @@ const domModule = () =>
             ),
         );
     });
-  };
-
-  const renderShips = (gameboard) =>
-  {
-    gameboard.getShipsNames().forEach((shipName) =>
-    {
-      gameboard.getShips()[shipName]
-        .getShipArea()
-        .forEach((area) =>
-        {
-          qs(`
-        [data-firstCoord='${area[0]}']
-        [data-secondCoord='${area[1]}']
-        `).classList
-            .add("ship");
-        });
-    });
-  };
-
-  const renderHits = (gameboard) =>
-  {
-    gameboard.getShipsNames().forEach((shipName) =>
-    {
-      gameboard.getShips()[shipName]
-        .getShipBody()
-        .forEach((area) =>
-        {
-          const field = qs(`
-    [data-firstCoord='${area[0]}']
-    [data-secondCoord='${area[1]}']
-    `);
-          field.textContent = "🔥";
-          field.classList.add("hit");
-        });
-    });
-  };
-
-  const renderMissedAttacks = (gameboard) =>
-  {
-    gameboard.getFieldStatus().missedAttacks.forEach((miss) =>
-    {
-      qs(`
-        [data-firstCoord='${miss[0]}']
-        [data-secondCoord='${miss[1]}']
-        `).textContent = "✘";
-    });
+    renderHits(gameboard, "ai");
+    renderMissedAttacks(gameboard, "ai");
   };
 
   return {
     generateBasic,
-    renderGameboard,
+    renderPlayerGameboard,
+    renderAIGameboard,
   };
 };
 
