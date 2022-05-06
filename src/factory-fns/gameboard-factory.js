@@ -96,6 +96,16 @@ const gameboardFactory = () =>
     }
   };
 
+  const markDestroyedArea = (coords) =>
+  {
+    fieldStatus.missedAttacks
+      .push(
+        ...board[coords[0]][coords[1]]
+          .calculateCollisionArea(board[coords[0]][coords[1]]
+            .getShipArea()),
+      );
+  };
+
   const receiveAttack = (coords) => // takes coordinates and checks board field
   {
     switch (typeof (board[coords[0]][coords[1]]))
@@ -103,11 +113,17 @@ const gameboardFactory = () =>
       case "object": // if field contains object (ship) marks "hit" in ships body array
         board[coords[0]][coords[1]].hit(coords);
         fieldStatus.hitAttacks.push(coords);
+        if (board[coords[0]][coords[1]].isSunk())
+        {
+          markDestroyedArea(coords);
+        }
         break;
+
       case "undefined": // if field undefined (empty) sets string "miss" in this field and pushes coordinates to missed attacks array
         board[coords[0]][coords[1]] = "miss";
         fieldStatus.missedAttacks.push(coords);
         break;
+
       default:
     }
   };

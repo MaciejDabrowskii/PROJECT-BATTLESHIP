@@ -17,6 +17,8 @@ playerGameboard.receiveAttack([0, 0]);
 playerGameboard.receiveAttack([0, 0]);
 playerGameboard.receiveAttack([9, 9]);
 playerGameboard.receiveAttack([8, 8]);
+playerGameboard.receiveAttack([0, 8]);
+playerGameboard.receiveAttack([1, 8]);
 
 aiGameboard.placeShip("carrier", [0, 0]);
 aiGameboard.placeShip("battleship", [0, 2]);

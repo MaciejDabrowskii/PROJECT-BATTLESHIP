@@ -305,3 +305,14 @@ test("check if function checkForInvalidCoords prevents from placing ships with c
     _.compact(_.flattenDeep(gameboard.getBoard())).length,
   ).toEqual(0);
 });
+
+test("check if markDestroyed area works", () =>
+{
+  const gameboard = gameboardFactory();
+  gameboard.placeShip("destroyer", [0, 0]);
+  gameboard.receiveAttack([0, 0]);
+  gameboard.receiveAttack([1, 0]);
+  expect(
+    gameboard.getFieldStatus().missedAttacks,
+  ).toEqual([[0, 1], [1, 1], [2, 0], [2, 1]]);
+});
