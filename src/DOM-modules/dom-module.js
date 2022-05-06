@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import {
@@ -6,6 +7,13 @@ import {
 
 const domModule = () =>
 {
+  let playerName = "";
+
+  const editPlayerName = () =>
+  {
+    playerName = qs("input").value;
+  };
+
   const generateBasic = () =>
   {
     document.body.append(
@@ -16,6 +24,51 @@ const domModule = () =>
 
     qs(".wrapper").append(
 
+      createElement("h1", {
+        text: "Battle Ship",
+        class: "header",
+      }),
+
+      createElement("div", {
+        class: "player-name-input-container",
+      }),
+
+      createElement("div", {
+        class: "game-contents",
+      }),
+
+      createElement("div", {
+        class: "turn-indicator",
+      }),
+    );
+
+    qs(".player-name-input-container").append(
+
+      createElement("label", {
+        for: "text",
+        text: "Enter player name:",
+      }),
+
+      createElement("input", {
+        type: "text",
+        id: "player-name",
+      }),
+
+    );
+
+    qs(".turn-indicator").append(
+      createElement("h3", {
+        text: "Turn: ",
+        class: "turn-indicator-header",
+      }),
+
+      createElement("div", {
+        class: "turn-indicator-player",
+      }),
+    );
+
+    qs(".game-contents").append(
+
       createElement("div", {
         class: "player-section",
       }),
@@ -23,23 +76,14 @@ const domModule = () =>
       createElement("div", {
         class: "ai-section",
       }),
-
-      createElement("div", {
-        class: "turn-indicator",
-        text: "Turn: ",
-      }),
     );
 
     qs(".player-section").append(
 
-      createElement("input", {
-        type: "text",
-        id: "player-name",
-      }),
-
       createElement("p", {
-        text: "- board",
+        text: `${playerName} - board`,
         class: "board-name",
+        id: "board-name-player",
       }),
 
       createElement("div", {
@@ -58,6 +102,11 @@ const domModule = () =>
         class: "ai-board",
       }),
     );
+  };
+
+  const reRenderPlayerBoardName = () =>
+  {
+    qs("#board-name-player").textContent = `${playerName} - board`;
   };
 
   const renderShips = (gameboard, owner) =>
@@ -107,6 +156,8 @@ const domModule = () =>
 
   const renderGameboard = (gameboard, owner) =>
   {
+    qs(`.${owner}-board`).innerHTML = "";
+
     gameboard.getBoard().forEach((array, firstIndex) =>
     {
       qs(`.${owner}-board`)
@@ -139,10 +190,27 @@ const domModule = () =>
     renderMissedAttacks(gameboard, `${owner}`);
   };
 
+  const turnIndicator = (playerTurn) =>
+  {
+    switch (playerTurn)
+    {
+      case true:
+        qs(".turn-indicator-player").textContent = playerName;
+        break;
+      case false:
+        qs(".turn-indicator-player").textContent = "AI";
+        break;
+      default:
+    }
+  };
+
   return {
     generateBasic,
     renderGameboard,
     renderShips,
+    reRenderPlayerBoardName,
+    editPlayerName,
+    turnIndicator,
   };
 };
 

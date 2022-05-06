@@ -15,3 +15,7 @@
 .ai-board {
     display:flex;
 }
+.game-contents {
+    display: flex;
+    gap: 30px;
+}

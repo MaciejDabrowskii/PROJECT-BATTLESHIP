@@ -96,7 +96,7 @@ const gameboardFactory = () =>
     }
   };
 
-  const markDestroyedArea = (coords) =>
+  const markDestroyedArea = (coords) => // takes coordinate and marks area aroud ship at this coordinate as miss
   {
     fieldStatus.missedAttacks
       .push(
