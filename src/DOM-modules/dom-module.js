@@ -105,20 +105,21 @@ const domModule = () =>
     });
   };
 
-  const renderPlayerGameboard = (gameboard) =>
+  const renderGameboard = (gameboard, owner) =>
   {
     gameboard.getBoard().forEach((array, firstIndex) =>
     {
-      qs(".player-board")
+      qs(`.${owner}-board`)
         .append(
           createElement("div", {
             class: "column",
             "data-column": `${firstIndex}`,
+            "data-owner": `${owner}`,
           }),
         );
     });
 
-    qsa(".column").forEach((column, columnIndex) =>
+    qsa(`.column[data-owner="${owner}"]`).forEach((column, columnIndex) =>
     {
       let i = 0;
       while (i < 10)
@@ -126,7 +127,7 @@ const domModule = () =>
         column.append(
           createElement("div", {
             class: "field",
-            "data-owner": "player",
+            "data-owner": `${owner}`,
             "data-firstCoord": `${columnIndex}`,
             "data-secondCoord": `${i}`,
           }),
@@ -134,44 +135,14 @@ const domModule = () =>
         i += 1;
       }
     });
-    renderShips(gameboard, "player");
-    renderHits(gameboard, "player");
-    renderMissedAttacks(gameboard, "player");
-  };
-
-  const renderAIGameboard = (gameboard) =>
-  {
-    gameboard.getBoard().forEach((array, indexFirstCoord) =>
-    {
-      qs(".ai-board")
-        .append(
-          createElement("div", {
-            class: "column",
-            "data-column": `${indexFirstCoord}`,
-          })
-            .append(
-              array.forEach((field, indexSecondCoord) =>
-              {
-                qs(`[data-column=${indexFirstCoord}]`).append(
-                  createElement("div", {
-                    class: "field",
-                    "data-owner": "ai",
-                    "data-firstCoord": `${indexFirstCoord}`,
-                    "data-secondCoord": `${indexSecondCoord}`,
-                  }),
-                );
-              }),
-            ),
-        );
-    });
-    renderHits(gameboard, "ai");
-    renderMissedAttacks(gameboard, "ai");
+    renderHits(gameboard, `${owner}`);
+    renderMissedAttacks(gameboard, `${owner}`);
   };
 
   return {
     generateBasic,
-    renderPlayerGameboard,
-    renderAIGameboard,
+    renderGameboard,
+    renderShips,
   };
 };
 

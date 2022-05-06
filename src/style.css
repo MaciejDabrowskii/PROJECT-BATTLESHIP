@@ -12,3 +12,6 @@
 .player-board {
     display:flex;
 }
+.ai-board {
+    display:flex;
+}
