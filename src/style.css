@@ -6,7 +6,7 @@
 .ship {
     background-color: red;
 }
-.ship.hit {
+.hit {
     background-color: rgb(0, 255, 34);
 }
 .player-board {
