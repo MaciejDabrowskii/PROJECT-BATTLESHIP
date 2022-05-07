@@ -50,7 +50,7 @@ export const gameLoop = () =>
     {
       while (ai.getTurn())
       {
-        await timer(1);
+        await timer(1000);
         ai.attack(ai.randomCoord(playerGameboard), playerGameboard);
         domModule.renderGameboard(playerGameboard, "player");
         domModule.renderShips(playerGameboard, "player");
