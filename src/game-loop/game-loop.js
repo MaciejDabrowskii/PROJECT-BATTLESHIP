@@ -36,7 +36,11 @@ export const gameLoop = () =>
   const checkForWinner = () =>
   {
     if (playerGameboard.isFleetDestroyed()) domModule.anounceResoult("defeat");
-    if (aiGameboard.isFleetDestroyed()) domModule.anounceResoult("victory");
+    if (aiGameboard.isFleetDestroyed())
+    {
+      ai.switchTurn();
+      domModule.anounceResoult("victory");
+    }
   };
 
   const aiLoop = () =>
@@ -46,7 +50,7 @@ export const gameLoop = () =>
     {
       while (ai.getTurn())
       {
-        await timer(1000);
+        await timer(1);
         ai.attack(ai.randomCoord(playerGameboard), playerGameboard);
         domModule.renderGameboard(playerGameboard, "player");
         domModule.renderShips(playerGameboard, "player");
@@ -60,28 +64,41 @@ export const gameLoop = () =>
 
   const userInputListener = (() =>
   {
-    qs(".wrapper").addEventListener("mousedown", (e) =>
+    qs(".wrapper").addEventListener("click", (e) =>
     {
       if (humanPlayer.getTurn())
       {
-        if (
-          (e.target.dataset.owner === "ai")
-        && !(e.target.className === "field hit"))
+        switch (e.target.dataset.owner)
         {
-          humanPlayer.attack([
-            [e.target.dataset.firstcoord],
-            [e.target.dataset.secondcoord],
-          ], aiGameboard);
+          case "ai": {
+            switch (e.target.className)
+            {
+              case "field miss":
+              case "field hit":
+              {
+                break;
+              }
+              default: {
+                humanPlayer.attack([
+                  [e.target.dataset.firstcoord],
+                  [e.target.dataset.secondcoord],
+                ], aiGameboard);
 
-          domModule.renderGameboard(aiGameboard, "ai");
-          domModule.turnIndicator(humanPlayer.getTurn());
-          checkForWinner();
+                domModule.renderGameboard(aiGameboard, "ai");
+                domModule.turnIndicator(humanPlayer.getTurn());
+                checkForWinner();
 
-          if (!humanPlayer.getTurn())
-          {
-            ai.switchTurn();
-            aiLoop();
+                if (!humanPlayer.getTurn())
+                {
+                  ai.switchTurn();
+                  aiLoop();
+                }
+                break;
+              }
+            }
+            break;
           }
+          default:
         }
       }
     });

@@ -184,6 +184,7 @@ const domModule = (() =>
     {
       qs(`[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`)
         .textContent = "✘";
+      qs(`[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`).classList.add("miss");
     });
   };
 
