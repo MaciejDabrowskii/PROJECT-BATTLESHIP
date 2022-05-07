@@ -103,35 +103,38 @@ const domModule = (() =>
         class: "ai-board",
       }),
     );
-  };
 
-  const renderModal = () =>
-  {
-    document.body.append(
+    switch (qs(".modal-body"))
+    {
+      case null:
+        document.body.append(
 
-      createElement("div", {
-        class: "modal-body",
-        id: "modal-body",
-      }),
+          createElement("div", {
+            class: "modal-body",
+            id: "modal-body",
+          }),
 
-      createElement("div", {
-        id: "overlay",
-      }),
-    );
+          createElement("div", {
+            id: "overlay",
+          }),
+        );
 
-    qs(".modal-body").append(
-      createElement("button", {
-        class: "modal-btn",
-        id: "modal-btn",
+        qs(".modal-body").append(
+          createElement("button", {
+            class: "modal-btn",
+            id: "modal-btn",
 
-      }),
-      createElement("h3", {
-        class: "modal-text",
-        id: "modal-text",
-      }),
-    );
+          }),
+          createElement("h3", {
+            class: "modal-text",
+            id: "modal-text",
+          }),
+        );
+        qs(".modal-btn").innerHTML = "&times";
+        break;
 
-    qs(".modal-btn").innerHTML = "&times";
+      default:
+    }
   };
 
   const reRenderPlayerBoardName = () =>
@@ -255,7 +258,7 @@ const domModule = (() =>
 
   return {
     renderBasic,
-    renderModal,
+    // renderModal,
     renderGameboard,
     renderShips,
     reRenderPlayerBoardName,
