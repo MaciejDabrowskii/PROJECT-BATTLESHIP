@@ -102,11 +102,5 @@ export const gameLoop = () =>
         }
       }
     });
-
-    qs("input").addEventListener("input", () =>
-    {
-      domModule.editPlayerName();
-      domModule.reRenderPlayerBoardName();
-    });
   })();
 };

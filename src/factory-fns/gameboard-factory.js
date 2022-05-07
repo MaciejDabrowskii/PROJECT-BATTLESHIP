@@ -96,7 +96,7 @@ const gameboardFactory = () =>
     }
   };
 
-  const markDestroyedArea = (coords) => // takes coordinate and marks area aroud ship at this coordinate as miss
+  const markDestroyedArea = (coords) => // takes coordinate and marks area around as miss
   {
     fieldStatus.missedAttacks
       .push(
@@ -106,7 +106,7 @@ const gameboardFactory = () =>
       );
   };
 
-  const receiveAttack = (coords) => // takes coordinates and checks board field
+  const receiveAttack = (coords) => // takes coordinates and check board field
   {
     switch (typeof (board[coords[0]][coords[1]]))
     {
