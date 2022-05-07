@@ -96,7 +96,7 @@ const domModule = (() =>
 
       createElement("p", {
         class: "board-name",
-        text: "ai - board",
+        text: "AI - board",
       }),
 
       createElement("div", {
