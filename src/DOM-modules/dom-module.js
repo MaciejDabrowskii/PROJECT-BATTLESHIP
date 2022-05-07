@@ -5,7 +5,7 @@ import {
   qs, qsa, addGlobalEventListener, createElement,
 } from "../utility-fns/utility-fns";
 
-const domModule = () =>
+const domModule = (() =>
 {
   let playerName = "";
 
@@ -14,12 +14,13 @@ const domModule = () =>
     playerName = qs("input").value;
   };
 
-  const generateBasic = () =>
+  const renderBasic = () =>
   {
     document.body.append(
       createElement("div", {
         class: "wrapper",
       }),
+
     );
 
     qs(".wrapper").append(
@@ -102,6 +103,35 @@ const domModule = () =>
         class: "ai-board",
       }),
     );
+  };
+
+  const renderModal = () =>
+  {
+    document.body.append(
+
+      createElement("div", {
+        class: "modal-body",
+        id: "modal-body",
+      }),
+
+      createElement("div", {
+        id: "overlay",
+      }),
+    );
+
+    qs(".modal-body").append(
+      createElement("button", {
+        class: "modal-btn",
+        id: "modal-btn",
+
+      }),
+      createElement("h3", {
+        class: "modal-text",
+        id: "modal-text",
+      }),
+    );
+
+    qs(".modal-btn").innerHTML = "&times";
   };
 
   const reRenderPlayerBoardName = () =>
@@ -204,14 +234,35 @@ const domModule = () =>
     }
   };
 
+  const anounceResoult = (resoult) =>
+  {
+    let resoultMessage = "";
+    switch (resoult)
+    {
+      case "victory": resoultMessage = "CONGRATULATIONS, YOU WON!";
+        break;
+
+      case "defeat": resoultMessage = "YOU HAVE BEEN DEFEATED!";
+        break;
+
+      default:
+    }
+
+    qs(".modal-body").classList.add("active");
+    qs("#overlay").classList.add("active");
+    qs(".modal-text").textContent = resoultMessage;
+  };
+
   return {
-    generateBasic,
+    renderBasic,
+    renderModal,
     renderGameboard,
     renderShips,
     reRenderPlayerBoardName,
     editPlayerName,
     turnIndicator,
+    anounceResoult,
   };
-};
+})();
 
 export default domModule;

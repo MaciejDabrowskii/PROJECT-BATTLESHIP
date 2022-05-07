@@ -1,20 +1,19 @@
-/* eslint-disable no-promise-executor-return */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-sequences */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-promise-executor-return */
+/* eslint-disable import/prefer-default-export */
+
 import domModule from "../DOM-modules/dom-module";
 import gameboardFactory from "../factory-fns/gameboard-factory";
 import playerFactory from "../factory-fns/player-factory";
 import { qs } from "../utility-fns/utility-fns";
 
-const gameLoop = (() =>
+export const gameLoop = () =>
 {
   const playerGameboard = gameboardFactory();
   const aiGameboard = gameboardFactory();
   const humanPlayer = playerFactory();
   const ai = playerFactory();
-  const dom = domModule();
   ai.switchTurn();
 
   playerGameboard.placeShip("carrier", [0, 0]);
@@ -29,10 +28,16 @@ const gameLoop = (() =>
   aiGameboard.placeShip("submarine", [0, 6]);
   aiGameboard.placeShip("destroyer", [0, 8]);
 
-  dom.generateBasic();
-  dom.renderGameboard(playerGameboard, "player");
-  dom.renderShips(playerGameboard, "player");
-  dom.renderGameboard(aiGameboard, "ai");
+  domModule.renderBasic();
+  domModule.renderGameboard(playerGameboard, "player");
+  domModule.renderShips(playerGameboard, "player");
+  domModule.renderGameboard(aiGameboard, "ai");
+
+  const checkForWinner = () =>
+  {
+    if (playerGameboard.isFleetDestroyed()) domModule.anounceResoult("defeat");
+    if (aiGameboard.isFleetDestroyed()) domModule.anounceResoult("victory");
+  };
 
   const aiLoop = () =>
   {
@@ -42,19 +47,20 @@ const gameLoop = (() =>
       while (ai.getTurn())
       {
         await timer(1000);
-        ai.attack(ai.randomCoord(playerGameboard), playerGameboard),
-        dom.renderGameboard(playerGameboard, "player");
-        dom.renderShips(playerGameboard, "player");
+        ai.attack(ai.randomCoord(playerGameboard), playerGameboard);
+        domModule.renderGameboard(playerGameboard, "player");
+        domModule.renderShips(playerGameboard, "player");
       }
       humanPlayer.switchTurn();
-      dom.turnIndicator(humanPlayer.getTurn());
+      domModule.turnIndicator(humanPlayer.getTurn());
+      checkForWinner();
     }
     load();
   };
 
-  const addEvents = (() =>
+  const userInputListener = (() =>
   {
-    document.addEventListener("mousedown", (e) =>
+    qs(".wrapper").addEventListener("mousedown", (e) =>
     {
       if (humanPlayer.getTurn())
       {
@@ -67,8 +73,9 @@ const gameLoop = (() =>
             [e.target.dataset.secondcoord],
           ], aiGameboard);
 
-          dom.renderGameboard(aiGameboard, "ai");
-          dom.turnIndicator(humanPlayer.getTurn());
+          domModule.renderGameboard(aiGameboard, "ai");
+          domModule.turnIndicator(humanPlayer.getTurn());
+          checkForWinner();
 
           if (!humanPlayer.getTurn())
           {
@@ -81,10 +88,8 @@ const gameLoop = (() =>
 
     qs("input").addEventListener("input", () =>
     {
-      dom.editPlayerName();
-      dom.reRenderPlayerBoardName();
+      domModule.editPlayerName();
+      domModule.reRenderPlayerBoardName();
     });
   })();
-})();
-
-export default gameLoop;
+};
