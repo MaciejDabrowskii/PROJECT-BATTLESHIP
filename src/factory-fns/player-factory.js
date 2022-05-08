@@ -35,35 +35,30 @@ const playerFactory = () =>
     ) switchTurn();
   };
 
-  const randomCoord = (enemyGameboard) =>
+  const generateRandomCoord = (unavailable) =>
   {
-    const unavailable = [
-      ...enemyGameboard.getFieldStatus().missedAttacks,
-      ...enemyGameboard.getFieldStatus().hitAttacks,
-    ];
-
-    let attackCoord = [
+    let randomCoord = [
       Math.floor(Math.random() * 10),
       Math.floor(Math.random() * 10),
     ];
 
     // eslint-disable-next-line no-loop-func
-    while (unavailable.some(((el) => JSON.stringify(attackCoord)
+    while (unavailable.some(((el) => JSON.stringify(randomCoord)
       .includes(JSON.stringify((el))))))
     {
-      attackCoord = [
+      randomCoord = [
         Math.floor(Math.random() * 10),
         Math.floor(Math.random() * 10),
       ];
     }
-    return attackCoord;
+    return randomCoord;
   };
 
   return {
     switchTurn,
     getTurn,
     attack,
-    randomCoord,
+    generateRandomCoord,
 
   };
 };

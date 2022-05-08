@@ -12,11 +12,11 @@ const gameboardFactory = () =>
   };
 
   const ships = {
-    carrier: {}, // length: 5
-    battleship: {}, // length: 4
-    crusier: {}, // length: 3
-    submarine: {}, // length: 3
-    destroyer: {}, // length: 2
+    carrier: { length: 5 },
+    battleship: { length: 4 },
+    crusier: { length: 3 },
+    submarine: { length: 3 },
+    destroyer: { length: 2 },
   };
 
   const getBoard = () => board;
@@ -36,9 +36,26 @@ const gameboardFactory = () =>
     }
   };
 
-  const isColliding = (ship, coord) => !ship.calculateShipArea(coord) // takes ship object calculates its area and check it against colision area if one of ship area match collison return true
+  const isNotColliding = (shipArea) => !shipArea // takes ship object calculates its area and check it against colision area if one of ship area match collison return true
     .some((el) => JSON.stringify(fieldStatus.antiCollision)
       .includes(JSON.stringify((el))));
+
+  const isPlacementPossible = (shipObject, firstCoord) => ( // check if ship placment is possible (no collision with other ships && ships coords inside gameboard)
+    (
+      isNotColliding(
+        shipObject
+          .calculateShipArea(firstCoord),
+      )
+    )
+    && (
+      shipObject
+        .calculateShipArea(firstCoord)
+        .every(
+          (coord) => shipObject
+            .checkForInvalidCoords(coord),
+        )
+    )
+  );
 
   const placeShip = (shipType, firstCoord) =>
   {
@@ -67,14 +84,10 @@ const gameboardFactory = () =>
       default:
     }
 
-    if (
-      (isColliding(ships[shipType], firstCoord)) // checks if ship placment is possible (no collision with other ships && ships coords inside gameboard)
-    && (
-      ships[shipType]
-        .calculateShipArea(firstCoord)
-        .every((coord) => ships[shipType]
-          .checkForInvalidCoords(coord))
-    ))
+    if
+    (
+      isPlacementPossible(ships[shipType], firstCoord)
+    )
     {
       ships[shipType] // sets calculated ship area to ship object
         .setShipArea(
@@ -113,7 +126,10 @@ const gameboardFactory = () =>
       case "object": // if field contains object (ship) marks "hit" in ships body array
         board[coords[0]][coords[1]].hit(coords);
         fieldStatus.hitAttacks.push(coords);
-        if (board[coords[0]][coords[1]].isSunk())
+
+        if (
+          board[coords[0]][coords[1]].isSunk()
+        )
         {
           markDestroyedArea(coords);
         }
@@ -132,6 +148,36 @@ const gameboardFactory = () =>
     .every((shipName) => ships[shipName]
       .isSunk());
 
+  const randomShipPlacement = (generateRandom, antiCollision) => // places ships on random coordinates
+  {
+    getShipsNames() // takes ship names and for each name:
+      .forEach((ship) =>
+      {
+        if (
+          Math.round(Math.random()) > 0) switchOrientation(); // randomly switches orientation
+
+        while (ships[ship].getLength === undefined) // loop that check ship object key is non existent
+        {
+          const random = generateRandom(antiCollision); // generate random viable coordinate (viable - not present in antiCollision array)
+
+          if // generate ship body by given random coordinate and check if its body not colliding with any other ship
+          (
+            isNotColliding( // is fhip area coords are not present in antiCollision array
+              shipFactory(ships[ship].length, orientation)
+                .calculateShipArea(random),
+            )
+            && isPlacementPossible( // and ship area wont stick outside gameboard
+              shipFactory(ships[ship].length, orientation),
+              random,
+            )
+          )
+          {
+            placeShip(ship, random); // place ship
+          }
+        }
+      });
+  };
+
   return {
     getBoard,
     getShipsNames,
@@ -141,6 +187,7 @@ const gameboardFactory = () =>
     switchOrientation,
     receiveAttack,
     isFleetDestroyed,
+    randomShipPlacement,
   };
 };
 export default gameboardFactory;

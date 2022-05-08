@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 const shipFactory = (length, orientation) =>
 {
   const shipOrientation = orientation;
@@ -58,71 +59,74 @@ const shipFactory = (length, orientation) =>
 
     area.forEach((coord, index, array) =>
     {
-      if (index === 0) // first coordinate
+      switch (index)
       {
-        colisonArray.push(
-          [coord[0] - 1, coord[1]], // middle left
-          [coord[0] - 1, coord[1] - 1], // ubove left
-          [coord[0] - 1, coord[1] + 1], // under left
-          [coord[0], coord[1] - 1], // middle ubove
-        );
-
-        if (orientation === "horizontal")
+        case 0: // first coord
         {
           colisonArray.push(
-            [coord[0], coord[1] + 1], // middle under
+            [coord[0], coord[1] - 1], // up
+            [coord[0] - 1, coord[1] - 1], // up left
+            [coord[0] - 1, coord[1]], // left
           );
-        }
-        if (orientation === "vertical")
-        {
-          colisonArray.push(
-            [coord[0] + 1, coord[1] - 1], // ubove left
-          );
-        }
-      }
-
-      else if (index === array.length - 1)// last coordinate
-      {
-        colisonArray.push(
-          [coord[0], coord[1] + 1], // middle under
-          [coord[0] + 1, coord[1]], // middle right
-          [coord[0] + 1, coord[1] + 1], // ubove right
-          [coord[0] + 1, coord[1] - 1], // under right
-        );
-
-        if (orientation === "horizontal")
-        {
-          colisonArray.push(
-            [coord[0], coord[1] - 1], // under left
-          );
-        }
-        if (orientation === "vertical")
-        {
-          colisonArray.push(
-            [coord[0] - 1, coord[1] + 1], // ubove right
-          );
-        }
-      }
-
-      else
-      {
-        switch (shipOrientation)
-        {
-          case "horizontal":
+          if (orientation === "horizontal")
+          {
             colisonArray.push(
-              [coord[0], coord[1] - 1], // middle ubove
-              [coord[0], coord[1] + 1], // middle under
+              [coord[0], coord[1] + 1], //  down
+              [coord[0] - 1, coord[1] + 1], // down left
             );
-            break;
-
-          case "vertical":
+          }
+          if (orientation === "vertical")
+          {
             colisonArray.push(
-              [coord[0] - 1, coord[1]], // middle left
-              [coord[0] + 1, coord[1]], // middle right
+              [coord[0] + 1, coord[1] - 1], // up right
+              [coord[0] + 1, coord[1]], // right
             );
+          }
+          break;
+        }
 
-            break;
-          default:
+        case (array.length - 1): // last coord
+        {
+          colisonArray.push(
+            [coord[0], coord[1] + 1], // down
+            [coord[0] + 1, coord[1]], // right
+            [coord[0] + 1, coord[1] + 1], // down right
+          );
+
+          if (orientation === "horizontal")
+          {
+            colisonArray.push(
+              [coord[0], coord[1] - 1], // up
+              [coord[0] + 1, coord[1] - 1], // up right
+            );
+          }
+          if (orientation === "vertical")
+          {
+            colisonArray.push(
+              [coord[0] - 1, coord[1] + 1], // down left
+              [coord[0] - 1, coord[1]], // left
+            );
+          }
+          break;
+        }
+
+        default: // every coordinate betwen first and last
+        {
+          if (orientation === "horizontal")
+          {
+            colisonArray.push(
+              [coord[0], coord[1] - 1], // up
+              [coord[0], coord[1] + 1], // down
+            );
+          }
+          if (orientation === "vertical")
+          {
+            colisonArray.push(
+              [coord[0] - 1, coord[1]], // left
+              [coord[0] + 1, coord[1]], // right
+            );
+          }
+          break;
         }
       }
     });

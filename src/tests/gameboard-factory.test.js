@@ -177,7 +177,7 @@ test("check if calulateColision not returning coords outside gameboard > 10 ", (
 
   expect(
     gameboard.getFieldStatus().antiCollision,
-  ).toEqual([[8, 9], [9, 9], [7, 9], [7, 8], [8, 8], [9, 8]]);
+  ).toEqual([[8, 9], [9, 9], [8, 8], [7, 8], [7, 9], [9, 8]]);
 
   expect(
     gameboard.getFieldStatus().antiCollision.length,
@@ -191,7 +191,11 @@ test("check if calulateColision not returning coords outside gameboard < 0 and >
 
   expect(
     gameboard.getFieldStatus().antiCollision,
-  ).toEqual([[8, 0], [9, 0], [7, 0], [7, 1], [8, 1], [9, 1]]);
+  ).toEqual([[8, 0], [9, 0], [7, 0], [8, 1], [7, 1], [9, 1]]);
+
+  expect(
+    gameboard.getFieldStatus().antiCollision.length,
+  ).toEqual(6);
 
   expect(
     gameboard.getFieldStatus().antiCollision.length,
@@ -315,4 +319,33 @@ test("check if markDestroyed area works", () =>
   expect(
     gameboard.getFieldStatus().missedAttacks,
   ).toEqual([[0, 1], [1, 1], [2, 0], [2, 1]]);
+});
+
+test("check if placing ships on random works", () =>
+{
+  const gameboard = gameboardFactory();
+  const generateRandomCoord = (unavailable) =>
+  {
+    let randomCoord = [
+      Math.floor(Math.random() * 10),
+      Math.floor(Math.random() * 10),
+    ];
+
+    // eslint-disable-next-line no-loop-func
+    while (unavailable.some(((el) => JSON.stringify(randomCoord)
+      .includes(JSON.stringify((el))))))
+    {
+      randomCoord = [
+        Math.floor(Math.random() * 10),
+        Math.floor(Math.random() * 10),
+      ];
+    }
+    return randomCoord;
+  };
+
+  gameboard.randomShipPlacement(generateRandomCoord, gameboard.getFieldStatus().antiCollision);
+
+  expect(
+    _.compact(_.flattenDeep(gameboard.getBoard())).length,
+  ).toEqual(17);
 });

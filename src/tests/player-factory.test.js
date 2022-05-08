@@ -33,7 +33,10 @@ test("check if attack random correctly generates random coord) ", () =>
   const enemyGameboard = gameboardFactory();
 
   expect(
-    player.randomCoord(enemyGameboard).length,
+    player.generateRandomCoord([
+      ...enemyGameboard.getFieldStatus().missedAttacks,
+      ...enemyGameboard.getFieldStatus().hitAttacks,
+    ]).length,
   ).toEqual(2);
 });
 
@@ -48,7 +51,12 @@ test("check if attack random correctly generates random coords and not generatin
   let i = 0;
   while (i < 97)
   {
-    enemyGameboard.receiveAttack(player.randomCoord(enemyGameboard));
+    enemyGameboard.receiveAttack(player.generateRandomCoord(
+      [
+        ...enemyGameboard.getFieldStatus().missedAttacks,
+        ...enemyGameboard.getFieldStatus().hitAttacks,
+      ],
+    ));
     i += 1;
   }
 

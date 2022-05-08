@@ -81,3 +81,13 @@ test("check if shipFactory correctly save ship coordinates", () =>
   expect(ship.getShipArea())
     .toEqual([[1, 1], [1, 2], [1, 3], [1, 4]]);
 });
+
+test("check if calculate collision area works properly", () =>
+{
+  const ship = shipFactory(3, "horizontal");
+  ship.setShipArea(ship.calculateShipArea([2, 0]));
+  expect(
+    ship.calculateCollisionArea(ship.getShipArea()),
+  )
+    .toEqual([[1, 0], [2, 1], [1, 1], [3, 1], [4, 1], [5, 0], [5, 1]]);
+});

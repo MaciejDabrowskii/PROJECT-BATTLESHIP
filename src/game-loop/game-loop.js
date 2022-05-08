@@ -16,11 +16,15 @@ export const gameLoop = () =>
   const ai = playerFactory();
   ai.switchTurn();
 
-  playerGameboard.placeShip("carrier", [0, 0]);
-  playerGameboard.placeShip("battleship", [0, 2]);
-  playerGameboard.placeShip("crusier", [0, 4]);
-  playerGameboard.placeShip("submarine", [0, 6]);
-  playerGameboard.placeShip("destroyer", [0, 8]);
+  // playerGameboard.placeShip("carrier", [0, 0]);
+  // playerGameboard.placeShip("battleship", [0, 2]);
+  // playerGameboard.placeShip("crusier", [0, 4]);
+  // playerGameboard.placeShip("submarine", [0, 6]);
+  // playerGameboard.placeShip("destroyer", [0, 8]);
+  playerGameboard.randomShipPlacement(
+    humanPlayer.generateRandomCoord,
+    playerGameboard.getFieldStatus().antiCollision,
+  );
 
   aiGameboard.placeShip("carrier", [0, 0]);
   aiGameboard.placeShip("battleship", [0, 2]);
@@ -51,7 +55,12 @@ export const gameLoop = () =>
       while (ai.getTurn())
       {
         await timer(1000);
-        ai.attack(ai.randomCoord(playerGameboard), playerGameboard);
+        ai.attack(ai.generateRandomCoord(
+          [
+            ...playerGameboard.getFieldStatus().missedAttacks,
+            ...playerGameboard.getFieldStatus().hitAttacks,
+          ],
+        ), playerGameboard);
         domModule.renderGameboard(playerGameboard, "player");
         domModule.renderShips(playerGameboard, "player");
       }
