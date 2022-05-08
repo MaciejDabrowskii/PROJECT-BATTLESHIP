@@ -14,7 +14,7 @@ const shipFactory = (length, orientation) =>
   const isSunk = () => shipBody.every((element) => typeof element === "object");
 
   const calculateShipArea = (
-    firstCoord, // takes coordinate and calculates ship area depending on orientation. Returns ship area array
+    firstCoord, // take coordinate and calculate ship area depending on orientation. Return ship area array
   ) =>
   {
     const area = [];
@@ -36,7 +36,7 @@ const shipFactory = (length, orientation) =>
   };
 
   const hit = (
-    coord, // take coordinates and marks proper ship position as hit
+    coord, // take coordinate and mark proper ship position as hit
   ) =>
   {
     switch (shipOrientation)
@@ -58,7 +58,7 @@ const shipFactory = (length, orientation) =>
   );
 
   const calculateCollisionArea = (
-    area, // takes ship area and calculates all surrounding fields return array of those fields.
+    area, // take ship area and calculates all surrounding fields return array of those fields.
   ) =>
   {
     const colisonArray = [];
@@ -115,7 +115,7 @@ const shipFactory = (length, orientation) =>
         }
 
         default: {
-          // every coordinate betwen first and last
+          // every coordinate between first and last
           if (orientation === "horizontal")
           {
             colisonArray.push(

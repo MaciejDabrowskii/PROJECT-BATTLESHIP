@@ -25,7 +25,7 @@ const playerFactory = () =>
 
   const getTurn = () => playerTurn;
 
-  const attack = (attackCoord, enemyGameboard) =>
+  const attack = (attackCoord, enemyGameboard) => // send attack to given gameboard - if miss switch turn
   {
     enemyGameboard.receiveAttack(attackCoord);
 

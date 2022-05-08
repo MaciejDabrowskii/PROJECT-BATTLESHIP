@@ -38,7 +38,7 @@ const gameboardFactory = () =>
     }
   };
 
-  const isNotColliding = (shipArea) => !shipArea // takes ship object calculates its area and check it against colision area if one of ship area match collison return true
+  const isNotColliding = (shipArea) => !shipArea // take ship object calculates its area and check it against collision area if one of ship area match collison return true
     .some((el) => JSON.stringify(fieldStatus.antiCollision)
       .includes(JSON.stringify(el)));
 
@@ -53,7 +53,7 @@ const gameboardFactory = () =>
   const placeShip = (shipType, firstCoord) =>
   {
     switch (
-      shipType // creates a ship object
+      shipType // create a ship object
     )
     {
       case "carrier":
@@ -83,7 +83,7 @@ const gameboardFactory = () =>
     {
       ships[shipType] // sets calculated ship area to ship object
         .setShipArea(ships[shipType].calculateShipArea(firstCoord));
-      ships[shipType] // push ship area to gameboard array and anticolison array
+      ships[shipType] // push ship area to gameboard array and anticollison array
         .calculateShipArea(firstCoord)
         .forEach((coord) =>
         {
@@ -91,7 +91,7 @@ const gameboardFactory = () =>
           fieldStatus.antiCollision.push(coord);
         });
 
-      fieldStatus.antiCollision // calculates ship colison area (all surounding fields) and push tem to anticolision array
+      fieldStatus.antiCollision // calculates ship collison area (all surrounding fields) and push them to anticollision array
         .push(
           ...ships[shipType].calculateCollisionArea(
             ships[shipType].getShipArea(),
@@ -101,7 +101,7 @@ const gameboardFactory = () =>
   };
 
   const markDestroyedArea = (
-    coords, // takes coordinate and marks area around as miss
+    coords, // take coordinate and mark area around as miss
   ) =>
   {
     fieldStatus.missedAttacks.push(
@@ -117,7 +117,7 @@ const gameboardFactory = () =>
   {
     switch (typeof board[coords[0]][coords[1]])
     {
-      case "object": // if field contains object (ship) marks "hit" in ships body array
+      case "object": // if field contains object (ship) mark "hit" in ships body array
         board[coords[0]][coords[1]].hit(coords);
         fieldStatus.hitAttacks.push(coords);
 
@@ -136,7 +136,7 @@ const gameboardFactory = () =>
     }
   };
 
-  const isFleetDestroyed = () => getShipsNames() // takes ships objects and run method isSunk in each to determine that all ships are sunk
+  const isFleetDestroyed = () => getShipsNames() // take ships objects and run method isSunk on each to determine that all ships are sunk
     .every((shipName) => ships[shipName].isSunk());
 
   const randomShipPlacement = (
@@ -144,7 +144,7 @@ const gameboardFactory = () =>
     antiCollision, // places ships on random coordinates
   ) =>
   {
-    getShipsNames() // takes ship names and for each name:
+    getShipsNames() // take ship names and for each name:
       .forEach((ship) =>
       {
         if (Math.round(Math.random()) > 0) switchOrientation(); // randomly switches orientation
