@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-unused-vars */
 import _, { compact, flattenDeep } from "lodash";
 import gameboardFactory from "./gameboard-factory";
@@ -26,13 +27,12 @@ const playerFactory = () =>
 
   const attack = (attackCoord, enemyGameboard) =>
   {
-    enemyGameboard
-      .receiveAttack(attackCoord);
+    enemyGameboard.receiveAttack(attackCoord);
 
-    if (
-      enemyGameboard
-        .getBoard()[attackCoord[0]][attackCoord[1]] === "miss"
-    ) switchTurn();
+    if (enemyGameboard.getBoard()[attackCoord[0]][attackCoord[1]] === "miss")
+    {
+      switchTurn();
+    }
   };
 
   const generateRandomCoord = (unavailable) =>
@@ -43,8 +43,10 @@ const playerFactory = () =>
     ];
 
     // eslint-disable-next-line no-loop-func
-    while (unavailable.some(((el) => JSON.stringify(randomCoord)
-      .includes(JSON.stringify((el))))))
+    while (
+      unavailable.some((el) => JSON.stringify(randomCoord)
+        .includes(JSON.stringify(el)))
+    )
     {
       randomCoord = [
         Math.floor(Math.random() * 10),
@@ -59,7 +61,6 @@ const playerFactory = () =>
     getTurn,
     attack,
     generateRandomCoord,
-
   };
 };
 

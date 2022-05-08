@@ -11,10 +11,11 @@ const shipFactory = (length, orientation) =>
   const getShipBody = () => shipBody;
   const getShipArea = () => shipArea;
 
-  const isSunk = () => shipBody
-    .every((element) => (typeof (element) === "object"));
+  const isSunk = () => shipBody.every((element) => typeof element === "object");
 
-  const calculateShipArea = (firstCoord) => // takes coordinate and calculates ship area depending on orientation. Returns ship area array
+  const calculateShipArea = (
+    firstCoord, // takes coordinate and calculates ship area depending on orientation. Returns ship area array
+  ) =>
   {
     const area = [];
     if (shipOrientation === "horizontal")
@@ -34,14 +35,18 @@ const shipFactory = (length, orientation) =>
     return area;
   };
 
-  const hit = (coord) => // take coordinates and marks proper ship position as hit
+  const hit = (
+    coord, // take coordinates and marks proper ship position as hit
+  ) =>
   {
     switch (shipOrientation)
     {
-      case "horizontal": shipBody[coord[0] - shipArea[0][0]] = coord;
+      case "horizontal":
+        shipBody[coord[0] - shipArea[0][0]] = coord;
         break;
 
-      case "vertical": shipBody[coord[1] - shipArea[0][1]] = coord;
+      case "vertical":
+        shipBody[coord[1] - shipArea[0][1]] = coord;
         break;
 
       default:
@@ -49,11 +54,12 @@ const shipFactory = (length, orientation) =>
   };
 
   const checkForInvalidCoords = (coord) => !(
-    ((coord.at(1) < 0) || (coord.at(0) < 0))
-      || ((coord.at(1) > 9) || (coord.at(0) > 9))
+    coord.at(1) < 0 || coord.at(0) < 0 || coord.at(1) > 9 || coord.at(0) > 9
   );
 
-  const calculateCollisionArea = (area) => // takes ship area and calculates all surrounding fields return array of those fields.
+  const calculateCollisionArea = (
+    area, // takes ship area and calculates all surrounding fields return array of those fields.
+  ) =>
   {
     const colisonArray = [];
 
@@ -61,8 +67,7 @@ const shipFactory = (length, orientation) =>
     {
       switch (index)
       {
-        case 0: // first coord
-        {
+        case 0: { // first coord
           colisonArray.push(
             [coord[0], coord[1] - 1], // up
             [coord[0] - 1, coord[1] - 1], // up left
@@ -85,8 +90,7 @@ const shipFactory = (length, orientation) =>
           break;
         }
 
-        case (array.length - 1): // last coord
-        {
+        case array.length - 1: { // last coord
           colisonArray.push(
             [coord[0], coord[1] + 1], // down
             [coord[0] + 1, coord[1]], // right
@@ -110,8 +114,8 @@ const shipFactory = (length, orientation) =>
           break;
         }
 
-        default: // every coordinate betwen first and last
-        {
+        default: {
+          // every coordinate betwen first and last
           if (orientation === "horizontal")
           {
             colisonArray.push(

@@ -2,29 +2,27 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
 import {
-  qs, qsa, addGlobalEventListener, createElement,
+  qs,
+  qsa,
+  addGlobalEventListener,
+  createElement,
 } from "../utility-fns/utility-fns";
 
-const domModule = (() =>
-{
+const domModule = (() => {
   let playerName = "";
 
-  const editPlayerName = () =>
-  {
+  const editPlayerName = () => {
     playerName = qs("input").value;
   };
 
-  const renderBasic = () =>
-  {
+  const renderBasic = () => {
     document.body.append(
       createElement("div", {
         class: "wrapper",
-      }),
-
+      })
     );
 
     qs(".wrapper").append(
-
       createElement("h1", {
         text: "Battle Ship",
         class: "header",
@@ -40,11 +38,10 @@ const domModule = (() =>
 
       createElement("div", {
         class: "turn-indicator",
-      }),
+      })
     );
 
     qs(".player-name-input-container").append(
-
       createElement("label", {
         for: "text",
         text: "Enter player name:",
@@ -53,8 +50,7 @@ const domModule = (() =>
       createElement("input", {
         type: "text",
         id: "player-name",
-      }),
-
+      })
     );
 
     qs(".turn-indicator").append(
@@ -65,22 +61,20 @@ const domModule = (() =>
 
       createElement("div", {
         class: "turn-indicator-player",
-      }),
+      })
     );
 
     qs(".game-contents").append(
-
       createElement("div", {
         class: "player-section",
       }),
 
       createElement("div", {
         class: "ai-section",
-      }),
+      })
     );
 
     qs(".player-section").append(
-
       createElement("p", {
         text: `${playerName} - board`,
         class: "board-name",
@@ -89,11 +83,10 @@ const domModule = (() =>
 
       createElement("div", {
         class: "player-board",
-      }),
+      })
     );
 
     qs(".ai-section").append(
-
       createElement("p", {
         class: "board-name",
         text: "AI - board",
@@ -101,14 +94,12 @@ const domModule = (() =>
 
       createElement("div", {
         class: "ai-board",
-      }),
+      })
     );
 
-    switch (qs(".modal-body"))
-    {
+    switch (qs(".modal-body")) {
       case null:
         document.body.append(
-
           createElement("div", {
             class: "modal-body",
             id: "modal-body",
@@ -116,19 +107,18 @@ const domModule = (() =>
 
           createElement("div", {
             id: "overlay",
-          }),
+          })
         );
 
         qs(".modal-body").append(
           createElement("button", {
             class: "modal-btn",
             id: "modal-btn",
-
           }),
           createElement("h3", {
             class: "modal-text",
             id: "modal-text",
-          }),
+          })
         );
         qs(".modal-btn").innerHTML = "&times";
         break;
@@ -137,39 +127,32 @@ const domModule = (() =>
     }
   };
 
-  const reRenderPlayerBoardName = () =>
-  {
+  const reRenderPlayerBoardName = () => {
     qs("#board-name-player").textContent = `${playerName} - board`;
   };
 
-  const renderShips = (gameboard, owner) =>
-  {
-    gameboard.getShipsNames().forEach((shipName) =>
-    {
-      gameboard.getShips()[shipName]
-        .getShipArea()
-        .forEach((area) =>
-        {
+  const renderShips = (gameboard, owner) => {
+    gameboard.getShipsNames().forEach((shipName) => {
+      gameboard
+        .getShips()
+        [shipName].getShipArea()
+        .forEach((area) => {
           qs(
-            `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
-          )
-            .classList
-            .add("ship");
+            `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`
+          ).classList.add("ship");
         });
     });
   };
 
-  const renderHits = (gameboard, owner) =>
-  {
-    gameboard.getShipsNames().forEach((shipName) =>
-    {
-      gameboard.getShips()[shipName]
-        .getShipBody()
-        .forEach((area) =>
-        {
-          if (typeof (area) === "object")
-          {
-            const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
+  const renderHits = (gameboard, owner) => {
+    gameboard.getShipsNames().forEach((shipName) => {
+      gameboard
+        .getShips()
+        [shipName].getShipBody()
+        .forEach((area) => {
+          if (typeof area === "object") {
+            const field =
+              qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
             `);
             field.classList.add("hit");
             field.textContent = "🔥";
@@ -178,44 +161,40 @@ const domModule = (() =>
     });
   };
 
-  const renderMissedAttacks = (gameboard, owner) =>
-  {
-    gameboard.getFieldStatus().missedAttacks.forEach((miss) =>
-    {
-      qs(`[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`)
-        .textContent = "✘";
-      qs(`[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`).classList.add("miss");
+  const renderMissedAttacks = (gameboard, owner) => {
+    gameboard.getFieldStatus().missedAttacks.forEach((miss) => {
+      qs(
+        `[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`
+      ).textContent = "✘";
+      qs(
+        `[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`
+      ).classList.add("miss");
     });
   };
 
-  const renderGameboard = (gameboard, owner) =>
-  {
+  const renderGameboard = (gameboard, owner) => {
     qs(`.${owner}-board`).innerHTML = "";
 
-    gameboard.getBoard().forEach((array, firstIndex) =>
-    {
-      qs(`.${owner}-board`)
-        .append(
-          createElement("div", {
-            class: "column",
-            "data-column": `${firstIndex}`,
-            "data-owner": `${owner}`,
-          }),
-        );
+    gameboard.getBoard().forEach((array, firstIndex) => {
+      qs(`.${owner}-board`).append(
+        createElement("div", {
+          class: "column",
+          "data-column": `${firstIndex}`,
+          "data-owner": `${owner}`,
+        })
+      );
     });
 
-    qsa(`.column[data-owner="${owner}"]`).forEach((column, columnIndex) =>
-    {
+    qsa(`.column[data-owner="${owner}"]`).forEach((column, columnIndex) => {
       let i = 0;
-      while (i < 10)
-      {
+      while (i < 10) {
         column.append(
           createElement("div", {
             class: "field",
             "data-owner": `${owner}`,
             "data-firstCoord": `${columnIndex}`,
             "data-secondCoord": `${i}`,
-          }),
+          })
         );
         i += 1;
       }
@@ -224,10 +203,8 @@ const domModule = (() =>
     renderMissedAttacks(gameboard, `${owner}`);
   };
 
-  const turnIndicator = (playerTurn) =>
-  {
-    switch (playerTurn)
-    {
+  const turnIndicator = (playerTurn) => {
+    switch (playerTurn) {
       case true:
         qs(".turn-indicator-player").textContent = playerName;
         break;
@@ -238,15 +215,15 @@ const domModule = (() =>
     }
   };
 
-  const anounceResoult = (resoult) =>
-  {
+  const anounceResoult = (resoult) => {
     let resoultMessage = "";
-    switch (resoult)
-    {
-      case "victory": resoultMessage = "CONGRATULATIONS, YOU WON!";
+    switch (resoult) {
+      case "victory":
+        resoultMessage = "CONGRATULATIONS, YOU WON!";
         break;
 
-      case "defeat": resoultMessage = "YOU HAVE BEEN DEFEATED!";
+      case "defeat":
+        resoultMessage = "YOU HAVE BEEN DEFEATED!";
         break;
 
       default:

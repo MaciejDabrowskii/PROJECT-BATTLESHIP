@@ -55,12 +55,13 @@ export const gameLoop = () =>
       while (ai.getTurn())
       {
         await timer(1000);
-        ai.attack(ai.generateRandomCoord(
-          [
+        ai.attack(
+          ai.generateRandomCoord([
             ...playerGameboard.getFieldStatus().missedAttacks,
             ...playerGameboard.getFieldStatus().hitAttacks,
-          ],
-        ), playerGameboard);
+          ]),
+          playerGameboard,
+        );
         domModule.renderGameboard(playerGameboard, "player");
         domModule.renderShips(playerGameboard, "player");
       }
@@ -83,15 +84,17 @@ export const gameLoop = () =>
             switch (e.target.className)
             {
               case "field miss":
-              case "field hit":
-              {
+              case "field hit": {
                 break;
               }
               default: {
-                humanPlayer.attack([
-                  [e.target.dataset.firstcoord],
-                  [e.target.dataset.secondcoord],
-                ], aiGameboard);
+                humanPlayer.attack(
+                  [
+                    [e.target.dataset.firstcoord],
+                    [e.target.dataset.secondcoord],
+                  ],
+                  aiGameboard,
+                );
 
                 domModule.renderGameboard(aiGameboard, "ai");
                 domModule.turnIndicator(humanPlayer.getTurn());
