@@ -1,23 +1,53 @@
 .field {
-  width: 1rem;
-  height: 1rem;
-  border: 1px solid black;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid rgb(255, 255, 255);
+  background-image: url(https://pic.onlinewebfonts.com/svg/img_498382.png);
+  background-size: contain;
+  background-color: rgb(78, 182, 241);
 }
-.ship {
-  background-color: red;
+.field.ship {
+  background-color: rgb(192, 208, 224);
+  background-image: url(https://www.svgrepo.com/show/111867/ship.svg);
+}
+.turn-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 .hit {
   background-color: rgb(0, 255, 34);
 }
+.field.hit.ship {
+  font-size: 1.5rem;
+  color: rgb(255, 102, 0);
+  text-align: center;
+}
+.miss{
+  font-size: 1.5rem;
+  color: red;
+  text-align: center;
+}
+.player-section, .ai-section {
+  display: flex;
+  gap: 5rem;
+}
 .player-board {
   display: flex;
+}
+.board-name{
+  text-align: center;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
 }
 .ai-board {
   display: flex;
 }
 .game-contents {
   display: flex;
-  gap: 30px;
+  gap: 10rem;
+  margin: 4rem 10% 6rem 10%;
 }
 .modal-body {
   position: fixed;
@@ -53,4 +83,10 @@
 #overlay.active {
   opacity: 1;
   pointer-events: all;
+}
+.ai-board.active, .player-board.active{
+  transform: scale(1.3);
+}
+.active{
+  transition: transform .5s ease-in-out;
 }

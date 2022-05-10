@@ -36,6 +36,7 @@ export const gameLoop = () =>
   domModule.renderGameboard(playerGameboard, "player");
   domModule.renderShips(playerGameboard, "player");
   domModule.renderGameboard(aiGameboard, "ai");
+  domModule.toggleActive("ai");
 
   const checkForWinner = () =>
   {
@@ -54,7 +55,8 @@ export const gameLoop = () =>
     {
       while (ai.getTurn())
       {
-        await timer(1000);
+        await timer(2000);
+
         ai.attack(
           ai.generateRandomCoord([
             ...playerGameboard.getFieldStatus().missedAttacks,
@@ -66,6 +68,8 @@ export const gameLoop = () =>
         domModule.renderShips(playerGameboard, "player");
       }
       humanPlayer.switchTurn();
+      domModule.toggleActive("ai");
+      domModule.toggleActive("player");
       domModule.turnIndicator(humanPlayer.getTurn());
       checkForWinner();
     }
@@ -103,6 +107,8 @@ export const gameLoop = () =>
                 if (!humanPlayer.getTurn())
                 {
                   ai.switchTurn();
+                  domModule.toggleActive("ai");
+                  domModule.toggleActive("player");
                   aiLoop();
                 }
                 break;

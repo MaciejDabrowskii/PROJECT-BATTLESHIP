@@ -8,18 +8,21 @@ import {
   createElement,
 } from "../utility-fns/utility-fns";
 
-const domModule = (() => {
+const domModule = (() =>
+{
   let playerName = "";
 
-  const editPlayerName = () => {
+  const editPlayerName = () =>
+  {
     playerName = qs("input").value;
   };
 
-  const renderBasic = () => {
+  const renderBasic = () =>
+  {
     document.body.append(
       createElement("div", {
         class: "wrapper",
-      })
+      }),
     );
 
     qs(".wrapper").append(
@@ -38,7 +41,7 @@ const domModule = (() => {
 
       createElement("div", {
         class: "turn-indicator",
-      })
+      }),
     );
 
     qs(".player-name-input-container").append(
@@ -50,7 +53,7 @@ const domModule = (() => {
       createElement("input", {
         type: "text",
         id: "player-name",
-      })
+      }),
     );
 
     qs(".turn-indicator").append(
@@ -61,7 +64,7 @@ const domModule = (() => {
 
       createElement("div", {
         class: "turn-indicator-player",
-      })
+      }),
     );
 
     qs(".game-contents").append(
@@ -71,33 +74,34 @@ const domModule = (() => {
 
       createElement("div", {
         class: "ai-section",
-      })
+      }),
     );
 
     qs(".player-section").append(
       createElement("p", {
-        text: `${playerName} - board`,
+        text: `${playerName}  BOARD`,
         class: "board-name",
         id: "board-name-player",
       }),
 
       createElement("div", {
         class: "player-board",
-      })
+      }),
     );
 
     qs(".ai-section").append(
       createElement("p", {
         class: "board-name",
-        text: "AI - board",
+        text: "AI  BOARD",
       }),
 
       createElement("div", {
         class: "ai-board",
-      })
+      }),
     );
 
-    switch (qs(".modal-body")) {
+    switch (qs(".modal-body"))
+    {
       case null:
         document.body.append(
           createElement("div", {
@@ -107,7 +111,7 @@ const domModule = (() => {
 
           createElement("div", {
             id: "overlay",
-          })
+          }),
         );
 
         qs(".modal-body").append(
@@ -118,7 +122,7 @@ const domModule = (() => {
           createElement("h3", {
             class: "modal-text",
             id: "modal-text",
-          })
+          }),
         );
         qs(".modal-btn").innerHTML = "&times";
         break;
@@ -127,74 +131,85 @@ const domModule = (() => {
     }
   };
 
-  const reRenderPlayerBoardName = () => {
-    qs("#board-name-player").textContent = `${playerName} - board`;
+  const reRenderPlayerBoardName = () =>
+  {
+    qs("#board-name-player").textContent = `${playerName}  BOARD`;
   };
 
-  const renderShips = (gameboard, owner) => {
-    gameboard.getShipsNames().forEach((shipName) => {
+  const renderShips = (gameboard, owner) =>
+  {
+    gameboard.getShipsNames().forEach((shipName) =>
+    {
       gameboard
-        .getShips()
-        [shipName].getShipArea()
-        .forEach((area) => {
+        .getShips()[shipName].getShipArea()
+        .forEach((area) =>
+        {
           qs(
-            `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`
+            `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
           ).classList.add("ship");
         });
     });
   };
 
-  const renderHits = (gameboard, owner) => {
-    gameboard.getShipsNames().forEach((shipName) => {
+  const renderHits = (gameboard, owner) =>
+  {
+    gameboard.getShipsNames().forEach((shipName) =>
+    {
       gameboard
-        .getShips()
-        [shipName].getShipBody()
-        .forEach((area) => {
-          if (typeof area === "object") {
-            const field =
-              qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
+        .getShips()[shipName].getShipBody()
+        .forEach((area) =>
+        {
+          if (typeof area === "object")
+          {
+            const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
             `);
-            field.classList.add("hit");
+            field.classList.add("hit", "ship");
             field.textContent = "🔥";
           }
         });
     });
   };
 
-  const renderMissedAttacks = (gameboard, owner) => {
-    gameboard.getFieldStatus().missedAttacks.forEach((miss) => {
+  const renderMissedAttacks = (gameboard, owner) =>
+  {
+    gameboard.getFieldStatus().missedAttacks.forEach((miss) =>
+    {
       qs(
-        `[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`
+        `[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`,
       ).textContent = "✘";
       qs(
-        `[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`
+        `[data-owner="${owner}"][data-firstcoord="${miss[0]}"][data-secondcoord="${miss[1]}"]`,
       ).classList.add("miss");
     });
   };
 
-  const renderGameboard = (gameboard, owner) => {
+  const renderGameboard = (gameboard, owner) =>
+  {
     qs(`.${owner}-board`).innerHTML = "";
 
-    gameboard.getBoard().forEach((array, firstIndex) => {
+    gameboard.getBoard().forEach((array, firstIndex) =>
+    {
       qs(`.${owner}-board`).append(
         createElement("div", {
           class: "column",
           "data-column": `${firstIndex}`,
           "data-owner": `${owner}`,
-        })
+        }),
       );
     });
 
-    qsa(`.column[data-owner="${owner}"]`).forEach((column, columnIndex) => {
+    qsa(`.column[data-owner="${owner}"]`).forEach((column, columnIndex) =>
+    {
       let i = 0;
-      while (i < 10) {
+      while (i < 10)
+      {
         column.append(
           createElement("div", {
             class: "field",
             "data-owner": `${owner}`,
             "data-firstCoord": `${columnIndex}`,
             "data-secondCoord": `${i}`,
-          })
+          }),
         );
         i += 1;
       }
@@ -203,8 +218,10 @@ const domModule = (() => {
     renderMissedAttacks(gameboard, `${owner}`);
   };
 
-  const turnIndicator = (playerTurn) => {
-    switch (playerTurn) {
+  const turnIndicator = (playerTurn) =>
+  {
+    switch (playerTurn)
+    {
       case true:
         qs(".turn-indicator-player").textContent = playerName;
         break;
@@ -215,9 +232,11 @@ const domModule = (() => {
     }
   };
 
-  const anounceResoult = (resoult) => {
+  const anounceResoult = (resoult) =>
+  {
     let resoultMessage = "";
-    switch (resoult) {
+    switch (resoult)
+    {
       case "victory":
         resoultMessage = "CONGRATULATIONS, YOU WON!";
         break;
@@ -234,9 +253,14 @@ const domModule = (() => {
     qs(".modal-text").textContent = resoultMessage;
   };
 
+  const toggleActive = (owner) =>
+  {
+    qs(`.${owner}-board`).classList.toggle("active");
+  };
+
   return {
     renderBasic,
-    // renderModal,
+    toggleActive,
     renderGameboard,
     renderShips,
     reRenderPlayerBoardName,
