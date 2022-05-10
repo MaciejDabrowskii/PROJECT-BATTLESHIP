@@ -89,17 +89,6 @@ const domModule = (() =>
       }),
     );
 
-    qs(".ai-section").append(
-      createElement("p", {
-        class: "board-name",
-        text: "AI  BOARD",
-      }),
-
-      createElement("div", {
-        class: "ai-board",
-      }),
-    );
-
     switch (qs(".modal-body"))
     {
       case null:
@@ -119,6 +108,7 @@ const domModule = (() =>
             class: "modal-btn",
             id: "modal-btn",
           }),
+
           createElement("h3", {
             class: "modal-text",
             id: "modal-text",
@@ -131,6 +121,67 @@ const domModule = (() =>
     }
   };
 
+  const renderAISectionElements = () =>
+  {
+    qs(".ai-section").append(
+      createElement("p", {
+        class: "board-name",
+        text: "AI  BOARD",
+      }),
+
+      createElement("div", {
+        class: "ai-board",
+      }),
+    );
+  };
+
+  const renderDragAndDropItems = (gameboard) =>
+  {
+    qs(".ai-section").append(
+      createElement("div", {
+        class: "ships-to-drop",
+      }),
+
+      createElement("div", {
+        class: "buttons-container",
+      }),
+    );
+
+    qs(".buttons-container").append(
+      createElement("button", {
+        class: "change-orientation",
+        text: "Change orientation",
+      }),
+
+      createElement("button", {
+        class: "confirm-layout",
+        text: "Confirm layout",
+      }),
+    );
+
+    gameboard.getShipsNames().forEach((ship) =>
+    {
+      qs(".ships-to-drop").append(
+        createElement("div", {
+          class: "ship-drag",
+          id: `${ship}`,
+        }),
+      );
+    });
+
+    gameboard.getShipsNames().forEach((ship) =>
+    {
+      for (let i = 0; i < gameboard.getShips()[ship].length; i += 1)
+      {
+        qs(`#${ship}`).append(
+          createElement("div", {
+            class: "ship-body-el",
+          }),
+        );
+      }
+    });
+  };
+
   const reRenderPlayerBoardName = () =>
   {
     qs("#board-name-player").textContent = `${playerName}  BOARD`;
@@ -140,14 +191,17 @@ const domModule = (() =>
   {
     gameboard.getShipsNames().forEach((shipName) =>
     {
-      gameboard
-        .getShips()[shipName].getShipArea()
-        .forEach((area) =>
-        {
-          qs(
-            `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
-          ).classList.add("ship");
-        });
+      if (("getShipArea" in gameboard.getShips()[shipName]) && (owner === "player"))
+      {
+        gameboard
+          .getShips()[shipName].getShipArea()
+          .forEach((area) =>
+          {
+            qs(
+              `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
+            ).classList.add("ship");
+          });
+      }
     });
   };
 
@@ -155,18 +209,21 @@ const domModule = (() =>
   {
     gameboard.getShipsNames().forEach((shipName) =>
     {
-      gameboard
-        .getShips()[shipName].getShipBody()
-        .forEach((area) =>
-        {
-          if (typeof area === "object")
+      if ("getShipBody" in gameboard.getShips()[shipName])
+      {
+        gameboard
+          .getShips()[shipName].getShipBody()
+          .forEach((area) =>
           {
-            const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
+            if (typeof area === "object")
+            {
+              const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
             `);
-            field.classList.add("hit", "ship");
-            field.textContent = "🔥";
-          }
-        });
+              field.classList.add("hit", "ship");
+              field.textContent = "🔥";
+            }
+          });
+      }
     });
   };
 
@@ -214,6 +271,7 @@ const domModule = (() =>
         i += 1;
       }
     });
+    renderShips(gameboard, `${owner}`);
     renderHits(gameboard, `${owner}`);
     renderMissedAttacks(gameboard, `${owner}`);
   };
@@ -262,11 +320,12 @@ const domModule = (() =>
     renderBasic,
     toggleActive,
     renderGameboard,
-    renderShips,
+    renderAISectionElements,
     reRenderPlayerBoardName,
     editPlayerName,
     turnIndicator,
     anounceResoult,
+    renderDragAndDropItems,
   };
 })();
 

@@ -21,22 +21,23 @@ export const gameLoop = () =>
   // playerGameboard.placeShip("crusier", [0, 4]);
   // playerGameboard.placeShip("submarine", [0, 6]);
   // playerGameboard.placeShip("destroyer", [0, 8]);
-  playerGameboard.randomShipPlacement(
-    humanPlayer.generateRandomCoord,
-    playerGameboard.getFieldStatus().antiCollision,
-  );
+  // playerGameboard.randomShipPlacement(
+  //   humanPlayer.generateRandomCoord,
+  //   playerGameboard.getFieldStatus().antiCollision,
+  // );
 
-  aiGameboard.placeShip("carrier", [0, 0]);
-  aiGameboard.placeShip("battleship", [0, 2]);
-  aiGameboard.placeShip("crusier", [0, 4]);
-  aiGameboard.placeShip("submarine", [0, 6]);
-  aiGameboard.placeShip("destroyer", [0, 8]);
+  // aiGameboard.placeShip("carrier", [0, 0]);
+  // aiGameboard.placeShip("battleship", [0, 2]);
+  // aiGameboard.placeShip("crusier", [0, 4]);
+  // aiGameboard.placeShip("submarine", [0, 6]);
+  // aiGameboard.placeShip("destroyer", [0, 8]);
 
   domModule.renderBasic();
   domModule.renderGameboard(playerGameboard, "player");
-  domModule.renderShips(playerGameboard, "player");
-  domModule.renderGameboard(aiGameboard, "ai");
-  domModule.toggleActive("ai");
+  // domModule.renderShips(playerGameboard, "player");
+  domModule.renderDragAndDropItems(playerGameboard);
+  // domModule.renderGameboard(aiGameboard, "ai");
+  // domModule.toggleActive("ai");
 
   const checkForWinner = () =>
   {
@@ -55,7 +56,7 @@ export const gameLoop = () =>
     {
       while (ai.getTurn())
       {
-        await timer(2000);
+        await timer(1500);
 
         ai.attack(
           ai.generateRandomCoord([
@@ -67,6 +68,7 @@ export const gameLoop = () =>
         domModule.renderGameboard(playerGameboard, "player");
         domModule.renderShips(playerGameboard, "player");
       }
+      await timer(700);
       humanPlayer.switchTurn();
       domModule.toggleActive("ai");
       domModule.toggleActive("player");

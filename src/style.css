@@ -1,7 +1,7 @@
 .field {
   width: 2rem;
   height: 2rem;
-  border: 2px solid rgb(255, 255, 255);
+  border: .05rem solid rgb(255, 255, 255);
   background-image: url(https://pic.onlinewebfonts.com/svg/img_498382.png);
   background-size: contain;
   background-color: rgb(78, 182, 241);
@@ -32,6 +32,13 @@
 .player-section, .ai-section {
   display: flex;
   gap: 5rem;
+}
+.ai-section {
+  flex-direction: column;
+}
+.buttons-container {
+  display: flex;
+  gap: 4rem;
 }
 .player-board {
   display: flex;
@@ -89,4 +96,27 @@
 }
 .active{
   transition: transform .5s ease-in-out;
+}
+
+.confirm-layout, .change-orientation {
+
+  width: 8rem;
+  height: 3rem;
+}
+
+.ships-to-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .7rem;
+}
+
+.ship-drag {
+  border: 1px solid black;
+  display: flex;
+}
+.ship-body-el {
+  border: 1px solid black;
+  width: 1.6rem;
+  height: 1.6rem;
 }
