@@ -1,9 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
+import _, { compact, flattenDeep } from "lodash";
 import domModule from "../DOM-modules/dom-module";
 import { qs, qsa } from "../utility-fns/utility-fns";
 import { gameLoop } from "../game-loop/game-loop";
+import playerFactory from "../factory-fns/player-factory";
 
-const addEvents = () =>
+const eventHandlers = (() =>
 {
   const modalAndInputEvents = () =>
   {
@@ -22,7 +26,7 @@ const addEvents = () =>
     });
   };
 
-  const dragAndDropEvents = (gameboard) =>
+  const dragAndDropEvents = (playerGameboard, aiGameboard) =>
   {
     // Drag and drop Ships Events
     function dragStart(e)
@@ -58,11 +62,11 @@ const addEvents = () =>
       this.classList.remove("hovered");
       const shipType = e.dataTransfer.getData("Ship-type");
 
-      gameboard.placeShip(
-        shipType,
-        [Number(this.dataset.firstcoord), Number(this.dataset.secondcoord)],
-      );
-      domModule.renderShips(gameboard, "player");
+      playerGameboard.placeShip(shipType, [
+        Number(this.dataset.firstcoord),
+        Number(this.dataset.secondcoord),
+      ]);
+      domModule.renderShips(playerGameboard, "player");
 
       if (this.classList.contains("ship"))
       {
@@ -85,11 +89,53 @@ const addEvents = () =>
       field.addEventListener("drop", dragDrop);
     });
     // Drag and drop Buttons Events
+
+    qs(".change-orientation-btn").addEventListener("click", () =>
+    {
+      playerGameboard.switchOrientation();
+
+      switch (playerGameboard.getOrientation())
+      {
+        case "horizontal": {
+          qsa(".ship-drag").forEach((el) =>
+          {
+            el.style.flexDirection = "row";
+          });
+          break;
+        }
+
+        case "vertical": {
+          qsa(".ship-drag").forEach((el) =>
+          {
+            el.style.flexDirection = "column";
+          });
+          break;
+        }
+        default:
+      }
+    });
+
+    qs(".confirm-layout-btn").addEventListener("click", () =>
+    {
+      if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17)
+      {
+        qs(".ai-section").innerHTML = "";
+        domModule.renderAISectionElements();
+        aiGameboard.randomShipPlacement(
+          playerFactory().generateRandomCoord,
+          aiGameboard.getFieldStatus().antiCollision,
+        );
+        domModule.renderGameboard(aiGameboard, "ai");
+        domModule.renderShips(aiGameboard, "ai");
+        domModule.toggleActive("ai");
+        qs(".ai-section").style.flexDirection = "row";
+      }
+    });
   };
 
   return {
     modalAndInputEvents,
     dragAndDropEvents,
   };
-};
-export default addEvents;
+})();
+export default eventHandlers;

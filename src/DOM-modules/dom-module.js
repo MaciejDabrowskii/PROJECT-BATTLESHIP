@@ -140,7 +140,6 @@ const domModule = (() =>
     qs(".ai-section").append(
       createElement("div", {
         class: "ships-to-drop",
-
       }),
 
       createElement("div", {
@@ -150,17 +149,17 @@ const domModule = (() =>
 
     qs(".buttons-container").append(
       createElement("button", {
-        class: "change-orientation",
+        class: "change-orientation-btn",
         text: "Change orientation",
       }),
 
       createElement("button", {
-        class: "confirm-layout",
+        class: "confirm-layout-btn",
         text: "Confirm layout",
       }),
 
       createElement("button", {
-        class: "random",
+        class: "random-btn",
         text: "Random!",
       }),
     );
@@ -198,10 +197,14 @@ const domModule = (() =>
   {
     gameboard.getShipsNames().forEach((shipName) =>
     {
-      if (("getShipArea" in gameboard.getShips()[shipName]) && (owner === "player"))
+      if (
+        "getShipArea" in gameboard.getShips()[shipName]
+        && owner === "player"
+      )
       {
         gameboard
-          .getShips()[shipName].getShipArea()
+          .getShips()
+          [shipName].getShipArea()
           .forEach((area) =>
           {
             qs(
@@ -219,7 +222,8 @@ const domModule = (() =>
       if ("getShipBody" in gameboard.getShips()[shipName])
       {
         gameboard
-          .getShips()[shipName].getShipBody()
+          .getShips()
+          [shipName].getShipBody()
           .forEach((area) =>
           {
             if (typeof area === "object")

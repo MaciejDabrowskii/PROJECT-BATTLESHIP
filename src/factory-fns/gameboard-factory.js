@@ -23,6 +23,7 @@ const gameboardFactory = () =>
   const getShips = () => ships;
   const getShipsNames = () => Object.keys(ships);
   const getFieldStatus = () => fieldStatus;
+  const getOrientation = () => orientation;
 
   const switchOrientation = () =>
   {
@@ -180,6 +181,7 @@ const gameboardFactory = () =>
     getShipsNames,
     getShips,
     getFieldStatus,
+    getOrientation,
     placeShip,
     switchOrientation,
     receiveAttack,

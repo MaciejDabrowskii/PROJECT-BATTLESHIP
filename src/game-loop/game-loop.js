@@ -7,7 +7,7 @@ import domModule from "../DOM-modules/dom-module";
 import gameboardFactory from "../factory-fns/gameboard-factory";
 import playerFactory from "../factory-fns/player-factory";
 import { qs, qsa } from "../utility-fns/utility-fns";
-import addEvents from "../event-handlers/event-handler";
+import eventHandlers from "../event-handlers/event-handler";
 
 export const gameLoop = () =>
 {
@@ -17,29 +17,13 @@ export const gameLoop = () =>
   const ai = playerFactory();
   ai.switchTurn();
 
-  // playerGameboard.placeShip("carrier", [0, 0]);
-  // playerGameboard.placeShip("battleship", [0, 2]);
-  // playerGameboard.placeShip("crusier", [0, 4]);
-  playerGameboard.placeShip("submarine", [0, 6]);
-  // playerGameboard.placeShip("destroyer", [0, 8]);
-  // playerGameboard.randomShipPlacement(
-  //   humanPlayer.generateRandomCoord,
-  //   playerGameboard.getFieldStatus().antiCollision,
-  // );
-
-  // aiGameboard.placeShip("carrier", [0, 0]);
-  // aiGameboard.placeShip("battleship", [0, 2]);
-  // aiGameboard.placeShip("crusier", [0, 4]);
-  // aiGameboard.placeShip("submarine", [0, 6]);
-  // aiGameboard.placeShip("destroyer", [0, 8]);
+  // playerGameboard.randomShipPlacement(humanPlayer.generateRandomCoord, playerGameboard.getFieldStatus().antiCollision);
 
   domModule.renderBasic();
   domModule.renderGameboard(playerGameboard, "player");
-  // domModule.renderShips(playerGameboard, "player");
   domModule.renderDragAndDropItems(playerGameboard);
-  // domModule.renderGameboard(aiGameboard, "ai");
-  // domModule.toggleActive("ai");
-  // addEvents.dragAndDropEvents(playerGameboard);
+
+  eventHandlers.dragAndDropEvents(playerGameboard, aiGameboard);
 
   const checkForWinner = () =>
   {
