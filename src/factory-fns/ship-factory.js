@@ -54,7 +54,10 @@ const shipFactory = (length, orientation) =>
   };
 
   const checkForInvalidCoords = (coord) => !(
-    coord.at(1) < 0 || coord.at(0) < 0 || coord.at(1) > 9 || coord.at(0) > 9
+    coord.at(1) < 0
+     || coord.at(0) < 0
+      || coord.at(1) > 9
+       || coord.at(0) > 9
   );
 
   const calculateCollisionArea = (
@@ -67,7 +70,8 @@ const shipFactory = (length, orientation) =>
     {
       switch (index)
       {
-        case 0: { // first coord
+        case 0: {
+          // first coord
           colisonArray.push(
             [coord[0], coord[1] - 1], // up
             [coord[0] - 1, coord[1] - 1], // up left
@@ -90,7 +94,8 @@ const shipFactory = (length, orientation) =>
           break;
         }
 
-        case array.length - 1: { // last coord
+        case array.length - 1: {
+          // last coord
           colisonArray.push(
             [coord[0], coord[1] + 1], // down
             [coord[0] + 1, coord[1]], // right

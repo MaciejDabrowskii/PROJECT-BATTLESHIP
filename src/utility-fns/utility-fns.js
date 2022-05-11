@@ -2,8 +2,7 @@
 // qs(".wrapper");
 // qs(".btn")
 
-export function qs(selector, parent = document)
-{
+export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
 
@@ -11,8 +10,7 @@ export function qs(selector, parent = document)
 // qsa("li")
 // qsa(".btn", qs(".wrapper")) - selects all bnts in wrapper
 
-export function qsa(selector, parent = document)
-{
+export function qsa(selector, parent = document) {
   return [...parent.querySelectorAll(selector)];
 }
 
@@ -34,16 +32,14 @@ export function addGlobalEventListener(
   selector,
   callback,
   options,
-  parent = document,
-)
-{
+  parent = document
+) {
   parent.addEventListener(
     type,
-    (e) =>
-    {
+    (e) => {
       if (e.target.matches(selector)) callback(e);
     },
-    options,
+    options
   );
 }
 // creates DOM element with attributes passed in object, examples:
@@ -56,25 +52,19 @@ export function addGlobalEventListener(
 // });
 // qs(".wrapper").append(element);
 
-export function createElement(type, options = {})
-{
+export function createElement(type, options = {}) {
   const element = document.createElement(type);
-  Object.entries(options).forEach(([key, value]) =>
-  {
-    if (key === "class")
-    {
+  Object.entries(options).forEach(([key, value]) => {
+    if (key === "class") {
       element.classList.add(value);
     }
 
-    if (key === "dataset")
-    {
-      Object.entries(value).forEach(([dataKey, dataValue]) =>
-      {
+    if (key === "dataset") {
+      Object.entries(value).forEach(([dataKey, dataValue]) => {
         element.dataset[dataKey] = dataValue;
       });
     }
-    if (key === "text")
-    {
+    if (key === "text") {
       element.textContent = value;
     }
 

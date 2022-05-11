@@ -340,8 +340,7 @@ test("check if placing ships on random works", () =>
 
     // eslint-disable-next-line no-loop-func
     while (
-      unavailable.some((el) => JSON.stringify(randomCoord)
-        .includes(JSON.stringify(el)))
+      unavailable.some((el) => JSON.stringify(randomCoord).includes(JSON.stringify(el)))
     )
     {
       randomCoord = [
