@@ -140,6 +140,7 @@ const domModule = (() =>
     qs(".ai-section").append(
       createElement("div", {
         class: "ships-to-drop",
+
       }),
 
       createElement("div", {
@@ -157,6 +158,11 @@ const domModule = (() =>
         class: "confirm-layout",
         text: "Confirm layout",
       }),
+
+      createElement("button", {
+        class: "random",
+        text: "Random!",
+      }),
     );
 
     gameboard.getShipsNames().forEach((ship) =>
@@ -165,6 +171,7 @@ const domModule = (() =>
         createElement("div", {
           class: "ship-drag",
           id: `${ship}`,
+          draggable: "true",
         }),
       );
     });
@@ -317,6 +324,7 @@ const domModule = (() =>
   };
 
   return {
+    renderShips,
     renderBasic,
     toggleActive,
     renderGameboard,

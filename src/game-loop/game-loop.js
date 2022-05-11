@@ -6,7 +6,8 @@
 import domModule from "../DOM-modules/dom-module";
 import gameboardFactory from "../factory-fns/gameboard-factory";
 import playerFactory from "../factory-fns/player-factory";
-import { qs } from "../utility-fns/utility-fns";
+import { qs, qsa } from "../utility-fns/utility-fns";
+import addEvents from "../event-handlers/event-handler";
 
 export const gameLoop = () =>
 {
@@ -19,7 +20,7 @@ export const gameLoop = () =>
   // playerGameboard.placeShip("carrier", [0, 0]);
   // playerGameboard.placeShip("battleship", [0, 2]);
   // playerGameboard.placeShip("crusier", [0, 4]);
-  // playerGameboard.placeShip("submarine", [0, 6]);
+  playerGameboard.placeShip("submarine", [0, 6]);
   // playerGameboard.placeShip("destroyer", [0, 8]);
   // playerGameboard.randomShipPlacement(
   //   humanPlayer.generateRandomCoord,
@@ -38,6 +39,7 @@ export const gameLoop = () =>
   domModule.renderDragAndDropItems(playerGameboard);
   // domModule.renderGameboard(aiGameboard, "ai");
   // domModule.toggleActive("ai");
+  // addEvents.dragAndDropEvents(playerGameboard);
 
   const checkForWinner = () =>
   {

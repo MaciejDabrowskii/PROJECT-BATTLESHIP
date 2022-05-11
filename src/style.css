@@ -1,7 +1,7 @@
 .field {
   width: 2rem;
   height: 2rem;
-  border: .05rem solid rgb(255, 255, 255);
+  border: .07rem solid rgb(255, 255, 255);
   background-image: url(https://pic.onlinewebfonts.com/svg/img_498382.png);
   background-size: contain;
   background-color: rgb(78, 182, 241);
@@ -119,4 +119,19 @@
   border: 1px solid black;
   width: 1.6rem;
   height: 1.6rem;
+}
+.ship-drag {
+  background-color: rgb(192, 208, 224);
+  background-image: url(https://www.svgrepo.com/show/111867/ship.svg);
+  cursor: pointer;
+}
+.hold{
+  background-color: rgba(192, 208, 224, 0.719);
+}
+.hovered{
+  background:rgba(91, 207, 106, 0.822);
+  border: .07rem dashed rgb(197, 69, 69);
+}
+.invisible{
+  display: none;
 }
