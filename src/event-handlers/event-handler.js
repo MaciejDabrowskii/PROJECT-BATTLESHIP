@@ -4,7 +4,7 @@
 import _, { compact, flattenDeep } from "lodash";
 import domModule from "../DOM-modules/dom-module";
 import { qs, qsa } from "../utility-fns/utility-fns";
-import { gameLoop } from "../game-loop/game-loop";
+import newGame from "../game-loop/new-game";
 import playerFactory from "../factory-fns/player-factory";
 
 const eventHandlers = (() =>
@@ -25,7 +25,7 @@ const eventHandlers = (() =>
         qs("#overlay").classList.remove("active");
         qs(".wrapper")
           .remove();
-        gameLoop();
+        newGame();
       });
   };
 
@@ -154,7 +154,6 @@ const eventHandlers = (() =>
             aiGameboard.getFieldStatus().antiCollision,
           );
           domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
-          domModule.renderShips(aiGameboard, "ai"); // render ai ships
           domModule.toggleActive("ai"); // switch ai trun to false and start game
           qs(".ai-section").style.flexDirection = "row";
         }
@@ -177,7 +176,6 @@ const eventHandlers = (() =>
           aiGameboard.getFieldStatus().antiCollision,
         );
         domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
-        domModule.renderShips(aiGameboard, "ai"); // render ai ships
         domModule.toggleActive("ai"); // switch ai trun to false and start game
         qs(".ai-section").style.flexDirection = "row";
       });

@@ -17,13 +17,12 @@ export const gameLoop = () =>
   const ai = playerFactory();
   ai.switchTurn();
 
-  // playerGameboard.randomShipPlacement(humanPlayer.generateRandomCoord, playerGameboard.getFieldStatus().antiCollision);
-
   domModule.renderBasic(); // render basic dom elements
   domModule.renderGameboard(playerGameboard, "player");
   domModule.renderDragAndDropItems(playerGameboard);
 
   eventHandlers.dragAndDropEvents(playerGameboard, aiGameboard);
+  eventHandlers.modalAndInputEvents();
 
   const checkForWinner = () =>
   {

@@ -151,3 +151,6 @@
 .invisible {
   display: none;
 }
+.field[data-owner="ai"] {
+  cursor: pointer;
+}
