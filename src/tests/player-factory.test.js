@@ -10,7 +10,8 @@ test("check if switch turns works correctly true --> false ", () =>
   const player = playerFactory();
   player.switchTurn();
 
-  expect(player.getTurn()).toEqual(false);
+  expect(player.getTurn())
+    .toEqual(false);
 });
 
 test("check attack function works correctly (send attack to coordinate on gameboard) ", () =>
@@ -20,7 +21,8 @@ test("check attack function works correctly (send attack to coordinate on gamebo
 
   player.attack([0, 1], enemyGameboard);
 
-  expect(enemyGameboard.getBoard()[0][1]).toEqual("miss");
+  expect(enemyGameboard.getBoard()[0][1])
+    .toEqual("miss");
 });
 
 test("check if attack random correctly generates random coord) ", () =>
@@ -33,7 +35,8 @@ test("check if attack random correctly generates random coord) ", () =>
       ...enemyGameboard.getFieldStatus().missedAttacks,
       ...enemyGameboard.getFieldStatus().hitAttacks,
     ]).length,
-  ).toEqual(2);
+  )
+    .toEqual(2);
 });
 
 test("check if attack random correctly generates random coords and not generating same coord twice) ", () =>
@@ -56,13 +59,16 @@ test("check if attack random correctly generates random coords and not generatin
     i += 1;
   }
 
-  expect(_.compact(_.flattenDeep(enemyGameboard.getBoard())).length).toEqual(
-    100,
-  );
+  expect(_.compact(_.flattenDeep(enemyGameboard.getBoard())).length)
+    .toEqual(
+      100,
+    );
 
   expect(
-    _.compact(_.flattenDeep(enemyGameboard.getBoard())).every(
-      (el) => el === "miss",
-    ),
-  ).toEqual(true);
+    _.compact(_.flattenDeep(enemyGameboard.getBoard()))
+      .every(
+        (el) => el === "miss",
+      ),
+  )
+    .toEqual(true);
 });

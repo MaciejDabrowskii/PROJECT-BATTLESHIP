@@ -3,7 +3,8 @@ const shipFactory = (length, orientation) =>
 {
   const shipOrientation = orientation;
   const shipLength = length;
-  const shipBody = new Array(length).fill("notHit", 0, length);
+  const shipBody = new Array(length)
+    .fill("notHit", 0, length);
   const shipArea = [];
 
   const setShipArea = (array) => shipArea.push(...array);

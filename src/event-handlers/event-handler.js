@@ -11,19 +11,22 @@ const eventHandlers = (() =>
 {
   const modalAndInputEvents = () =>
   {
-    qs("input").addEventListener("input", () =>
-    {
-      domModule.editPlayerName();
-      domModule.reRenderPlayerBoardName();
-    });
+    qs("input")
+      .addEventListener("input", () =>
+      {
+        domModule.editPlayerName();
+        domModule.reRenderPlayerBoardName();
+      });
 
-    qs(".modal-btn").addEventListener("click", () =>
-    {
-      qs(".modal-body").classList.remove("active");
-      qs("#overlay").classList.remove("active");
-      qs(".wrapper").remove();
-      gameLoop();
-    });
+    qs(".modal-btn")
+      .addEventListener("click", () =>
+      {
+        qs(".modal-body").classList.remove("active");
+        qs("#overlay").classList.remove("active");
+        qs(".wrapper")
+          .remove();
+        gameLoop();
+      });
   };
 
   const dragAndDropEvents = (playerGameboard, aiGameboard) =>
@@ -46,91 +49,116 @@ const eventHandlers = (() =>
       e.preventDefault();
     }
 
-    function dragEnter()
+    function dragEnter(e)
     {
-      this.classList.add("hovered");
+      if (!this.classList.contains("ship"))
+      {
+        this.classList.add("hovered");
+      }
     }
 
     function dragLeave()
     {
-      this.className = "field";
+      this.classList.remove("hovered");
     }
 
     function dragDrop(e)
     {
       e.preventDefault();
-      this.classList.remove("hovered");
       const shipType = e.dataTransfer.getData("Ship-type");
-
-      playerGameboard.placeShip(shipType, [
-        Number(this.dataset.firstcoord),
-        Number(this.dataset.secondcoord),
-      ]);
-      domModule.renderShips(playerGameboard, "player");
-
-      if (this.classList.contains("ship"))
+      if (
+        !JSON.stringify(playerGameboard
+          .getFieldStatus().antiCollision)
+          .includes(JSON.stringify([
+            Number(this.dataset.firstcoord),
+            Number(this.dataset.secondcoord),
+          ]))
+      )
       {
-        qs(`#${shipType}`).removeEventListener("dragend", dragEnd);
-        qs(`#${shipType}`).classList.add("invisible");
+        this.classList.remove("hovered");
+
+        playerGameboard.placeShip(shipType, [
+          Number(this.dataset.firstcoord),
+          Number(this.dataset.secondcoord),
+        ]);
+
+        domModule.renderShips(playerGameboard, "player");
+
+        if (this.classList.contains("ship"))
+        {
+          qs(`#${shipType}`)
+            .removeEventListener("dragend", dragEnd);
+          qs(`#${shipType}`).classList.add("invisible");
+        }
+      }
+      else
+      {
+        this.classList.remove("hovered");
       }
     }
 
-    qsa(".ship-drag").forEach((ship) =>
-    {
-      ship.addEventListener("dragstart", dragStart);
-      ship.addEventListener("dragend", dragEnd);
-    });
+    qsa(".ship-drag")
+      .forEach((ship) =>
+      {
+        ship.addEventListener("dragstart", dragStart);
+        ship.addEventListener("dragend", dragEnd);
+      });
 
-    qsa(".field").forEach((field) =>
-    {
-      field.addEventListener("dragover", dragOver);
-      field.addEventListener("dragenter", dragEnter);
-      field.addEventListener("dragleave", dragLeave);
-      field.addEventListener("drop", dragDrop);
-    });
+    qsa(".field")
+      .forEach((field) =>
+      {
+        field.addEventListener("dragover", dragOver);
+        field.addEventListener("dragenter", dragEnter);
+        field.addEventListener("dragleave", dragLeave);
+        field.addEventListener("drop", dragDrop);
+      });
     // Drag and drop Buttons Events
 
-    qs(".change-orientation-btn").addEventListener("click", () =>
-    {
-      playerGameboard.switchOrientation();
-
-      switch (playerGameboard.getOrientation())
+    qs(".change-orientation-btn")
+      .addEventListener("click", () =>
       {
-        case "horizontal": {
-          qsa(".ship-drag").forEach((el) =>
-          {
-            el.style.flexDirection = "row";
-          });
-          break;
-        }
+        playerGameboard.switchOrientation();
 
-        case "vertical": {
-          qsa(".ship-drag").forEach((el) =>
-          {
-            el.style.flexDirection = "column";
-          });
-          break;
-        }
-        default:
-      }
-    });
+        switch (playerGameboard.getOrientation())
+        {
+          case "horizontal": {
+            qsa(".ship-drag")
+              .forEach((el) =>
+              {
+                el.style.flexDirection = "row";
+              });
+            break;
+          }
 
-    qs(".confirm-layout-btn").addEventListener("click", () =>
-    {
-      if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17)
+          case "vertical": {
+            qsa(".ship-drag")
+              .forEach((el) =>
+              {
+                el.style.flexDirection = "column";
+              });
+            break;
+          }
+          default:
+        }
+      });
+
+    qs(".confirm-layout-btn")
+      .addEventListener("click", () =>
       {
-        qs(".ai-section").innerHTML = "";
-        domModule.renderAISectionElements();
-        aiGameboard.randomShipPlacement(
-          playerFactory().generateRandomCoord,
-          aiGameboard.getFieldStatus().antiCollision,
-        );
-        domModule.renderGameboard(aiGameboard, "ai");
-        domModule.renderShips(aiGameboard, "ai");
-        domModule.toggleActive("ai");
-        qs(".ai-section").style.flexDirection = "row";
-      }
-    });
+        if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17)
+        {
+          qs(".ai-section").innerHTML = "";
+          domModule.renderAISectionElements();
+          aiGameboard.randomShipPlacement(
+            playerFactory().generateRandomCoord,
+            aiGameboard.getFieldStatus().antiCollision,
+          );
+          domModule.renderGameboard(aiGameboard, "ai");
+          domModule.renderShips(aiGameboard, "ai");
+          domModule.toggleActive("ai");
+          qs(".ai-section").style.flexDirection = "row";
+        }
+      });
   };
 
   return {

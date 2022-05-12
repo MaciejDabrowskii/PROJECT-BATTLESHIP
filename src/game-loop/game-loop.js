@@ -66,47 +66,48 @@ export const gameLoop = () =>
 
   const userInputListener = (() =>
   {
-    qs(".wrapper").addEventListener("click", (e) =>
-    {
-      if (humanPlayer.getTurn())
+    qs(".wrapper")
+      .addEventListener("click", (e) =>
       {
-        switch (e.target.dataset.owner)
+        if (humanPlayer.getTurn())
         {
-          case "ai": {
-            switch (e.target.className)
-            {
-              case "field miss":
-              case "field hit": {
-                break;
-              }
-              default: {
-                humanPlayer.attack(
-                  [
-                    [e.target.dataset.firstcoord],
-                    [e.target.dataset.secondcoord],
-                  ],
-                  aiGameboard,
-                );
-
-                domModule.renderGameboard(aiGameboard, "ai");
-                domModule.turnIndicator(humanPlayer.getTurn());
-                checkForWinner();
-
-                if (!humanPlayer.getTurn())
-                {
-                  ai.switchTurn();
-                  domModule.toggleActive("ai");
-                  domModule.toggleActive("player");
-                  aiLoop();
+          switch (e.target.dataset.owner)
+          {
+            case "ai": {
+              switch (e.target.className)
+              {
+                case "field miss":
+                case "field hit": {
+                  break;
                 }
-                break;
+                default: {
+                  humanPlayer.attack(
+                    [
+                      [e.target.dataset.firstcoord],
+                      [e.target.dataset.secondcoord],
+                    ],
+                    aiGameboard,
+                  );
+
+                  domModule.renderGameboard(aiGameboard, "ai");
+                  domModule.turnIndicator(humanPlayer.getTurn());
+                  checkForWinner();
+
+                  if (!humanPlayer.getTurn())
+                  {
+                    ai.switchTurn();
+                    domModule.toggleActive("ai");
+                    domModule.toggleActive("player");
+                    aiLoop();
+                  }
+                  break;
+                }
               }
+              break;
             }
-            break;
+            default:
           }
-          default:
         }
-      }
-    });
+      });
   })();
 };

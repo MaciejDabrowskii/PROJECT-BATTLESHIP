@@ -159,9 +159,10 @@ const gameboardFactory = () =>
             // generate ship body by given random coordinate and check if its body not colliding with any other ship
             isNotColliding(
               // is fhip area coords are not present in antiCollision array
-              shipFactory(ships[ship].length, orientation).calculateShipArea(
-                random,
-              ),
+              shipFactory(ships[ship].length, orientation)
+                .calculateShipArea(
+                  random,
+                ),
             )
             && isPlacementPossible(
               // and ship area wont stick outside gameboard

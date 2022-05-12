@@ -25,69 +25,74 @@ const domModule = (() =>
       }),
     );
 
-    qs(".wrapper").append(
-      createElement("h1", {
-        text: "Battle Ship",
-        class: "header",
-      }),
+    qs(".wrapper")
+      .append(
+        createElement("h1", {
+          text: "Battle Ship",
+          class: "header",
+        }),
 
-      createElement("div", {
-        class: "player-name-input-container",
-      }),
+        createElement("div", {
+          class: "player-name-input-container",
+        }),
 
-      createElement("div", {
-        class: "game-contents",
-      }),
+        createElement("div", {
+          class: "game-contents",
+        }),
 
-      createElement("div", {
-        class: "turn-indicator",
-      }),
-    );
+        createElement("div", {
+          class: "turn-indicator",
+        }),
+      );
 
-    qs(".player-name-input-container").append(
-      createElement("label", {
-        for: "text",
-        text: "Enter player name:",
-      }),
+    qs(".player-name-input-container")
+      .append(
+        createElement("label", {
+          for: "text",
+          text: "Enter player name:",
+        }),
 
-      createElement("input", {
-        type: "text",
-        id: "player-name",
-      }),
-    );
+        createElement("input", {
+          type: "text",
+          id: "player-name",
+        }),
+      );
 
-    qs(".turn-indicator").append(
-      createElement("h3", {
-        text: "Turn: ",
-        class: "turn-indicator-header",
-      }),
+    qs(".turn-indicator")
+      .append(
+        createElement("h3", {
+          text: "Turn: ",
+          class: "turn-indicator-header",
+        }),
 
-      createElement("div", {
-        class: "turn-indicator-player",
-      }),
-    );
+        createElement("div", {
+          class: "turn-indicator-player",
+        }),
+      );
 
-    qs(".game-contents").append(
-      createElement("div", {
-        class: "player-section",
-      }),
+    qs(".game-contents")
+      .append(
+        createElement("div", {
+          class: "player-section",
+        }),
 
-      createElement("div", {
-        class: "ai-section",
-      }),
-    );
+        createElement("div", {
+          class: "ai-section",
+        }),
+      );
 
-    qs(".player-section").append(
-      createElement("p", {
-        text: `${playerName}  BOARD`,
-        class: "board-name",
-        id: "board-name-player",
-      }),
+    qs(".player-section")
+      .append(
+        createElement("p", {
+          text: `${playerName}  BOARD`,
+          class: "board-name",
+          id: "board-name-player",
+        }),
 
-      createElement("div", {
-        class: "player-board",
-      }),
-    );
+        createElement("div", {
+          class: "player-board",
+        }),
+      );
 
     switch (qs(".modal-body"))
     {
@@ -103,17 +108,18 @@ const domModule = (() =>
           }),
         );
 
-        qs(".modal-body").append(
-          createElement("button", {
-            class: "modal-btn",
-            id: "modal-btn",
-          }),
+        qs(".modal-body")
+          .append(
+            createElement("button", {
+              class: "modal-btn",
+              id: "modal-btn",
+            }),
 
-          createElement("h3", {
-            class: "modal-text",
-            id: "modal-text",
-          }),
-        );
+            createElement("h3", {
+              class: "modal-text",
+              id: "modal-text",
+            }),
+          );
         qs(".modal-btn").innerHTML = "&times";
         break;
 
@@ -123,69 +129,76 @@ const domModule = (() =>
 
   const renderAISectionElements = () =>
   {
-    qs(".ai-section").append(
-      createElement("p", {
-        class: "board-name",
-        text: "AI  BOARD",
-      }),
+    qs(".ai-section")
+      .append(
+        createElement("p", {
+          class: "board-name",
+          text: "AI  BOARD",
+        }),
 
-      createElement("div", {
-        class: "ai-board",
-      }),
-    );
+        createElement("div", {
+          class: "ai-board",
+        }),
+      );
   };
 
   const renderDragAndDropItems = (gameboard) =>
   {
-    qs(".ai-section").append(
-      createElement("div", {
-        class: "ships-to-drop",
-      }),
-
-      createElement("div", {
-        class: "buttons-container",
-      }),
-    );
-
-    qs(".buttons-container").append(
-      createElement("button", {
-        class: "change-orientation-btn",
-        text: "Change orientation",
-      }),
-
-      createElement("button", {
-        class: "confirm-layout-btn",
-        text: "Confirm layout",
-      }),
-
-      createElement("button", {
-        class: "random-btn",
-        text: "Random!",
-      }),
-    );
-
-    gameboard.getShipsNames().forEach((ship) =>
-    {
-      qs(".ships-to-drop").append(
+    qs(".ai-section")
+      .append(
         createElement("div", {
-          class: "ship-drag",
-          id: `${ship}`,
-          draggable: "true",
+          class: "ships-to-drop",
+        }),
+
+        createElement("div", {
+          class: "buttons-container",
         }),
       );
-    });
 
-    gameboard.getShipsNames().forEach((ship) =>
-    {
-      for (let i = 0; i < gameboard.getShips()[ship].length; i += 1)
+    qs(".buttons-container")
+      .append(
+        createElement("button", {
+          class: "change-orientation-btn",
+          text: "Change orientation",
+        }),
+
+        createElement("button", {
+          class: "confirm-layout-btn",
+          text: "Confirm layout",
+        }),
+
+        createElement("button", {
+          class: "random-btn",
+          text: "Random!",
+        }),
+      );
+
+    gameboard.getShipsNames()
+      .forEach((ship) =>
       {
-        qs(`#${ship}`).append(
-          createElement("div", {
-            class: "ship-body-el",
-          }),
-        );
-      }
-    });
+        qs(".ships-to-drop")
+          .append(
+            createElement("div", {
+              class: "ship-drag",
+              id: `${ship}`,
+              draggable: "true",
+            }),
+          );
+      });
+
+    gameboard.getShipsNames()
+      .forEach((ship) =>
+      {
+        for (let i = 0; i < gameboard.getShips()[ship].length; i += 1)
+        {
+          qs(`#${ship}`)
+            .append(
+              createElement("div", {
+                class: "ship-body-el",
+              }),
+            );
+        }
+      });
   };
 
   const reRenderPlayerBoardName = () =>
@@ -195,47 +208,49 @@ const domModule = (() =>
 
   const renderShips = (gameboard, owner) =>
   {
-    gameboard.getShipsNames().forEach((shipName) =>
-    {
-      if (
-        "getShipArea" in gameboard.getShips()[shipName]
-        && owner === "player"
-      )
+    gameboard.getShipsNames()
+      .forEach((shipName) =>
       {
-        gameboard
-          .getShips()
-          [shipName].getShipArea()
-          .forEach((area) =>
-          {
-            qs(
-              `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
-            ).classList.add("ship");
-          });
-      }
-    });
+        if (
+          "getShipArea" in gameboard.getShips()[shipName]
+        && owner === "player"
+        )
+        {
+          gameboard
+            .getShips()
+            [shipName].getShipArea()
+            .forEach((area) =>
+            {
+              qs(
+                `[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]`,
+              ).classList.add("ship");
+            });
+        }
+      });
   };
 
   const renderHits = (gameboard, owner) =>
   {
-    gameboard.getShipsNames().forEach((shipName) =>
-    {
-      if ("getShipBody" in gameboard.getShips()[shipName])
+    gameboard.getShipsNames()
+      .forEach((shipName) =>
       {
-        gameboard
-          .getShips()
-          [shipName].getShipBody()
-          .forEach((area) =>
-          {
-            if (typeof area === "object")
+        if ("getShipBody" in gameboard.getShips()[shipName])
+        {
+          gameboard
+            .getShips()
+            [shipName].getShipBody()
+            .forEach((area) =>
             {
-              const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
+              if (typeof area === "object")
+              {
+                const field = qs(`[data-owner="${owner}"][data-firstcoord="${area[0]}"][data-secondcoord="${area[1]}"]
             `);
-              field.classList.add("hit", "ship");
-              field.textContent = "🔥";
-            }
-          });
-      }
-    });
+                field.classList.add("hit", "ship");
+                field.textContent = "🔥";
+              }
+            });
+        }
+      });
   };
 
   const renderMissedAttacks = (gameboard, owner) =>
@@ -255,33 +270,36 @@ const domModule = (() =>
   {
     qs(`.${owner}-board`).innerHTML = "";
 
-    gameboard.getBoard().forEach((array, firstIndex) =>
-    {
-      qs(`.${owner}-board`).append(
-        createElement("div", {
-          class: "column",
-          "data-column": `${firstIndex}`,
-          "data-owner": `${owner}`,
-        }),
-      );
-    });
-
-    qsa(`.column[data-owner="${owner}"]`).forEach((column, columnIndex) =>
-    {
-      let i = 0;
-      while (i < 10)
+    gameboard.getBoard()
+      .forEach((array, firstIndex) =>
       {
-        column.append(
-          createElement("div", {
-            class: "field",
-            "data-owner": `${owner}`,
-            "data-firstCoord": `${columnIndex}`,
-            "data-secondCoord": `${i}`,
-          }),
-        );
-        i += 1;
-      }
-    });
+        qs(`.${owner}-board`)
+          .append(
+            createElement("div", {
+              class: "column",
+              "data-column": `${firstIndex}`,
+              "data-owner": `${owner}`,
+            }),
+          );
+      });
+
+    qsa(`.column[data-owner="${owner}"]`)
+      .forEach((column, columnIndex) =>
+      {
+        let i = 0;
+        while (i < 10)
+        {
+          column.append(
+            createElement("div", {
+              class: "field",
+              "data-owner": `${owner}`,
+              "data-firstCoord": `${columnIndex}`,
+              "data-secondCoord": `${i}`,
+            }),
+          );
+          i += 1;
+        }
+      });
     renderShips(gameboard, `${owner}`);
     renderHits(gameboard, `${owner}`);
     renderMissedAttacks(gameboard, `${owner}`);
