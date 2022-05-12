@@ -19,7 +19,7 @@ export const gameLoop = () =>
 
   // playerGameboard.randomShipPlacement(humanPlayer.generateRandomCoord, playerGameboard.getFieldStatus().antiCollision);
 
-  domModule.renderBasic();
+  domModule.renderBasic(); // render basic dom elements
   domModule.renderGameboard(playerGameboard, "player");
   domModule.renderDragAndDropItems(playerGameboard);
 
@@ -52,12 +52,11 @@ export const gameLoop = () =>
           playerGameboard,
         );
         domModule.renderGameboard(playerGameboard, "player"); // rerender players gameboard
-        // domModule.renderShips(playerGameboard, "player");
       }
-      await timer(700);
-      humanPlayer.switchTurn();
-      domModule.toggleActive("ai");
-      domModule.toggleActive("player");
+      await timer(700); // wait 0,7s before turn change
+      humanPlayer.switchTurn(); // switch player turn
+      domModule.toggleActive("ai"); // toggle active style on ai gameboard
+      domModule.toggleActive("player"); // toggle active style on player gameboard
       domModule.turnIndicator(humanPlayer.getTurn());
       checkForWinner();
     }
