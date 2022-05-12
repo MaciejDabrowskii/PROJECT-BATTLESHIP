@@ -35,24 +35,24 @@ export const gameLoop = () =>
     }
   };
 
-  const aiLoop = () =>
+  const aiLoop = () => // ai turn
   {
     const timer = (time) => new Promise((res) => setTimeout(res, time)); // https://stackoverflow.com/questions/3583724/how-do-i-add-a-delay-in-a-javascript-loop
     async function load()
     {
-      while (ai.getTurn())
+      while (ai.getTurn()) // while ai turn true
       {
-        await timer(1500);
+        await timer(1500); // wait 1,5s to not take all actions instantly (more visibility for human player)
 
-        ai.attack(
+        ai.attack( // attack at random coordinate
           ai.generateRandomCoord([
             ...playerGameboard.getFieldStatus().missedAttacks,
             ...playerGameboard.getFieldStatus().hitAttacks,
           ]),
           playerGameboard,
         );
-        domModule.renderGameboard(playerGameboard, "player");
-        domModule.renderShips(playerGameboard, "player");
+        domModule.renderGameboard(playerGameboard, "player"); // rerender players gameboard
+        // domModule.renderShips(playerGameboard, "player");
       }
       await timer(700);
       humanPlayer.switchTurn();

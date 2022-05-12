@@ -11,7 +11,7 @@ const eventHandlers = (() =>
 {
   const modalAndInputEvents = () =>
   {
-    qs("input")
+    qs("input") // dynamically adds player name to player board name
       .addEventListener("input", () =>
       {
         domModule.editPlayerName();
@@ -66,7 +66,7 @@ const eventHandlers = (() =>
     {
       e.preventDefault();
       const shipType = e.dataTransfer.getData("Ship-type");
-      if (
+      if ( // check if drop on this place is possible - compare field with anticollision array
         !JSON.stringify(playerGameboard
           .getFieldStatus().antiCollision)
           .includes(JSON.stringify([
@@ -75,20 +75,20 @@ const eventHandlers = (() =>
           ]))
       )
       {
-        this.classList.remove("hovered");
+        this.classList.remove("hovered"); // remove class hovered from field
 
-        playerGameboard.placeShip(shipType, [
+        playerGameboard.placeShip(shipType, [ // place ship
           Number(this.dataset.firstcoord),
           Number(this.dataset.secondcoord),
         ]);
 
-        domModule.renderShips(playerGameboard, "player");
+        domModule.renderShips(playerGameboard, "player"); // render ships on player gameboard
 
-        if (this.classList.contains("ship"))
+        if (this.classList.contains("ship")) // if placing successful
         {
           qs(`#${shipType}`)
             .removeEventListener("dragend", dragEnd);
-          qs(`#${shipType}`).classList.add("invisible");
+          qs(`#${shipType}`).classList.add("invisible"); // hide placed ship
         }
       }
       else
@@ -145,19 +145,41 @@ const eventHandlers = (() =>
     qs(".confirm-layout-btn")
       .addEventListener("click", () =>
       {
-        if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17)
+        if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17) // check if all ships has been placed
         {
-          qs(".ai-section").innerHTML = "";
+          qs(".ai-section").innerHTML = ""; // remove drag and drop ships and buttons
           domModule.renderAISectionElements();
-          aiGameboard.randomShipPlacement(
+          aiGameboard.randomShipPlacement( // place ai ships at random locations
             playerFactory().generateRandomCoord,
             aiGameboard.getFieldStatus().antiCollision,
           );
-          domModule.renderGameboard(aiGameboard, "ai");
-          domModule.renderShips(aiGameboard, "ai");
-          domModule.toggleActive("ai");
+          domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
+          domModule.renderShips(aiGameboard, "ai"); // render ai ships
+          domModule.toggleActive("ai"); // switch ai trun to false and start game
           qs(".ai-section").style.flexDirection = "row";
         }
+      });
+
+    qs(".random-btn")
+      .addEventListener("click", () => // place ships at random locations and start game
+      {
+        playerGameboard.randomShipPlacement( // place players ships at random locations
+          playerFactory().generateRandomCoord,
+          aiGameboard.getFieldStatus().antiCollision,
+        );
+        domModule.renderGameboard(playerGameboard, "player"); // rerender player board and ships
+        domModule.renderShips(playerGameboard, "player");
+
+        qs(".ai-section").innerHTML = ""; // remove drag and drop ships and buttons
+        domModule.renderAISectionElements(); // render containers for ai board and board name
+        aiGameboard.randomShipPlacement( // place ai ships at random locations
+          playerFactory().generateRandomCoord,
+          aiGameboard.getFieldStatus().antiCollision,
+        );
+        domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
+        domModule.renderShips(aiGameboard, "ai"); // render ai ships
+        domModule.toggleActive("ai"); // switch ai trun to false and start game
+        qs(".ai-section").style.flexDirection = "row";
       });
   };
 

@@ -217,8 +217,7 @@ const domModule = (() =>
         )
         {
           gameboard
-            .getShips()
-            [shipName].getShipArea()
+            .getShips()[shipName].getShipArea()
             .forEach((area) =>
             {
               qs(
@@ -237,8 +236,7 @@ const domModule = (() =>
         if ("getShipBody" in gameboard.getShips()[shipName])
         {
           gameboard
-            .getShips()
-            [shipName].getShipBody()
+            .getShips()[shipName].getShipBody()
             .forEach((area) =>
             {
               if (typeof area === "object")
@@ -356,6 +354,7 @@ const domModule = (() =>
     turnIndicator,
     anounceResoult,
     renderDragAndDropItems,
+
   };
 })();
 
