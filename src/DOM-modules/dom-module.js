@@ -29,7 +29,7 @@ const domModule = (() =>
     qs(".wrapper")
       .append(
         createElement("h1", {
-          text: "Battle Ship",
+          text: "BATTLESHIP",
           class: "header",
         }),
         createElement("img", {
