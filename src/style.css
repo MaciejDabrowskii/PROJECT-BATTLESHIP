@@ -15,6 +15,7 @@ body{
   background-color: rgb(92, 160, 211);
   display: flex;
   justify-content: center;
+  margin: 0;
 }
 /* button, input, ::-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder {
   font-family: "font";
@@ -82,7 +83,7 @@ label {
   gap: 2rem;
   font-size: 1.5rem;
 }
-.turn-indicator-player {
+.turn-indicator-header {
   margin: 0;
 }
 .hit {
