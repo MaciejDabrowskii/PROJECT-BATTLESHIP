@@ -127,6 +127,7 @@ const eventHandlers = (() =>
               {
                 el.style.flexDirection = "row";
               });
+            qs(".ships-to-drop").style.flexDirection = "column";
             break;
           }
 
@@ -136,6 +137,7 @@ const eventHandlers = (() =>
               {
                 el.style.flexDirection = "column";
               });
+            qs(".ships-to-drop").style.flexDirection = "row";
             break;
           }
           default:
@@ -155,7 +157,6 @@ const eventHandlers = (() =>
           );
           domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
           domModule.toggleActive("ai"); // switch ai trun to false and start game
-          qs(".ai-section").style.flexDirection = "row";
         }
       });
 
@@ -177,7 +178,6 @@ const eventHandlers = (() =>
         );
         domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
         domModule.toggleActive("ai"); // switch ai trun to false and start game
-        qs(".ai-section").style.flexDirection = "row";
       });
   };
 

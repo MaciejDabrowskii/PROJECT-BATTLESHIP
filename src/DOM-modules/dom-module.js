@@ -7,6 +7,7 @@ import {
   addGlobalEventListener,
   createElement,
 } from "../utility-fns/utility-fns";
+import titleShip from "../assets/title-ship.png";
 
 const domModule = (() =>
 {
@@ -30,6 +31,10 @@ const domModule = (() =>
         createElement("h1", {
           text: "Battle Ship",
           class: "header",
+        }),
+        createElement("img", {
+          class: "title-ship-img",
+          src: titleShip,
         }),
 
         createElement("div", {
@@ -55,6 +60,7 @@ const domModule = (() =>
         createElement("input", {
           type: "text",
           id: "player-name",
+          placeholder: "Enter your name",
         }),
       );
 
@@ -145,6 +151,13 @@ const domModule = (() =>
   const renderDragAndDropItems = (gameboard) =>
   {
     qs(".ai-section")
+      .append(
+        createElement("div", {
+          class: "ship-deploy",
+        }),
+      );
+
+    qs(".ship-deploy")
       .append(
         createElement("div", {
           class: "ships-to-drop",
