@@ -226,7 +226,7 @@ const domModule = (() =>
       {
         if (
           "getShipArea" in gameboard.getShips()[shipName]
-        // && owner === "player"
+        && owner === "player"
         )
         {
           gameboard
