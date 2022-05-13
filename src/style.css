@@ -17,9 +17,7 @@ body{
   justify-content: center;
   margin: 0;
 }
-/* button, input, ::-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder {
-  font-family: "font";
-} */
+
 button, input {
   font-family: "font";
   background-color: rgb(200, 230, 245);
