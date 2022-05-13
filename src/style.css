@@ -29,7 +29,7 @@ button, input {
 .wrapper{
   background-color: rgb(242, 238, 224);
   position: relative;
-  padding: 2rem 0;
+  padding: 0.6rem 0 1.5rem 0;
   width: 80%;
 }
 h1 {
@@ -75,12 +75,15 @@ label {
   background-blend-mode: unset;
 }
 .turn-indicator {
-  margin-top: 17rem;
+  margin-top: 16rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2rem;
   font-size: 1.5rem;
+}
+.turn-indicator-player {
+  margin: 0;
 }
 .hit {
   background-color: rgb(0, 255, 34);
