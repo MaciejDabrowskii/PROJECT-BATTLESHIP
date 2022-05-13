@@ -7,7 +7,7 @@ import {
   addGlobalEventListener,
   createElement,
 } from "../utility-fns/utility-fns";
-import titleShip from "../assets/title-ship.png";
+import titleShip from "../assets/imgs/title-ship.png";
 
 const domModule = (() =>
 {
@@ -226,7 +226,7 @@ const domModule = (() =>
       {
         if (
           "getShipArea" in gameboard.getShips()[shipName]
-        && owner === "player"
+        // && owner === "player"
         )
         {
           gameboard

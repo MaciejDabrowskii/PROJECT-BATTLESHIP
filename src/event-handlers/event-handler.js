@@ -178,6 +178,7 @@ const eventHandlers = (() =>
         );
         domModule.renderGameboard(aiGameboard, "ai"); // render ai gameboard
         domModule.toggleActive("ai"); // switch ai trun to false and start game
+        domModule.renderShips(aiGameboard, "ai");
       });
   };
 
