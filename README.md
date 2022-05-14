@@ -18,7 +18,7 @@ Battleship game to practice Test Driven Development using ![Jest](https://img.sh
 
 - Ability to play round with ai
 - Ability to attack by clicking on game board
-- Ability to place ships with drag and drop
+- Ability to place ships using drag and drop
 - Ability to change ships orientation
 - Ability to place ships randomly with button click
 - Random button will place ships at random locations with random alignment
