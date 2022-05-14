@@ -146,13 +146,16 @@ input {
 .field[data-owner="ai"] {
   cursor: pointer;
 }
+
 .field[data-owner="ai"]:hover {
   opacity: 0.6;
   cursor: pointer;
 }
+
 .field.ship[data-owner="ai"]:hover {
   opacity: 1;
 }
+
 .field.miss[data-owner="ai"]:hover {
   opacity: 1;
 }
