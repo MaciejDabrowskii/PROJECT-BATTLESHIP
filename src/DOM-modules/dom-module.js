@@ -7,7 +7,7 @@ import {
   addGlobalEventListener,
   createElement,
 } from "../utility-fns/utility-fns";
-import titleShip from "../assets/imgs/title-ship.png";
+import titleShip from "../asets/imgs/title-ship.png";
 
 const domModule = (() =>
 {
