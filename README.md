@@ -16,17 +16,18 @@ Battleship game to practice Test Driven Development using ![Jest](https://img.sh
 
 ### Features
 
-- Ability to play round with ai
+- Ability to play one round with ai
 - Ability to attack by clicking on game board
 - Ability to place ships using drag and drop
 - Ability to change ships orientation
 - Ability to place ships randomly with button click
 - Random button will place ships at random locations with random alignment
-- Game will automatticly mark area aroun sunken ship
+- Game will automatticly mark area around sunken ship
+- Game prevents ship placment on forbidden areas (works with random too)
+- Game will display modal with result when last ship destroyed
+- AI will deploy ships at random locations with random alignment
 - AI will never shoot same place
 - AI will never shoot unavalible coordinates
-- Game prevents ship placment on forbidden areas (works with random too)
-- Game will display modal with resoult when last ship destroyed
 
 ### Technologies
 
