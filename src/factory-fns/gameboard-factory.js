@@ -82,7 +82,7 @@ const gameboardFactory = () =>
 
     if (isPlacementPossible(ships[shipType], firstCoord))
     {
-      ships[shipType] // sets calculated ship area to ship object
+      ships[shipType] // set calculated ship area to ship object
         .setShipArea(ships[shipType].calculateShipArea(firstCoord));
       ships[shipType] // push ship area to gameboard array and anticollison array
         .calculateShipArea(firstCoord)
@@ -92,7 +92,7 @@ const gameboardFactory = () =>
           fieldStatus.antiCollision.push(coord);
         });
 
-      fieldStatus.antiCollision // calculates ship collison area (all surrounding fields) and push them to anticollision array
+      fieldStatus.antiCollision // calculate ship collison area (all surrounding fields) and push them to anticollision array
         .push(
           ...ships[shipType].calculateCollisionArea(
             ships[shipType].getShipArea(),
