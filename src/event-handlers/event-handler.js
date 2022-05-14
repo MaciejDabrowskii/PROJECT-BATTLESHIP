@@ -66,26 +66,32 @@ const eventHandlers = (() =>
     {
       e.preventDefault();
       const shipType = e.dataTransfer.getData("Ship-type");
-      if ( // check if drop on this place is possible - compare field with anticollision array
-        !JSON.stringify(playerGameboard
-          .getFieldStatus().antiCollision)
-          .includes(JSON.stringify([
-            Number(this.dataset.firstcoord),
-            Number(this.dataset.secondcoord),
-          ]))
+      if (
+        // check if drop on this place is possible - compare field with anticollision array
+        !JSON.stringify(
+          playerGameboard.getFieldStatus().antiCollision,
+        )
+          .includes(
+            JSON.stringify([
+              Number(this.dataset.firstcoord),
+              Number(this.dataset.secondcoord),
+            ]),
+          )
       )
       {
         this.classList.remove("hovered"); // remove class hovered from field
 
-        playerGameboard.placeShip(shipType, [ // place ship
+        playerGameboard.placeShip(shipType, [
+          // place ship
           Number(this.dataset.firstcoord),
           Number(this.dataset.secondcoord),
         ]);
 
         domModule.renderShips(playerGameboard, "player"); // render ships on player gameboard
 
-        if (this.classList.contains("ship")) // if placing successful
+        if (this.classList.contains("ship"))
         {
+          // if placing successful
           qs(`#${shipType}`)
             .removeEventListener("dragend", dragEnd);
           qs(`#${shipType}`).classList.add("invisible"); // hide placed ship
@@ -147,11 +153,13 @@ const eventHandlers = (() =>
     qs(".confirm-layout-btn")
       .addEventListener("click", () =>
       {
-        if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17) // check if all ships has been placed
+        if (_.compact(_.flattenDeep(playerGameboard.getBoard())).length === 17)
         {
+        // check if all ships has been placed
           qs(".ai-section").innerHTML = ""; // remove drag and drop ships and buttons
           domModule.renderAISectionElements();
-          aiGameboard.randomShipPlacement( // place ai ships at random locations
+          aiGameboard.randomShipPlacement(
+          // place ai ships at random locations
             playerFactory().generateRandomCoord,
             aiGameboard.getFieldStatus().antiCollision,
           );
@@ -161,9 +169,11 @@ const eventHandlers = (() =>
       });
 
     qs(".random-btn")
-      .addEventListener("click", () => // place ships at random locations and start game
+      .addEventListener("click", () =>
+      // place ships at random locations and start game
       {
-        playerGameboard.randomShipPlacement( // place players ships at random locations
+        playerGameboard.randomShipPlacement(
+        // place players ships at random locations
           playerFactory().generateRandomCoord,
           aiGameboard.getFieldStatus().antiCollision,
         );
@@ -172,7 +182,8 @@ const eventHandlers = (() =>
 
         qs(".ai-section").innerHTML = ""; // remove drag and drop ships and buttons
         domModule.renderAISectionElements(); // render containers for ai board and board name
-        aiGameboard.randomShipPlacement( // place ai ships at random locations
+        aiGameboard.randomShipPlacement(
+        // place ai ships at random locations
           playerFactory().generateRandomCoord,
           aiGameboard.getFieldStatus().antiCollision,
         );

@@ -367,7 +367,6 @@ const domModule = (() =>
     turnIndicator,
     anounceResoult,
     renderDragAndDropItems,
-
   };
 })();
 

@@ -4,6 +4,7 @@
   font-weight: 400;
   font-style: normal;
 }
+
 :root {
   margin: 0;
   padding: 0;
@@ -11,127 +12,77 @@
   letter-spacing: 0.2rem;
   color: rgb(92, 160, 211);
 }
-body{
+
+body {
   background-color: rgb(92, 160, 211);
   display: flex;
   justify-content: center;
   margin: 0;
 }
 
-button, input {
+button,
+input {
   font-family: "font";
   background-color: rgb(200, 230, 245);
   border-color: rgb(109, 57, 57);
   color: rgb(109, 57, 57);
 }
 
-.wrapper{
+.wrapper {
   background-color: rgb(242, 238, 224);
   position: relative;
   padding: 0.6rem 0 1.5rem 0;
   width: 80%;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
+
 h1 {
   text-align: center;
-  color:rgb(92, 160, 211);
+  color: rgb(92, 160, 211);
   position: absolute;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
   width: 100%;
   padding-top: 9rem;
   z-index: 10;
   font-size: 3rem;
 }
+
 .title-ship-img {
   position: absolute;
-    height: 9rem;
-    left: 48%;
+  height: 9rem;
+  left: 48%;
 }
-.player-name-input-container{
+
+.player-name-input-container {
   padding-top: 13rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3rem;
 }
-input{
-  text-align: center;
-}
+
 label {
   font-size: 1.3rem;
 }
-.field {
-  width: 2rem;
-  height: 2rem;
-  border: 0.07rem solid rgb(255, 255, 255);
-  background-image: url(https://pic.onlinewebfonts.com/svg/img_498382.png);
-  background-size: contain;
-  background-color: rgb(200, 230, 245);
-  background-blend-mode: soft-light;
+
+input {
+  text-align: center;
 }
-.field.ship {
-  background-color: rgb(109, 57, 57);
-  background-image: url(https://www.svgrepo.com/show/271348/ship-boat.svg);
-  background-blend-mode: unset;
-}
-.turn-indicator {
-  margin-top: 16rem;
+
+.game-contents {
   display: flex;
+  margin: 22rem 0 8rem 0;
+  justify-content: space-evenly;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  font-size: 1.5rem;
+  position: relative;
 }
-.turn-indicator-header {
-  margin: 0;
-}
-.hit {
-  background-color: rgb(0, 255, 34);
-}
-.field.hit.ship {
-  font-size: 1.5rem;
-  color: rgb(255, 102, 0);
-  text-align: center;
-}
-.miss {
-  font-size: 1.5rem;
-  color: red;
-  text-align: center;
-}
+
 .player-section,
 .ai-section {
   position: relative;
   display: flex;
-}
-.ship-deploy {
-  flex-direction: column;
-  display: flex;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  height: 21.4rem;
-  width: 29rem;
-  justify-content: space-between;
-}
-
-.buttons-container {
-  display: flex;
-  gap: 4rem;
-  justify-content: space-evenly
-}
-
-.player-board, .ai-board{
-  display: flex;
-  position: absolute;
-  transform:translate(-50%, -50%);
-}
-
-.ai-board.active,
-.player-board.active {
-  transform:translate(-50%, -50%) scale(1.3);
-  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-.active {
-  transition: transform 0.5s ease-in-out;
 }
 
 .board-name {
@@ -143,21 +94,148 @@ label {
   width: 22rem;
 }
 
-
-.game-contents {
+.player-board,
+.ai-board {
   display: flex;
-  margin: 22rem 0 8rem 0;
-  justify-content:space-evenly;
-  align-items: center;
-  position: relative;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
+
+.ai-board.active,
+.player-board.active {
+  transform: translate(-50%, -50%) scale(1.3);
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.active {
+  transition: transform 0.5s ease-in-out;
+}
+
+.field {
+  width: 2rem;
+  height: 2rem;
+  border: 0.07rem solid rgb(255, 255, 255);
+  background-image: url(https://pic.onlinewebfonts.com/svg/img_498382.png);
+  background-size: contain;
+  background-color: rgb(200, 230, 245);
+  background-blend-mode: soft-light;
+}
+
+.hit {
+  background-color: rgb(0, 255, 34);
+}
+
+.miss {
+  font-size: 1.5rem;
+  color: red;
+  text-align: center;
+}
+
+.field.ship {
+  background-color: rgb(109, 57, 57);
+  background-image: url(https://www.svgrepo.com/show/271348/ship-boat.svg);
+  background-blend-mode: unset;
+}
+
+.field.hit.ship {
+  font-size: 1.5rem;
+  color: rgb(255, 102, 0);
+  text-align: center;
+}
+
+.field[data-owner="ai"] {
+  cursor: pointer;
+}
+.field[data-owner="ai"]:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+.field.ship[data-owner="ai"]:hover {
+  opacity: 1;
+}
+.field.miss[data-owner="ai"]:hover {
+  opacity: 1;
+}
+
+.ship-deploy {
+  flex-direction: column;
+  display: flex;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  height: 21.4rem;
+  width: 29rem;
+  justify-content: space-between;
+}
+
+.ships-to-drop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 3rem;
+  gap: 0.7rem;
+}
+
+.ship-body-el {
+  width: 1.95rem;
+  height: 1.9rem;
+  border: 0.07rem solid black;
+}
+
+.ship-drag {
+  border: 1px solid black;
+  display: flex;
+  background-color: #6d3939;
+  background-image: url(https://www.svgrepo.com/show/271348/ship-boat.svg);
+  background-blend-mode: unset;
+  cursor: pointer;
+}
+
+.invisible {
+  display: none;
+}
+
+.hold {
+  background-color: rgba(192, 208, 224, 0.719);
+}
+
+.hovered {
+  background: rgba(91, 207, 106, 0.822);
+  border: 0.07rem dashed rgb(197, 69, 69);
+}
+
+.buttons-container {
+  display: flex;
+  gap: 4rem;
+  justify-content: space-evenly;
+}
+
+.confirm-layout,
+.change-orientation {
+  width: 8rem;
+  height: 3rem;
+}
+
+.turn-indicator {
+  margin-top: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  font-size: 1.5rem;
+}
+
+.turn-indicator-header {
+  margin: 0;
+}
+
 .modal-body {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
   transition: 100ms ease-in-out;
-  border: .5rem solid rgb(109, 57, 57);;
+  border: 0.5rem solid rgb(109, 57, 57);
   z-index: 8;
   width: 35rem;
   max-width: 60%;
@@ -166,12 +244,13 @@ label {
   padding-bottom: 2rem;
   color: rgb(109, 57, 57);
   background-color: rgb(200, 230, 245);
-
 }
 
 .modal-body.active {
   transform: translate(-50%, -50%) scale(1);
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 .modal-btn {
@@ -179,19 +258,21 @@ label {
   font-size: 2rem;
   background-color: rgb(200, 230, 245);
   border: none;
-    width: 2rem;
-    height: 3rem;
-    align-self: flex-end;
-    margin-right: 0.5rem;
+  width: 2rem;
+  height: 3rem;
+  align-self: flex-end;
+  margin-right: 0.5rem;
 }
+
 .modal-btn:hover {
-cursor: pointer;
-color:rgb(92, 160, 211);
+  cursor: pointer;
+  color: rgb(92, 160, 211);
 }
+
 .modal-text {
-padding: 0 2rem 0 2rem;
-text-align: center;
-font-size: 1.5rem;
+  padding: 0 2rem 0 2rem;
+  text-align: center;
+  font-size: 1.5rem;
 }
 
 #overlay {
@@ -208,63 +289,4 @@ font-size: 1.5rem;
 #overlay.active {
   opacity: 1;
   pointer-events: all;
-}
-
-.confirm-layout,
-.change-orientation {
-  width: 8rem;
-  height: 3rem;
-}
-
-.ships-to-drop {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 3rem;
-  gap: 0.7rem;
-}
-
-.ship-drag {
-  border: 1px solid black;
-  display: flex;
-}
-
-.ship-body-el {
-  width: 1.95rem;
-  height: 1.9rem;
-  border: 0.07rem solid black;
-}
-
-.ship-drag {
-  background-color: #6d3939;
-  background-image: url(https://www.svgrepo.com/show/271348/ship-boat.svg);
-  background-blend-mode: unset;
-  cursor: pointer;
-}
-
-.hold {
-  background-color: rgba(192, 208, 224, 0.719);
-}
-
-.hovered {
-  background: rgba(91, 207, 106, 0.822);
-  border: 0.07rem dashed rgb(197, 69, 69);
-}
-
-.invisible {
-  display: none;
-}
-.field[data-owner="ai"] {
-  cursor: pointer;
-}
-.field[data-owner="ai"]:hover {
-  opacity: .6;
-  cursor: pointer;
-}
-.field.ship[data-owner="ai"]:hover {
-  opacity: 1;
-}
-.field.miss[data-owner="ai"]:hover {
-  opacity: 1;
 }
