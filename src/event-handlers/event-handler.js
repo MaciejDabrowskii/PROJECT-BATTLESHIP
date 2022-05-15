@@ -27,6 +27,14 @@ const eventHandlers = (() =>
           .remove();
         newGame();
       });
+
+    qs(".logo")
+      .addEventListener("click", () =>
+      {
+        window
+          .open("https://github.com/MaciejDabrowskii?tab=repositories", "_blank")
+          .focus();
+      });
   };
 
   // Drag and drop Ships Events

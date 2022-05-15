@@ -14,10 +14,28 @@
 }
 
 body {
+  position: relative;
   background-color: rgb(92, 160, 211);
   display: flex;
   justify-content: center;
   margin: 0;
+}
+
+.logo {
+  position: absolute;
+  right: 4rem;
+  top: 4rem;
+  width: 4rem;
+  transition: transform 0.4s ease-in-out;
+}
+
+.logo:hover {
+  cursor: pointer;
+  transform: rotate(360deg) scale(1.2);
+}
+
+#logo-color {
+  filter: invert(88%) sepia(24%) saturate(119%) hue-rotate(353deg) brightness(106%) contrast(90%);
 }
 
 button,
@@ -33,7 +51,7 @@ button:hover{
 }
 
 .wrapper {
-  background-color: rgb(242, 238, 224);
+  background-color: #f2eee0;
   position: relative;
   padding: 0.6rem 0 1.5rem 0;
   width: 80%;
@@ -196,6 +214,7 @@ input {
   background-image: url(https://www.svgrepo.com/show/271348/ship-boat.svg);
   background-blend-mode: unset;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .invisible {

@@ -4,4 +4,3 @@ import addEvents from "./event-handlers/event-handler";
 import { gameLoop } from "./game-loop/game-loop";
 
 gameLoop();
-// addEvents();

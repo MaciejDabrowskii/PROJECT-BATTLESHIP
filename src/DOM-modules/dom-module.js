@@ -8,6 +8,7 @@ import {
   createElement,
 } from "../utility-fns/utility-fns";
 import titleShip from "../asets/imgs/title-ship.png";
+import logo from "../asets/imgs/github-icon.svg";
 
 const domModule = (() =>
 {
@@ -23,6 +24,11 @@ const domModule = (() =>
     document.body.append(
       createElement("div", {
         class: "wrapper",
+      }),
+      createElement("img", {
+        class: "logo",
+        id: "logo-color",
+        src: logo,
       }),
     );
 
