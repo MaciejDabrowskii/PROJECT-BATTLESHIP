@@ -39,6 +39,7 @@ body {
 }
 
 button,
+label,
 input {
   font-family: "font";
   background-color: rgb(200, 230, 245);
@@ -46,14 +47,18 @@ input {
   color: rgb(109, 57, 57);
 }
 
+input {
+  background-color: rgb(242, 238, 224);
+}
+
 button:hover{
   cursor: pointer;
 }
 
 .wrapper {
-  background-color: #f2eee0;
+  background-color: rgb(242, 238, 224);
   position: relative;
-  padding: 0.6rem 0 1.5rem 0;
+  padding: 1.6rem 0 1.5rem 0;
   width: 80%;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
@@ -78,11 +83,13 @@ h1 {
 }
 
 .player-name-input-container {
-  padding-top: 13rem;
+  padding: 13rem 0 1rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 3rem;
+  box-shadow: rgb(0 0 0 / 45%) 0px 25px 20px -20px;
+  background-color: rgb(200, 230, 256);
 }
 
 label {
@@ -121,6 +128,7 @@ input {
   display: flex;
   position: absolute;
   transform: translate(-50%, -50%);
+  transition: transform 0.5s ease-in-out;
 }
 
 .ai-board.active,

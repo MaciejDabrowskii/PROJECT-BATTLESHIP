@@ -25,19 +25,6 @@ const playerFactory = () =>
 
   const getTurn = () => playerTurn;
 
-  const attack = (
-    attackCoord,
-    enemyGameboard, // send attack to given gameboard - if miss switch turn
-  ) =>
-  {
-    enemyGameboard.receiveAttack(attackCoord);
-
-    if (enemyGameboard.getBoard()[attackCoord[0]][attackCoord[1]] === "miss")
-    {
-      switchTurn();
-    }
-  };
-
   const generateRandomCoord = (unavailable) =>
   {
     let randomCoord = [
@@ -57,6 +44,19 @@ const playerFactory = () =>
       ];
     }
     return randomCoord;
+  };
+
+  const attack = (
+    attackCoord,
+    enemyGameboard, // send attack to given gameboard - if miss switch turn
+  ) =>
+  {
+    enemyGameboard.receiveAttack(attackCoord);
+
+    if (enemyGameboard.getBoard()[attackCoord[0]][attackCoord[1]] === "miss")
+    {
+      switchTurn();
+    }
   };
 
   return {
