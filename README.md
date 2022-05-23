@@ -2,7 +2,7 @@
   
 # PROJECT-BATTLESHIP
 
-<img alt="App preview" src="https://raw.githubusercontent.com/MaciejDabrowskii/PROJECT-BATTLESHIP/main/Readme%20assets/App-preview.jpg">
+<img alt="App preview" src="https://raw.githubusercontent.com/MaciejDabrowskii/PROJECT-BATTLESHIP/main/Readme%20assets/battleship-preview.jpg">
 
 </div>
 
