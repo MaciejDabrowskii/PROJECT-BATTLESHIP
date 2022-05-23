@@ -23,8 +23,8 @@ body {
 
 .logo {
   position: absolute;
-  right: 4rem;
-  top: 4rem;
+  right: 2%;
+  top: 4%;
   width: 4rem;
   transition: transform 0.4s ease-in-out;
 }
@@ -60,6 +60,7 @@ button:hover{
   position: relative;
   padding: 1.6rem 0 1.5rem 0;
   width: 80%;
+  min-height: 100vh;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -103,7 +104,8 @@ input {
 .game-contents {
   display: flex;
   margin: 22rem 0 8rem 0;
-  justify-content: space-evenly;
+  gap: 34rem;
+  justify-content: center;
   align-items: center;
   position: relative;
 }
@@ -251,7 +253,8 @@ input {
 }
 
 .turn-indicator {
-  margin-top: 16rem;
+  margin-top: 19rem;
+  background-color: rgb(200, 230, 245);
   display: flex;
   align-items: center;
   justify-content: center;
